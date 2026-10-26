@@ -1,4 +1,13 @@
 (function () {
+  var root = document.documentElement;
+  var tbtn = document.querySelector('.theme-btn');
+  if (tbtn) {
+    tbtn.addEventListener('click', function () {
+      var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+    });
+  }
   var header = document.querySelector('header');
   var btn = document.querySelector('.menu-btn');
   var menu = document.querySelector('nav ul');
