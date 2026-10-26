@@ -86,17 +86,17 @@
       star:'<svg viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>'
     };
     var WF = [
-      [ {i:'phone',t:'Missed call',s:'Webhook trigger',trig:1,log:'Missed call from +91 98XXX XX214'},
-        {i:'wa',t:'Send WhatsApp',s:'WhatsApp Business',log:'Reply sent: “Sorry we missed your call…”'},
-        {i:'ai',t:'AI Agent',s:'Understand reply',log:'Customer: “haircut kal milega?” → intent: booking'},
-        {i:'sheet',t:'Save lead',s:'Google Sheets',log:'Row added: phone, “Haircut”, tomorrow'},
-        {i:'bell',t:'Notify owner',s:'WhatsApp alert',log:'Owner alerted on WhatsApp'} ],
       [ {i:'form',t:'Form submitted',s:'Website webhook',trig:1,log:'New enquiry: “Need a clinic website”'},
         {i:'bell',t:'Alert owner',s:'WhatsApp',log:'Owner alerted with lead details'},
         {i:'wa',t:'Thank customer',s:'WhatsApp',log:'Thank-you message sent to customer'},
         {i:'wait',t:'Wait 2 days',s:'Wait node',log:'Waiting 2 days… (sped up for preview)'},
         {i:'ifn',t:'Replied?',s:'IF node',log:'No reply yet → send follow-up'},
         {i:'wa',t:'Follow-up',s:'WhatsApp',log:'Follow-up sent'} ],
+      [ {i:'form',t:'New booking',s:'Form / Google Calendar',trig:1,log:'Booking: Sat 11:00 AM, “Consultation”'},
+        {i:'wa',t:'Confirm',s:'WhatsApp',log:'Confirmation sent to customer'},
+        {i:'wait',t:'Wait',s:'Until 24h before',log:'Waiting until 24h before… (sped up for preview)'},
+        {i:'wa',t:'Reminder',s:'WhatsApp',log:'Reminder sent with reschedule link'},
+        {i:'sheet',t:'Update sheet',s:'Google Sheets',log:'Booking status: reminded'} ],
       [ {i:'check',t:'Visit complete',s:'Booking updated',trig:1,log:'Appointment marked complete'},
         {i:'wait',t:'Wait 3 hours',s:'Wait node',log:'Waiting 3 hours… (sped up for preview)'},
         {i:'wa',t:'Ask feedback',s:'WhatsApp',log:'“How was your visit today?” sent'},
