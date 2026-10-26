@@ -110,6 +110,27 @@ tr.r{cursor:pointer}tr.r:hover td{background:var(--ind-l)}
 .foot a{color:var(--ind);font-weight:600}
 .move{display:none}
 @media (hover:none){.move{display:block}}
+
+.wel{position:fixed;inset:0;z-index:80;background:#0f0e2b;display:grid;grid-template-columns:1.1fr 1fr;color:#fff;animation:wf .4s}
+@keyframes wf{from{opacity:0}}
+.wel .wp{position:relative;overflow:hidden}.wel .wp img{width:100%;height:100%;object-fit:cover;animation:wk 18s ease-out forwards}
+@keyframes wk{from{transform:scale(1.1)}}
+.wel .wp::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 40%,#0f0e2b),linear-gradient(0deg,rgba(15,14,43,.7),transparent 50%)}
+.wel .wq{position:absolute;left:28px;bottom:28px;z-index:1;display:flex;gap:10px;flex-wrap:wrap}
+.wel .wq span{background:rgba(255,255,255,.14);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:7px 12px;font-size:.82rem}
+.wel .wt{padding:48px clamp(24px,5vw,64px);display:flex;flex-direction:column;justify-content:center;gap:18px;overflow:auto}
+.wel h2{font-size:clamp(1.9rem,3.6vw,3rem);line-height:1.05;letter-spacing:-.03em}.wel h2 em{font-style:normal;color:#d9f99d}
+.wel p{color:#a5a8c8;max-width:440px}
+.wel ul{list-style:none;display:grid;gap:10px;color:#dfe0f2;font-size:.95rem}.wel li::before{content:"✓";color:#d9f99d;font-weight:700;margin-right:10px}
+.wel .wb{display:grid;gap:10px;max-width:420px;margin-top:8px}
+.wel .wb button{display:flex;align-items:center;gap:12px;text-align:left;border:1px solid #2d2b5e;background:#17163d;color:#fff;border-radius:16px;padding:12px 14px;cursor:pointer;transition:border-color .2s,transform .2s}
+.wel .wb button:hover{border-color:#d9f99d;transform:translateX(4px)}
+.wel .wb i{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-style:normal;font-weight:700;flex:none}
+.wel .wb small{display:block;color:#8d90b5}
+@media(max-width:820px){.wel{grid-template-columns:1fr;grid-template-rows:200px 1fr}.wel .wp::after{background:linear-gradient(0deg,#0f0e2b,transparent 60%)}.wel .wq{display:none}.wel .wt{padding:24px 20px;justify-content:flex-start}}
+.team{margin:10px 4px;border-radius:14px;overflow:hidden;background:#17163d;font-size:.78rem}
+.team img{width:100%;height:84px;object-fit:cover;display:block}.team div{padding:8px 10px;color:#c7c9e0}.team b{color:#d9f99d}
+@media (max-width:820px){.team{display:none}}
 </style>
 </head>
 <body>
@@ -119,8 +140,10 @@ tr.r{cursor:pointer}tr.r:hover td{background:var(--ind-l)}
     <div class="logo"><svg viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="#4f46e5"/><circle cx="32" cy="32" r="14" fill="none" stroke="#d9f99d" stroke-width="6" stroke-dasharray="60 30"/></svg>LeadLoop <small>DEMO</small></div>
     <button class="nv" aria-current="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="5" height="16" rx="1"/><rect x="10" y="4" width="5" height="10" rx="1"/><rect x="17" y="4" width="4" height="13" rx="1"/></svg><span>Pipeline</span></button>
     <button class="nv" id="todayBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span>Follow-ups</span></button>
+    <button class="nv" id="repBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><span>Manager reports</span></button>
     <button class="nv" id="resetBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/></svg><span>Reset demo</span></button>
     <div class="sp"></div>
+    <div class="team"><img src="img/m3.webp" alt="Sales team at work" loading="lazy"><div><b>● 4 reps online</b><br>Neha, Rohit, Sana &amp; you</div></div>
     <div class="me"><i>A</i><div>Aman (Sales)<br><small style="color:#7c7fa8">Demo user</small></div></div>
   </aside>
   <main class="main">
@@ -131,8 +154,15 @@ tr.r{cursor:pointer}tr.r:hover td{background:var(--ind-l)}
     <p class="foot">LeadLoop is a fictional demo · Designed &amp; built by <a href="https://knowmindsmedia.com/" target="_blank" rel="noopener">KnowMinds Media</a> · <a href="https://knowmindsmedia.com/#demo" target="_blank" rel="noopener">Get a custom CRM</a></p>
   </main>
 </div>
+<div class="wel" id="wel" role="dialog" aria-label="Welcome to LeadLoop"><div class="wp"><img src="img/hero.webp" alt="Sales team working together"><div class="wq"><span>📥 Leads from Website, Instagram, Ads &amp; WhatsApp</span><span>⏰ Auto follow-up reminders</span></div></div>
+<div class="wt"><div class="logo" style="padding:0;color:#fff"><svg viewBox="0 0 64 64" width="34" height="34"><rect width="64" height="64" rx="16" fill="#4f46e5"/><circle cx="32" cy="32" r="14" fill="none" stroke="#d9f99d" stroke-width="6" stroke-dasharray="60 30"/></svg> LeadLoop</div>
+<h2>Every lead followed up.<br><em>Every deal tracked.</em></h2><p>A simple CRM for agencies, clinics and local businesses — capture leads from every channel, never miss a follow-up and see your pipeline at a glance.</p>
+<ul><li>Drag-and-drop sales pipeline</li><li>One-tap WhatsApp follow-ups</li><li>Manager reports &amp; team leaderboard</li></ul>
+<div class="wb"><button data-enter="rep"><i style="background:#4f46e5">A</i><span><b>Enter as Aman — Sales rep</b><small>Work your leads and follow-ups</small></span></button><button data-enter="mgr"><i style="background:#d9f99d;color:#0f0e2b">N</i><span><b>Enter as Neha — Sales manager</b><small>See team performance &amp; revenue</small></span></button></div>
+<small style="color:#6e7199">Demo workspace · no sign-up, sample data only</small></div></div>
 <div class="ov" id="ov"></div>
 <div class="toast" id="toast"></div>
+<script src="/demo-kit/dash.js"></script>
 <script>
 (function(){
 var $=function(s){return document.querySelector(s)};
@@ -187,6 +217,21 @@ function addLead(){ov('<div class="mod"><h2>New lead</h2><form id="af" novalidat
     L.unshift({id:Date.now(),n:f.n.value.trim(),c:f.c.value.trim(),city:f.city.value.trim()||'—',s:'new',src:f.src.value,v:+f.v.value||0,f:d(1),ev:[['📥','Lead added manually',0]]});save();close();render();toast('Lead added to New')}}
 function today(){var due=L.filter(function(l){return l.s!=='won'&&new Date(l.f)<=new Date(d(1))}).sort(function(a,b){return new Date(a.f)-new Date(b.f)});
   ov('<div class="mod"><h2>Follow-ups (today & tomorrow)</h2>'+(due.length?due.map(function(l){var du=dueL(l.f);return '<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)"><span><b>'+l.n+'</b><br><small class="due '+du[0]+'">'+du[1]+' · '+sn(l.s)[1]+'</small></span><button class="btn g" data-open="'+l.id+'">Open</button></div>'}).join(''):'<p style="color:var(--muted)">All caught up 🎉</p>')+'<div style="text-align:right;margin-top:12px"><button class="btn g" data-x>Close</button></div></div>',1)}
+
+var TEAM=[['Neha Roy','Manager',6,4,3,240000],['Aman Verma','Sales rep',0,0,0,0],['Rohit Sahoo','Sales rep',11,5,2,118000],['Sana Mirza','Sales rep',9,6,3,152000]];
+function reports(){KMDash.open({title:'LeadLoop — Sales manager',subtitle:'KnowMinds demo workspace · live from your pipeline',theme:{accent:'#4f46e5',bg:'#f6f6fb',paper:'#fff',ink:'#0f0e2b',muted:'#6e7199',line:'#e5e5f0',font:'inherit'},
+ data:function(r){var lab=r==='Today'?KMDash.hours():KMDash.days(r==='7 days'?7:30),open=L.filter(function(l){return l.s!=='won'}),won=L.filter(function(l){return l.s==='won'}),late=L.filter(function(l){return l.s!=='won'&&dueL(l.f)[0]==='late'}).length,sum=function(a){return a.reduce(function(x,l){return x+l.v},0)};
+  TEAM[1][2]=L.length;TEAM[1][3]=L.filter(function(l){return l.s==='demo'||l.s==='proposal'||l.s==='won'}).length;TEAM[1][4]=won.length;TEAM[1][5]=sum(won);
+  var sc={};L.forEach(function(l){sc[l.src]=(sc[l.src]||0)+1});
+  return {kpis:[{label:'Open pipeline',value:inr(sum(open)),delta:open.length+(open.length===1?' deal':' deals')},{label:'Won',value:inr(sum(won)),delta:won.length+(won.length===1?' deal':' deals')},{label:'Win rate',value:Math.round(won.length/Math.max(1,L.length)*100)+'%',delta:'all time'},{label:'Overdue follow-ups',value:late,delta:late?'needs attention':'all clear'}],
+   chart:{title:'New leads',note:r==='Today'?'per hour':'per day',labels:lab,series:[{name:'Leads',values:KMDash.series(lab.length,r==='Today'?2:6,4,7),color:'#4f46e5'},{name:'Won',values:KMDash.series(lab.length,r==='Today'?1:2,2,11),color:'#65a30d'}]},
+   donut:{title:'Lead sources',center:L.length+' leads',items:Object.keys(sc).map(function(k){return {label:k,value:sc[k],display:sc[k],color:SRC[k]?SRC[k][1]:'#999'}})},
+   feed:L.slice().reverse().slice(0,3).map(function(l){var e=l.ev[l.ev.length-1];return {icon:e[0],text:l.n+' — '+e[1],time:sn(l.s)[1]}}),
+   table:{title:'Team leaderboard',note:'Nudge reps with overdue follow-ups',cols:['Rep','Role','Leads','Demos+','Won','Revenue',''],rows:TEAM.slice().sort(function(a,b){return b[5]-a[5]}).map(function(t){return [t[0]+(t[0]==='Aman Verma'?' (you)':''),t[1],t[2],t[3],t[4],inr(t[5]),t[1]==='Manager'?'—':KMDash.btn('Send nudge','nudge',t[0])]})}}},
+ onAction:function(a,id){toast('Nudge sent to '+id.split(' ')[0]+' on WhatsApp')},
+ liveFeed:function(){var t=[['📥','New Instagram lead captured'],['💬','Rohit sent a WhatsApp follow-up'],['📅','Sana booked a demo']][Math.floor(Math.random()*4)];return {icon:t[0],text:t[1]}}})}
+document.addEventListener('click',function(e){var en=e.target.closest('[data-enter]');if(en){document.getElementById('wel').remove();try{localStorage.setItem('ll_wel','1')}catch(x){}if(en.dataset.enter==='mgr')reports();return}var rb=e.target.closest('#repBtn');if(rb){reports();return}});
+try{if(localStorage.getItem('ll_wel'))document.getElementById('wel').remove()}catch(x){}
 document.addEventListener('click',function(e){var b=e.target.closest('[data-open],button');if(!b)return;
   if(b.dataset.open&&!b.classList.contains('drag')){open(+b.dataset.open)}
   else if(b.dataset.view){view=b.dataset.view;document.querySelectorAll('[data-view]').forEach(function(x){x.setAttribute('aria-pressed',x===b)});render()}
