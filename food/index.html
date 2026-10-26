@@ -13,6 +13,7 @@
 <style>
 :root{--y:#ffd23f;--ink:#111;--paper:#fffdf5;--o:#ff5d3a;--g:#2bb673;--muted:#5b5747;--line:#111}
 *{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none!important}
 body{font-family:"Bricolage Grotesque",system-ui,sans-serif;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased}
 button,input,select{font:inherit;color:inherit}
 .demo{background:var(--ink);color:var(--y);font-size:.82rem;text-align:center;padding:7px 12px;font-weight:500}
@@ -22,6 +23,8 @@ header{background:var(--y);border-bottom:3px solid var(--ink)}
 header .wrap{display:flex;justify-content:space-between;align-items:center;height:74px}
 .logo{font-weight:800;font-size:1.6rem;letter-spacing:-.03em;display:flex;align-items:center;gap:8px}
 .logo svg{width:36px;height:36px}
+.kbtn{margin-left:auto;margin-right:12px;border:3px solid var(--ink);background:var(--ink);color:var(--y);border-radius:999px;padding:8px 14px;font-weight:800;cursor:pointer}
+@media (max-width:640px){.kbtn{order:3;margin:0}}
 .meal{display:flex;background:#fff;border:3px solid var(--ink);border-radius:999px;padding:4px;gap:2px}
 .meal button{border:0;background:none;border-radius:999px;padding:7px 14px;font-weight:800;cursor:pointer}
 .meal button[aria-pressed="true"]{background:var(--ink);color:var(--y)}
@@ -30,10 +33,14 @@ header .wrap{display:flex;justify-content:space-between;align-items:center;heigh
 .hero h1{font-size:clamp(2.4rem,6vw,4.6rem);font-weight:800;line-height:.92;letter-spacing:-.045em}
 .hero h1 mark{background:var(--o);color:#fff;padding:0 .15em;border-radius:10px;display:inline-block;transform:rotate(-2deg)}
 .hero p{font-size:1.1rem;color:var(--muted);margin-top:14px;max-width:460px}
-.sticker{justify-self:center;width:210px;height:210px;border-radius:50%;background:var(--o);color:#fff;display:grid;place-items:center;text-align:center;font-weight:800;font-size:1.3rem;line-height:1.1;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);animation:spin 18s linear infinite}
+.hphoto{position:relative;justify-self:center;width:100%;max-width:440px}
+.hphoto img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:50%;border:3px solid var(--ink);box-shadow:10px 10px 0 var(--ink);animation:spin 80s linear infinite}
+.hphoto .sticker{position:absolute;right:-6px;top:-10px}
+.hphoto .rate{position:absolute;left:-10px;bottom:24px;background:#fff;border:3px solid var(--ink);border-radius:14px;padding:8px 12px;font-weight:800;box-shadow:4px 4px 0 var(--ink)}
+.sticker{justify-self:center;width:150px;height:150px;border-radius:50%;background:var(--o);color:#fff;display:grid;place-items:center;text-align:center;font-weight:800;font-size:1.3rem;line-height:1.1;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);animation:spin 18s linear infinite}
 .sticker span{animation:spin 18s linear infinite reverse;display:block}
 @keyframes spin{to{transform:rotate(360deg)}}
-@media (max-width:760px){.hero{grid-template-columns:1fr}.sticker{width:150px;height:150px;font-size:1rem}}
+@media (max-width:760px){.hero{grid-template-columns:1fr}.sticker{width:110px;height:110px;font-size:.85rem}.hphoto{max-width:300px}}
 .tabs{display:flex;gap:10px;margin:26px 0 18px;flex-wrap:wrap}
 .tabs button{border:3px solid var(--ink);background:#fff;border-radius:14px;padding:10px 18px;font-weight:800;cursor:pointer;box-shadow:4px 4px 0 var(--ink);transition:.1s}
 .tabs button:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
@@ -65,6 +72,17 @@ header .wrap{display:flex;justify-content:space-between;align-items:center;heigh
 @media (max-width:900px){.combo{grid-template-columns:1fr}}
 .cb{border:3px solid var(--ink);border-radius:22px;overflow:hidden;background:#fff;display:flex;flex-direction:column}
 .cb .top{padding:20px;font-size:3rem;display:flex;justify-content:space-between;align-items:start}
+.cb .top.ph{padding:0;position:relative;aspect-ratio:4/3;overflow:hidden;border-bottom:3px solid var(--ink);margin-bottom:16px}
+.cb .top.ph img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.cb:hover .top.ph img{transform:scale(1.06)}
+.cb .top.ph span{position:absolute;top:12px;left:12px}
+.dish{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}@media (max-width:900px){.dish{grid-template-columns:repeat(2,1fr)}}@media (max-width:560px){.dish{grid-template-columns:1fr}}
+.ds{border:3px solid var(--ink);border-radius:22px;overflow:hidden;background:#fff;display:flex;flex-direction:column;transition:transform .15s,box-shadow .15s}.ds:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--ink)}
+.ds .im{position:relative;aspect-ratio:16/11;border-bottom:3px solid var(--ink);overflow:hidden}.ds .im img{width:100%;height:100%;object-fit:cover}
+.ds .im em{position:absolute;top:10px;left:10px;font-style:normal;background:var(--y);border:2.5px solid var(--ink);border-radius:10px;padding:2px 8px;font-weight:800;font-size:.78rem}
+.ds .bd{padding:14px 16px 16px;display:flex;flex-direction:column;gap:4px;flex:1}.ds h4{font-size:1.15rem;font-weight:800;display:flex;gap:8px;align-items:center}.ds p{color:var(--muted);font-size:.9rem;flex:1}
+.ds .row{display:flex;justify-content:space-between;align-items:center;margin-top:8px}.ds .row b{font-size:1.25rem}.ds button{border:3px solid var(--ink);background:var(--y);border-radius:12px;padding:7px 14px;font-weight:800;cursor:pointer}
+.vg{width:14px;height:14px;border:2px solid var(--g);display:inline-grid;place-items:center;flex:none}.vg::after{content:"";width:6px;height:6px;border-radius:50%;background:var(--g)}.vg.nv{border-color:#c0392b}.vg.nv::after{background:#c0392b}
 .cb .top span{font-size:.8rem;font-weight:800;background:var(--ink);color:var(--y);border-radius:8px;padding:4px 8px}
 .cb .bd{padding:0 20px 20px;flex:1;display:flex;flex-direction:column}
 .cb h4{font-size:1.3rem;font-weight:800}
@@ -118,19 +136,22 @@ footer a{color:var(--ink);font-weight:800}
 <body>
 <div class="demo">Demo app by <a href="https://knowmindsmedia.com/" target="_blank" rel="noopener">KnowMinds Media</a> — Tiffin Tales is fictional. No real food will arrive (sorry!).</div>
 <header><div class="wrap"><div class="logo"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="29" fill="#fff" stroke="#111" stroke-width="4"/><circle cx="32" cy="32" r="16" fill="#111"/><circle cx="32" cy="32" r="7" fill="#ff5d3a"/></svg>Tiffin Tales</div>
+<button class="kbtn" id="kitBtn">👩‍🍳 Kitchen view</button>
 <div class="meal" id="meal"><button data-m="Breakfast">Breakfast</button><button data-m="Lunch" aria-pressed="true">Lunch</button><button data-m="Dinner">Dinner</button></div></div></header>
 <main class="wrap">
-  <section class="hero"><div><h1>Build your <mark>own thali.</mark> We'll cook it fresh.</h1><p>Pick a base, a dal, two sabzis and something sweet — or grab a chef combo. Hot, home-style and tracked live to your door.</p></div><div class="sticker"><span>Free<br>delivery<br>today!</span></div></section>
-  <div class="tabs"><button data-tab="build" aria-pressed="true">🍽️ Build a thali</button><button data-tab="combo">⭐ Chef combos</button></div>
+  <section class="hero"><div><h1>Build your <mark>own thali.</mark> We'll cook it fresh.</h1><p>Pick a base, a dal, two sabzis and something sweet — or grab a chef combo. Hot, home-style and tracked live to your door.</p></div><div class="hphoto"><img src="img/hero.webp" alt="Indian thali with rice and side dishes" fetchpriority="high"><div class="sticker"><span>Free<br>delivery<br>today!</span></div><div class="rate">⭐ 4.8 · 2,300+ orders</div></div></section>
+  <div class="tabs"><button data-tab="build" aria-pressed="true">🍽️ Build a thali</button><button data-tab="combo">⭐ Chef combos</button><button data-tab="dish">🔥 Popular dishes</button></div>
   <section id="t-build" class="builder"><div id="groups"></div>
     <aside class="plate"><h3>Your thali</h3><svg viewBox="0 0 200 200" id="plateSvg"></svg><div class="pl-list" id="plist"></div><div class="pl-tot"><span>Total</span><span id="ptot">₹0</span></div><button class="add" id="addThali" disabled>Pick a base to start</button></aside>
   </section>
   <section id="t-combo" class="combo" hidden></section>
+  <section id="t-dish" class="dish" hidden></section>
 </main>
 <button class="bagbtn" id="bagBtn">🛍️ Bag · <span id="bagN">0</span> · <span id="bagT">₹0</span></button>
 <div class="ov" id="ov"><div class="sheet" id="sheet"></div></div>
 <div class="toast" id="toast"></div>
 <footer><div class="wrap"><span>© 2026 Tiffin Tales — a fictional demo restaurant.</span><span>Designed &amp; built by <a href="https://knowmindsmedia.com/" target="_blank" rel="noopener">KnowMinds Media</a> · <a href="https://knowmindsmedia.com/#demo" target="_blank" rel="noopener">Get an ordering app →</a></span></div></footer>
+<script src="/demo-kit/dash.js"></script>
 <script>
 (function(){
 var $=function(s){return document.querySelector(s)};
@@ -139,7 +160,8 @@ var MENU={
  Breakfast:{base:[['🫓','Puri (4)',50,1],['🥞','Chakuli pitha (3)',60,1],['🍞','Toast (2)',35,1]],dal:[['🍲','Ghugni',45,1],['🥔','Aloo dum',50,1],['🥥','Coconut chutney',25,1]],sabzi:[['🍳','Masala omelette',60,0],['🥚','Boiled eggs (2)',35,0],['🥬','Upma',50,1],['🌶️','Bara (2)',40,1]],extra:[['☕','Masala chai',25,1],['🧃','Fresh juice',60,1],['🍌','Banana',15,1]]},
  Dinner:{base:[['🫓','Butter roti (4)',60,1],['🍚','Steamed rice',40,1],['🍛','Veg pulao',80,1]],dal:[['🍲','Dal makhani',80,1],['🥣','Dalma',60,1],['🫘','Chana masala',70,1]],sabzi:[['🧀','Kadai paneer',130,1],['🍗','Butter chicken',170,0],['🐑','Mutton curry',220,0],['🥦','Mix veg',80,1],['🍄','Mushroom masala',110,1]],extra:[['🍮','Gulab jamun (2)',40,1],['🥗','Salad',25,1],['🥛','Lassi',50,1]]}};
 var LIM={base:1,dal:1,sabzi:2,extra:3},LAB={base:'1. Pick a base',dal:'2. Add a dal',sabzi:'3. Choose up to 2 sabzis',extra:'4. Extras (up to 3)'};
-var COMBOS=[['🥘','Odia Special','Rice, dalma, aloo posto, saag, rasagola',229,'Bestseller'],['🍗','Protein Power','Jeera rice, dal tadka, chicken kosha, salad',279,'High protein'],['🥗','Light & Green','Phulka, moong dal, mix veg, salad, buttermilk',199,'Under 500 kcal']];
+var COMBOS=[['thali2','Odia Special','Rice, dalma, aloo posto, saag, rasagola',229,'Bestseller'],['thali3','Protein Power','Jeera rice, dal tadka, chicken kosha, salad',279,'High protein'],['banana','South Indian Feast','Rice, sambar, rasam, poriyal, papad on banana leaf',249,'Chef\'s pick']];
+var DISH=[['tikka','Chicken Tikka Masala','Creamy, smoky, mildly spiced',229,0,'🔥 Trending'],['dosa','Masala Dosa','Crisp dosa, potato masala, 3 chutneys',129,1,'Bestseller'],['samosa','Samosa (2 pcs)','Flaky pastry, spiced potato & peas',59,1,''],['fish','Fish Curry Meal','Fried fish, curry, rice & sides',279,0,'Coastal'],['bowl','Paneer Butter Masala','Rich tomato-butter gravy',199,1,'Comfort'],['roti','Roti & Curry Plate','4 rotis with dal of the day',139,1,'Value'],['curry','Veg Biryani','Fragrant basmati, raita',179,1,''],['rice','Rice & Curry Meal','Rice, dal, two curries & papad',169,1,''],['spread','Family Feast (serves 4)','Two curries, rice, rotis, dessert',899,0,'Party']];
 var meal='Lunch',pick={base:[],dal:[],sabzi:[],extra:[]},bag=[],slot='ASAP';
 function toast(m){var t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove('on')},1800)}
 function inr(n){return '₹'+n}
@@ -152,7 +174,7 @@ function plate(){var c=chosen(),tot=c.reduce(function(a,x){return a+x[2]},0);
   if(!c.length)s+='<text x="100" y="105" text-anchor="middle" font-size="12" fill="#999" font-family="Bricolage Grotesque">Your plate is empty</text>';
   $('#plateSvg').innerHTML=s;$('#plist').innerHTML=c.map(function(x){return '<div><span>'+x[0]+' '+x[1]+'</span><span>'+inr(x[2])+'</span></div>'}).join('');$('#ptot').textContent=inr(tot);
   var b=$('#addThali');var ok=pick.base.length&&pick.dal.length&&pick.sabzi.length;b.disabled=!ok;b.textContent=!pick.base.length?'Pick a base to start':!pick.dal.length?'Now add a dal':!pick.sabzi.length?'Add at least 1 sabzi':'Add thali to bag · '+inr(tot)}
-function combos(){$('#t-combo').innerHTML=COMBOS.map(function(c,i){return '<div class="cb"><div class="top">'+c[0]+'<span>'+c[4]+'</span></div><div class="bd"><h4>'+c[1]+'</h4><p>'+c[2]+'</p><div class="row"><b>'+inr(c[3])+'</b><button data-combo="'+i+'">Add +</button></div></div></div>'}).join('')}
+function combos(){$('#t-combo').innerHTML=COMBOS.map(function(c,i){return '<div class="cb"><div class="top ph"><img src="img/'+c[0]+'.webp" alt="'+c[1]+'" loading="lazy"><span>'+c[4]+'</span></div><div class="bd"><h4>'+c[1]+'</h4><p>'+c[2]+'</p><div class="row"><b>'+inr(c[3])+'</b><button data-combo="'+i+'">Add +</button></div></div></div>'}).join('')}
 function bagUI(){var n=bag.reduce(function(a,x){return a+x.q},0),t=bag.reduce(function(a,x){return a+x.q*x.p},0);$('#bagN').textContent=n+' item'+(n!==1?'s':'');$('#bagT').textContent=inr(t);var b=$('#bagBtn');b.classList.remove('on');void b.offsetWidth;b.classList.toggle('on',n>0)}
 function addBag(name,desc,p){var f=bag.filter(function(x){return x.n===name&&x.d===desc})[0];if(f)f.q++;else bag.push({n:name,d:desc,p:p,q:1});bagUI();toast('Added to bag 🛍️')}
 function sheet(h){$('#sheet').innerHTML=h;$('#ov').classList.add('on')}
@@ -163,11 +185,26 @@ function checkout(){var t=bag.reduce(function(a,x){return a+x.q*x.p},0),d=t>=299
 function track(){var st=0,eta=35,pos=0;var S=[['🧾','Order received'],['👩‍🍳','Cooking your thali'],['🛵','Out for delivery'],['🏠','Delivered']];
   function draw(){sheet('<h2>Live tracking <button data-close aria-label="Close">✕</button></h2><div class="trk"><p style="color:var(--muted);font-weight:500">'+(st<3?'Arriving in':'Enjoy your meal!')+'</p><div class="eta">'+(st<3?eta+' min':'🎉')+'</div><div class="st">'+S.map(function(s,i){return '<div class="'+(i<st?'done':i===st?'on':'')+'"><i>'+(i<st?'✅':s[0])+'</i>'+s[1]+'</div>'}).join('')+'</div><div class="road"><span class="rider" style="left:calc('+pos+'% - '+pos*.4+'px)">🛵</span><span class="home">🏠</span></div>'+(st===3?'<p style="margin-top:14px;font-weight:800">How was it?</p><div class="stars">'+[1,2,3,4,5].map(function(n){return '<button data-star="'+n+'">⭐</button>'}).join('')+'</div>':'<p style="color:var(--muted);font-size:.85rem;margin-top:10px;font-weight:500">Demo runs fast-forward ⏩</p>')+'</div>')}
   draw();var iv=setInterval(function(){eta=Math.max(0,eta-3);if(st===0&&eta<=32)st=1;if(st===1&&eta<=20)st=2;if(st===2)pos=Math.min(88,pos+14);if(st===2&&eta<=0){st=3;pos=88;clearInterval(iv);toast('Delivered! 🎉')}if($('#ov').classList.contains('on'))draw();else clearInterval(iv)},1100)}
+
+function dishes(){$('#t-dish').innerHTML=DISH.map(function(d,i){return '<div class="ds"><div class="im"><img src="img/'+d[0]+'.webp" alt="'+d[1]+'" loading="lazy">'+(d[5]?'<em>'+d[5]+'</em>':'')+'</div><div class="bd"><h4><span class="vg'+(d[4]?'':' nv')+'"></span>'+d[1]+'</h4><p>'+d[2]+'</p><div class="row"><b>₹'+d[3]+'</b><button data-dish="'+i+'">Add +</button></div></div></div>'}).join('')}
+var KQ=[['TT-1042','Ananya · Saheed Nagar','Odia Special combo ×2',458,1],['TT-1043','Rohit · Patia','Custom Lunch thali',265,0],['TT-1044','Meera · CDA Cuttack','Masala Dosa, Samosa',188,0],['TT-1041','Sahil · Jaydev Vihar','Family Feast',899,2],['TT-1040','Kiran · Khandagiri','Protein Power combo',279,3]];
+var KS=['New','Cooking','Out for delivery','Delivered'],KC=[['#fff3c4','#7a5b00'],['#ffe1d8','#b3381c'],['#dbeafe','#1d4ed8'],['#dcfce7','#15803d']];
+function kitchen(){KMDash.open({title:'Tiffin Tales — Kitchen',subtitle:'Live orders, prep & delivery',theme:{accent:'#ff5d3a',bg:'#fffdf5',paper:'#fff',ink:'#111',muted:'#5b5747',line:'#e8e3cf',font:'Bricolage Grotesque, sans-serif'},
+  data:function(r){var n=r==='Today'?13:r==='7 days'?7:30,lab=r==='Today'?KMDash.hours():KMDash.days(n),m=r==='Today'?1:r==='7 days'?6.8:29;
+    return {kpis:[{label:'Orders',value:Math.round(86*m),delta:'+16%'},{label:'Revenue',value:'₹'+Math.round(21400*m).toLocaleString('en-IN'),delta:'+12%'},{label:'Avg. prep time',value:'14 min',delta:'-2 min'},{label:'Rating',value:'4.8★',delta:'+0.1'}],
+      chart:{type:'bar',title:'Orders per '+(r==='Today'?'hour':'day'),labels:lab,values:r==='Today'?[2,4,6,9,14,18,11,6,5,8,15,19,12]:KMDash.series(lab.length,80,40,6),color:'#ff5d3a'},
+      donut:{title:'Top sellers',center:'Lunch',items:[{label:'Odia Special',value:31,display:'31%',color:'#ff5d3a'},{label:'Custom thali',value:27,display:'27%',color:'#ffd23f'},{label:'Masala Dosa',value:18,display:'18%',color:'#2bb673'},{label:'Others',value:24,display:'24%',color:'#111'}]},
+      feed:[{icon:'🛵',text:'Rider Ramesh picked up TT-1041',time:'2 min ago'},{icon:'🧾',text:'New order TT-1044 — ₹188',time:'5 min ago'},{icon:'⭐',text:'5★ — “Dalma tasted like home!”',time:'12 min ago'}],
+      table:{title:'Order queue',note:'Advance each order',cols:['Order','Customer','Items','Amount','Status',''],rows:KQ.map(function(o){return [o[0],o[1],o[2],'₹'+o[3],KMDash.pill(KS[o[4]],KC[o[4]][0],KC[o[4]][1]),o[4]<3?KMDash.btn(['Start cooking','Send out','Mark delivered'][o[4]],'adv',o[0]):'✅']})}}},
+  onAction:function(a,id){var o=KQ.filter(function(x){return x[0]===id})[0];o[4]=Math.min(3,o[4]+1);toast(id+' → '+KS[o[4]])},
+  liveFeed:function(){var d=DISH[Math.floor(Math.random()*DISH.length)];return Math.random()<.6?{icon:'🧾',text:'New order — '+d[1]+' (₹'+d[3]+')'}:{icon:'🛵',text:'Rider assigned to TT-'+(1045+Math.floor(Math.random()*20))}}})}
 document.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;
+  if(b.id==='kitBtn'){kitchen();return}
+  if(b.dataset.dish){var dd=DISH[+b.dataset.dish];addBag(dd[1],dd[2],dd[3]);return}
   if(b.dataset.m){meal=b.dataset.m;pick={base:[],dal:[],sabzi:[],extra:[]};document.querySelectorAll('#meal button').forEach(function(x){x.setAttribute('aria-pressed',x===b)});groups();toast(meal+' menu')}
   else if(b.dataset.g){var g=b.dataset.g,i=+b.dataset.i,a=pick[g],k=a.indexOf(i);if(k>-1)a.splice(k,1);else{if(a.length>=LIM[g]){if(LIM[g]===1)a.length=0;else return toast('Max '+LIM[g]+' — remove one first')}a.push(i)}groups()}
   else if(b.id==='addThali'){var c=chosen();addBag('Custom '+meal+' thali',c.map(function(x){return x[1]}).join(', '),c.reduce(function(a,x){return a+x[2]},0));pick={base:[],dal:[],sabzi:[],extra:[]};groups()}
-  else if(b.dataset.tab){document.querySelectorAll('[data-tab]').forEach(function(x){x.setAttribute('aria-pressed',x===b)});$('#t-build').hidden=b.dataset.tab!=='build';$('#t-combo').hidden=b.dataset.tab!=='combo'}
+  else if(b.dataset.tab){document.querySelectorAll('[data-tab]').forEach(function(x){x.setAttribute('aria-pressed',x===b)});$('#t-build').hidden=b.dataset.tab!=='build';$('#t-combo').hidden=b.dataset.tab!=='combo';$('#t-dish').hidden=b.dataset.tab!=='dish'}
   else if(b.dataset.combo){var cc=COMBOS[+b.dataset.combo];addBag(cc[1]+' combo',cc[2],cc[3])}
   else if(b.id==='bagBtn')checkout();
   else if(b.dataset.bq){var x=bag[+b.dataset.bq];x.q+=+b.dataset.dd;if(x.q<1)bag.splice(+b.dataset.bq,1);bagUI();if(bag.length)checkout();else close()}
@@ -177,7 +214,7 @@ document.addEventListener('click',function(e){var b=e.target.closest('button');i
   else if(b.hasAttribute('data-close'))close();
 });
 $('#ov').addEventListener('click',function(e){if(e.target.id==='ov')close()});
-groups();combos();
+groups();combos();dishes();
 })();
 </script>
 </body>
