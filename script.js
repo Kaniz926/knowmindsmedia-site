@@ -252,24 +252,6 @@
     document.addEventListener('visibilitychange',function(){ running=!document.hidden; if(running){ cancelAnimationFrame(raf); raf=requestAnimationFrame(frame);} });
   })();
 
-  // ===== Project preview dialog =====
-  var pv=document.getElementById('pv');
-  if(pv){
-    var pImg=pv.querySelector('img'), pT=pv.querySelector('#pv-title'), pD=pv.querySelector('.pv-desc'), pTag=pv.querySelector('.pv-tag');
-    document.querySelectorAll('[data-preview]').forEach(function(b){
-      b.addEventListener('click',function(){
-        var im=b.querySelector('img'); pImg.src=im.src; pImg.alt=im.alt;
-        pT.textContent=b.querySelector('h4').textContent; pD.textContent=b.querySelector('small').textContent;
-        pTag.textContent=(b.querySelector('.ptag')||{}).textContent||'';
-        if(pv.showModal) pv.showModal(); else pv.setAttribute('open','');
-      });
-    });
-    function close(){ if(pv.close) pv.close(); else pv.removeAttribute('open'); }
-    pv.querySelector('.pv-x').addEventListener('click',close);
-    pv.querySelector('[data-close]').addEventListener('click',close);
-    pv.addEventListener('click',function(e){ if(e.target===pv) close(); });
-  }
-
   var items = document.querySelectorAll('.reveal');
   if (!('IntersectionObserver' in window)) {
     items.forEach(function (el) { el.classList.add('in'); });
