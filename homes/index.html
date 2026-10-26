@@ -27,7 +27,8 @@ header .wrap{display:flex;justify-content:space-between;align-items:center;heigh
 /* quiz */
 .quiz{display:grid;grid-template-columns:1fr 1fr;min-height:540px;border-radius:28px;overflow:hidden;background:var(--paper);border:1px solid var(--line);margin:10px 0 40px}
 .q-art{background:var(--clay);position:relative;overflow:hidden;color:#fff;padding:40px;display:flex;flex-direction:column;justify-content:flex-end}
-.q-art svg{position:absolute;inset:0;width:100%;height:100%}
+.q-art .qbg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:kb 16s ease-out forwards;transform:scale(1.08)}
+@keyframes kb{to{transform:scale(1)}}
 .q-art::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 25%,rgba(80,30,12,.88) 78%)}
 .q-art h1,.q-art p{z-index:1}
 .q-art h1{font-family:"DM Serif Display";font-size:clamp(2.2rem,4vw,3.4rem);line-height:1.02;position:relative}
@@ -64,7 +65,9 @@ header .wrap{display:flex;justify-content:space-between;align-items:center;heigh
 .home{background:var(--paper);border:1px solid var(--line);border-radius:22px;overflow:hidden;display:flex;flex-direction:column;transition:transform .25s,box-shadow .25s}
 .home:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(80,40,20,.12)}
 .pic{aspect-ratio:4/3;position:relative;cursor:pointer}
-.pic svg{width:100%;height:100%;display:block}
+.pic img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s}
+.home:hover .pic img{transform:scale(1.06)}
+.pic{overflow:hidden;background:#e8dccb}
 .match{position:absolute;top:12px;left:12px;background:#fff;border-radius:999px;padding:5px 10px;font-weight:700;font-size:.8rem;display:flex;gap:6px;align-items:center}
 .match i{width:8px;height:8px;border-radius:50%;background:var(--olive)}
 .ty{position:absolute;top:12px;right:12px;background:var(--ink);color:#fff;border-radius:6px;padding:3px 8px;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
@@ -91,7 +94,7 @@ header .wrap{display:flex;justify-content:space-between;align-items:center;heigh
 @keyframes up{from{opacity:0;transform:translateY(20px)}}
 .x{position:absolute;top:12px;right:12px;width:38px;height:38px;border-radius:50%;border:0;background:#fff;cursor:pointer;z-index:2;box-shadow:0 2px 8px rgba(0,0,0,.1)}
 .det{display:grid;grid-template-columns:1.1fr 1fr}
-.det .pic{aspect-ratio:auto;min-height:100%}
+.dgal{display:flex;flex-direction:column;gap:8px;padding:12px}.det .pic{aspect-ratio:4/3;border-radius:16px;position:relative}.dth{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.dth button{border:0;padding:0;border-radius:10px;overflow:hidden;cursor:pointer;aspect-ratio:4/3;opacity:.75;transition:opacity .2s}.dth button:hover{opacity:1}.dth img{width:100%;height:100%;object-fit:cover}
 .det .b{padding:26px}
 .det h2{font-family:"DM Serif Display";font-size:1.9rem;line-height:1.1}
 .amen{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}
@@ -103,7 +106,7 @@ header .wrap{display:flex;justify-content:space-between;align-items:center;heigh
 .emi input{accent-color:var(--clay)}
 .emi .out{display:flex;justify-content:space-between;align-items:end;margin-top:14px;padding-top:12px;border-top:1px dashed var(--line)}
 .emi .out b{font-family:"DM Serif Display";font-size:1.8rem;color:var(--clay);font-weight:400}
-@media (max-width:760px){.det{grid-template-columns:1fr}.det .pic{aspect-ratio:4/3}}
+@media (max-width:760px){.det{grid-template-columns:1fr}}
 table{width:100%;border-collapse:collapse;font-size:.9rem}
 th,td{padding:12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
 th{font-weight:700;color:var(--muted);width:130px}
@@ -120,16 +123,22 @@ td.best{color:var(--olive);font-weight:700}
 footer{padding:26px 0 40px;color:var(--muted);font-size:.86rem;border-top:1px solid var(--line)}
 footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
 footer a{color:var(--clay);font-weight:700}
+
+.ab{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;margin:20px auto 60px}@media (max-width:860px){.ab{grid-template-columns:1fr}}
+.abi{position:relative;aspect-ratio:1.2}.abi img{position:absolute;object-fit:cover;border-radius:24px;box-shadow:0 20px 50px rgba(80,40,20,.18)}.abi img:first-child{width:76%;height:80%;left:0;top:0}.abi img:last-child{width:54%;height:52%;right:0;bottom:0;border:6px solid var(--sand)}
+.abl{list-style:none;display:grid;gap:12px}.abl li{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:12px 16px;color:var(--muted);font-size:.94rem}.abl b{display:block;color:var(--ink)}
 </style>
 </head>
 <body>
 <div class="demo">Demo app by <a href="https://knowmindsmedia.com/" target="_blank" rel="noopener">KnowMinds Media</a> · Ghar Finder and all listings are fictional.</div>
-<header><div class="wrap"><a class="logo" href="#" id="home"><svg viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#b4532a"/><path d="M14 32 32 16l18 16v18H14z" fill="#f6e7d3"/><rect x="27" y="36" width="10" height="14" fill="#b4532a"/></svg>Ghar Finder<small>Demo</small></a><button class="sv" id="savedBtn">♥ Saved (<span id="sc">0</span>)</button></div></header>
+<header><div class="wrap"><a class="logo" href="#" id="home"><svg viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#b4532a"/><path d="M14 32 32 16l18 16v18H14z" fill="#f6e7d3"/><rect x="27" y="36" width="10" height="14" fill="#b4532a"/></svg>Ghar Finder<small>Demo</small></a><div style="display:flex;gap:8px"><button class="sv" id="savedBtn">♥ Saved (<span id="sc">0</span>)</button><button class="sv" id="agentBtn" style="background:var(--ink);color:#fff">📊 Agent view</button></div></div></header>
 <main class="wrap" id="main"></main>
 <div class="tray" id="tray"><b style="white-space:nowrap">Compare</b><div class="sl" id="tsl"></div><button id="cmp">Compare now</button></div>
 <div class="mbg" id="mbg"><div class="mod" id="mod"></div></div>
 <div class="toast" id="toast"></div>
+<section class="wrap ab"><div class="abi"><img src="img/i1.webp" alt="Bright living room" loading="lazy"><img src="img/i4.webp" alt="Modern kitchen" loading="lazy"></div><div><span class="q-step">Why Ghar Finder</span><h2 class="serif" style="font-size:2.3rem;line-height:1.05;margin:8px 0 14px">Verified homes. Honest prices. Zero spam calls.</h2><ul class="abl"><li><b>✔ Verified listings</b>Every home is visited and photographed by our team.</li><li><b>📊 Fair price check</b>See price per sq ft against the area average.</li><li><b>🏦 Loan help</b>EMI estimates and tie-ups with major banks.</li><li><b>🔒 Number privacy</b>Your phone is shared only after you book a visit.</li></ul></div></section>
 <footer><div class="wrap"><span>© 2026 Fictional demo — prices and listings are made up.</span><span>Designed &amp; built by <a href="https://knowmindsmedia.com/" target="_blank" rel="noopener">KnowMinds Media</a> · <a href="https://knowmindsmedia.com/#demo" target="_blank" rel="noopener">Get a property portal</a></span></div></footer>
+<script src="/demo-kit/dash.js"></script>
 <script>
 (function(){
 var $=function(s){return document.querySelector(s)};
@@ -138,24 +147,22 @@ try{saved=JSON.parse(localStorage.getItem('gf_saved'))||[]}catch(e){}
 var AREAS=['Patia','Jaydev Vihar','Khandagiri','Saheed Nagar','CDA Cuttack','Any area'];
 var PAL=[['#e9b384','#7a4a2c','#f6e7d3'],['#9fb3a0','#3f4f3c','#eef2ea'],['#d6c3a5','#6c5a41','#fbf4e8'],['#c78f6f','#5a3524','#f3e2d6'],['#a8b8c8','#3a4a5c','#eef3f8'],['#e3c27a','#6d5420','#fbf3dc']];
 var H=[
- {id:1,t:'Sunrise Residency',a:'Patia',bhk:2,sq:1150,p:62,rent:18000,y:'Apartment',f:'3rd of 9',am:['Lift','Power backup','Gym','Covered parking'],age:2},
- {id:2,t:'Green Courtyard Villa',a:'Khandagiri',bhk:3,sq:1850,p:95,rent:32000,y:'Villa',f:'G+1',am:['Garden','Parking','Solar water'],age:1},
- {id:3,t:'Lakeview Heights',a:'Jaydev Vihar',bhk:3,sq:1600,p:110,rent:38000,y:'Apartment',f:'7th of 14',am:['Pool','Clubhouse','Lift','Security'],age:4},
- {id:4,t:'Mango Grove Homes',a:'Khandagiri',bhk:2,sq:980,p:44,rent:14000,y:'Apartment',f:'2nd of 5',am:['Lift','Park nearby'],age:6},
- {id:5,t:'Riverside Nest',a:'CDA Cuttack',bhk:2,sq:1080,p:48,rent:15000,y:'Apartment',f:'4th of 8',am:['Lift','Power backup','Play area'],age:3},
- {id:6,t:'Temple Town Duplex',a:'Saheed Nagar',bhk:4,sq:2400,p:165,rent:55000,y:'Villa',f:'G+2',am:['Terrace','Parking for 2','Modular kitchen'],age:5},
- {id:7,t:'Studio One',a:'Patia',bhk:1,sq:560,p:28,rent:9500,y:'Apartment',f:'5th of 10',am:['Lift','Furnished','Wi-Fi ready'],age:1},
- {id:8,t:'Kalinga Enclave',a:'Saheed Nagar',bhk:3,sq:1500,p:88,rent:29000,y:'Apartment',f:'3rd of 6',am:['Lift','Parking','Security'],age:8},
- {id:9,t:'Orchid Garden',a:'CDA Cuttack',bhk:3,sq:1420,p:72,rent:22000,y:'Apartment',f:'1st of 4',am:['Garden','Parking'],age:7}
+ {id:1,t:'Sunrise Residency',a:'Patia',bhk:2,sq:1150,p:62,rent:18000,y:'House',f:'G+1',am:['Lift','Power backup','Gym','Covered parking'],age:2,ex:'e5'},
+ {id:2,t:'Green Courtyard Villa',a:'Khandagiri',bhk:3,sq:1850,p:95,rent:32000,y:'Villa',f:'G+1',am:['Garden','Parking','Solar water'],age:1,ex:'e1'},
+ {id:3,t:'Lakeview Heights',a:'Jaydev Vihar',bhk:3,sq:1600,p:110,rent:38000,y:'House',f:'G+1',am:['Pool','Clubhouse','Lift','Security'],age:4,ex:'e3'},
+ {id:4,t:'Mango Grove Homes',a:'Khandagiri',bhk:2,sq:980,p:44,rent:14000,y:'House',f:'G+1',am:['Lift','Park nearby'],age:6,ex:'e7'},
+ {id:5,t:'Riverside Nest',a:'CDA Cuttack',bhk:2,sq:1080,p:48,rent:15000,y:'House',f:'G+1',am:['Lift','Power backup','Play area'],age:3,ex:'e8'},
+ {id:6,t:'Temple Town Duplex',a:'Saheed Nagar',bhk:4,sq:2400,p:165,rent:55000,y:'Villa',f:'G+2',am:['Terrace','Parking for 2','Modular kitchen'],age:5,ex:'e9'},
+ {id:7,t:'Studio One',a:'Patia',bhk:1,sq:560,p:28,rent:9500,y:'House',f:'G+1',am:['Lift','Furnished','Wi-Fi ready'],age:1,ex:'e4'},
+ {id:8,t:'Kalinga Enclave',a:'Saheed Nagar',bhk:3,sq:1500,p:88,rent:29000,y:'House',f:'G+1',am:['Lift','Parking','Security'],age:8,ex:'e6'},
+ {id:9,t:'Orchid Garden',a:'CDA Cuttack',bhk:3,sq:1420,p:72,rent:22000,y:'House',f:'G+1',am:['Garden','Parking'],age:7,ex:'e2'}
 ];
 function toast(m){var t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove('on')},2000)}
 function money(l){return l>=100?'₹'+(l/100).toFixed(2).replace(/\.?0+$/,'')+' Cr':'₹'+l+' L'}
 function rupee(n){return '₹'+Math.round(n).toLocaleString('en-IN')}
 function price(h){return A.purpose==='rent'?rupee(h.rent)+'<small style="font-family:DM Sans;font-size:.9rem;color:var(--muted)">/mo</small>':money(h.p)}
-function art(h){var c=PAL[h.id%PAL.length],v=h.y==='Villa';
-  return '<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><rect width="400" height="300" fill="'+c[2]+'"/><circle cx="'+(300-h.id*12)+'" cy="70" r="34" fill="'+c[0]+'" opacity=".55"/><rect y="230" width="400" height="70" fill="'+c[0]+'" opacity=".35"/>'+
-  (v?'<path d="M90 140 200 70l110 70v100H90z" fill="'+c[0]+'"/><path d="M80 145 200 62l120 83" stroke="'+c[1]+'" stroke-width="10" fill="none" stroke-linejoin="round"/><rect x="180" y="180" width="40" height="60" rx="4" fill="'+c[1]+'"/><rect x="115" y="160" width="40" height="34" rx="3" fill="#fff" opacity=".85"/><rect x="245" y="160" width="40" height="34" rx="3" fill="#fff" opacity=".85"/><circle cx="60" cy="210" r="26" fill="#7d9b6b"/><rect x="57" y="215" width="6" height="25" fill="#6b4a2c"/>'
-  :'<rect x="120" y="'+(60+h.id*3)+'" width="160" height="'+(180-h.id*3)+'" fill="'+c[0]+'"/><rect x="120" y="'+(60+h.id*3)+'" width="160" height="14" fill="'+c[1]+'"/>'+[0,1,2,3,4].map(function(r){return [0,1,2,3].map(function(k){return '<rect x="'+(136+k*36)+'" y="'+(90+h.id*3+r*28)+'" width="22" height="16" rx="2" fill="#fff" opacity="'+(r*4+k)%3*.2+.45+'"/>'}).join('')}).join('')+'<rect x="185" y="210" width="30" height="30" fill="'+c[1]+'"/><circle cx="330" cy="215" r="22" fill="#7d9b6b"/><rect x="327" y="220" width="6" height="20" fill="#6b4a2c"/>')+'</svg>'}
+function gal(h){var I=['i1','i2','i3','i4','i5','i6'];return [h.ex,I[h.id%6],I[(h.id+2)%6],I[(h.id+4)%6]]}
+function art(h,k){return '<img src="img/'+gal(h)[k||0]+'.webp" alt="'+h.t+'" loading="lazy">'}
 function score(h){var s=60;if(A.area==='Any area'||h.a===A.area)s+=20;if(A.bhk==='4+'?h.bhk>=4:h.bhk===A.bhk)s+=12;var b=A.purpose==='rent'?h.rent/1000:h.p;var lim=A.purpose==='rent'?A.budget:A.budget;if(b<=lim)s+=8;else s-=Math.min(40,Math.round((b-lim)/lim*60));return Math.max(35,Math.min(99,s))}
 /* ---------- quiz ---------- */
 var Q=[
@@ -168,7 +175,7 @@ function quiz(){var q=Q[step],h='';
   if(q.k==='budget'){var rent=A.purpose==='rent',mx=rent?60:200,mn=rent?8:20;if(A.budget>mx||A.budget<mn)A.budget=rent?20:70;
     h='<div class="rv" id="rv">'+(rent?rupee(A.budget*1000)+'/mo':money(A.budget))+'</div><div class="range"><input type="range" id="bud" min="'+mn+'" max="'+mx+'" step="'+(rent?1:5)+'" value="'+A.budget+'" aria-label="Budget"></div><div style="display:flex;justify-content:space-between;color:var(--muted);font-size:.84rem"><span>'+(rent?'₹8k':'₹20 L')+'</span><span>'+(rent?'₹60k':'₹2 Cr')+'</span></div>'}
   else h='<div class="opts'+(q.g?' g2':'')+'">'+q.o.map(function(o){return '<button class="opt" data-o="'+o[0]+'" aria-pressed="'+(String(A[q.k])===String(o[0]))+'"><span>'+o[1]+'<small>'+o[2]+'</small></span><span>→</span></button>'}).join('')+'</div>';
-  $('#main').innerHTML='<section class="quiz"><div class="q-art"><svg viewBox="0 0 500 540" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><circle cx="400" cy="90" r="70" fill="#d9774d"/><path d="M0 420 120 300l90 70 120-150 170 200v120H0z" fill="#9c4521"/><path d="M60 360 160 280l100 80v120H60z" fill="#f6e7d3"/><rect x="140" y="400" width="40" height="80" fill="#b4532a"/><rect x="80" y="380" width="40" height="34" fill="#b4532a" opacity=".5"/><rect x="200" y="380" width="40" height="34" fill="#b4532a" opacity=".5"/></svg><h1>Find a home that fits your life.</h1><p>Answer 4 quick questions — we\'ll rank homes by how well they match you.</p></div><div class="q-body"><span class="q-step">Question '+(step+1)+' of 4</span><h2>'+q.h+'</h2>'+h+'<div class="q-nav"><div class="q-dots">'+Q.map(function(x,i){return '<i class="'+(i<=step?'on':'')+'"></i>'}).join('')+'</div><div style="display:flex;gap:10px">'+(step?'<button class="lnk" id="qb">Back</button>':'')+'<button class="cta c" id="qn" '+(q.k!=='budget'&&A[q.k]===null?'disabled':'')+'>'+(step===3?'Show my matches':'Next')+'</button></div></div></div></section>';
+  $('#main').innerHTML='<section class="quiz"><div class="q-art"><img class="qbg" src="img/hero.webp" alt="" fetchpriority="high"><h1>Find a home that fits your life.</h1><p>Answer 4 quick questions — we\'ll rank homes by how well they match you.</p></div><div class="q-body"><span class="q-step">Question '+(step+1)+' of 4</span><h2>'+q.h+'</h2>'+h+'<div class="q-nav"><div class="q-dots">'+Q.map(function(x,i){return '<i class="'+(i<=step?'on':'')+'"></i>'}).join('')+'</div><div style="display:flex;gap:10px">'+(step?'<button class="lnk" id="qb">Back</button>':'')+'<button class="cta c" id="qn" '+(q.k!=='budget'&&A[q.k]===null?'disabled':'')+'>'+(step===3?'Show my matches':'Next')+'</button></div></div></div></section>';
   var r=$('#bud');if(r)r.oninput=function(){A.budget=+r.value;$('#rv').textContent=A.purpose==='rent'?rupee(A.budget*1000)+'/mo':money(A.budget)}}
 /* ---------- results ---------- */
 function results(onlySaved){var list=H.map(function(h){return Object.assign({m:score(h)},h)});if(onlySaved)list=list.filter(function(h){return saved.indexOf(h.id)>-1});
@@ -179,7 +186,7 @@ function card(h){return '<article class="home"><div class="pic" data-d="'+h.id+'
 function tray(){$('#tray').classList.toggle('on',cmp.length>0);$('#tsl').innerHTML=cmp.map(function(id){return '<span>'+by(id).t+'</span>'}).join('');$('#cmp').disabled=cmp.length<2;$('#cmp').textContent=cmp.length<2?'Add 1 more':'Compare '+cmp.length}
 function by(id){return H.filter(function(h){return h.id===id})[0]}
 function modal(h){$('#mod').innerHTML='<button class="x" data-x aria-label="Close">✕</button>'+h;$('#mbg').classList.add('on')}
-function detail(id){var h=by(id),m=score(h);modal('<div class="det"><div class="pic">'+art(h)+'<span class="match"><i></i>'+m+'% match</span></div><div class="b"><span class="pr">'+price(h)+'</span><h2>'+h.t+'</h2><p style="color:var(--muted)">📍 '+h.a+' · '+h.bhk+' BHK · '+h.sq+' sq ft · '+h.y+' · Floor '+h.f+'</p><div class="amen">'+h.am.map(function(x){return '<span>'+x+'</span>'}).join('')+'</div>'+
+function detail(id){var h=by(id),m=score(h);modal('<div class="det"><div class="dgal"><div class="pic" id="dmain">'+art(h)+'<span class="match"><i></i>'+m+'% match</span></div><div class="dth">'+gal(h).map(function(g,i){return '<button data-dg="'+g+'" aria-label="Photo '+(i+1)+'"><img src="img/'+g+'.webp" alt=""></button>'}).join('')+'</div></div><div class="b"><span class="pr">'+price(h)+'</span><h2>'+h.t+'</h2><p style="color:var(--muted)">📍 '+h.a+' · '+h.bhk+' BHK · '+h.sq+' sq ft · '+h.y+' · '+h.f+' floors</p><div class="amen">'+h.am.map(function(x){return '<span>'+x+'</span>'}).join('')+'</div>'+
   (A.purpose==='rent'?'<p style="font-size:.9rem;color:var(--muted)">Security deposit: '+rupee(h.rent*3)+' (3 months) · Maintenance included.</p>':'<div class="emi"><h4>EMI calculator</h4><label>Loan amount <b id="la"></b><input type="range" id="lr" min="10" max="90" value="80" aria-label="Loan percentage"></label><label>Interest rate <b id="ir"></b><input type="range" id="rr" min="7" max="12" step=".1" value="8.5" aria-label="Interest rate"></label><label>Tenure <b id="tn"></b><input type="range" id="tr" min="5" max="30" value="20" aria-label="Tenure in years"></label><div class="out"><span>Monthly EMI</span><b id="emi"></b></div></div>')+
   '<button class="cta c" data-v="'+h.id+'" style="width:100%;margin-top:16px">Book a site visit</button></div></div>');
   if(A.purpose!=='rent'){var f=function(){var P=h.p*1e5*$('#lr').value/100,r=$('#rr').value/1200,n=$('#tr').value*12,e=P*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1);$('#la').textContent=rupee(P)+' ('+$('#lr').value+'%)';$('#ir').textContent=$('#rr').value+'%';$('#tn').textContent=$('#tr').value+' years';$('#emi').textContent=rupee(e)};['lr','rr','tr'].forEach(function(i){$('#'+i).oninput=f});f()}}
@@ -188,7 +195,21 @@ function compare(){var hs=cmp.map(by),rows=[['Price',function(h){return A.purpos
 function visit(id){var h=by(id),d=0,t=null;function draw(){modal('<div class="visit"><h2>Visit '+h.t+'</h2><p style="color:var(--muted)">Pick a day and time — our agent will meet you at the property.</p><div class="dts">'+[1,2,3,4,5,6].map(function(i){var x=new Date();x.setDate(x.getDate()+i);return '<button data-dd="'+i+'" aria-pressed="'+(d===i)+'">'+x.toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short'})+'</button>'}).join('')+'</div><div class="tms">'+['10:00 AM','12:00 PM','3:00 PM','5:00 PM'].map(function(x){return '<button data-tt="'+x+'" aria-pressed="'+(t===x)+'">'+x+'</button>'}).join('')+'</div><input id="vn" placeholder="Your name (demo)" autocomplete="off"><button class="cta c" id="vb" style="width:100%;margin-top:14px" '+(d&&t?'':'disabled')+'>Confirm visit</button></div>')}
   draw();$('#mod').onclick=function(e){var b=e.target.closest('button');if(!b)return;if(b.dataset.dd){d=+b.dataset.dd;var n=$('#vn').value;draw();$('#vn').value=n}if(b.dataset.tt){t=b.dataset.tt;var n2=$('#vn').value;draw();$('#vn').value=n2}
     if(b.id==='vb'){if($('#vn').value.trim().length<2)return toast('Please enter a name');var x=new Date();x.setDate(x.getDate()+d);modal('<div class="visit" style="text-align:center"><div style="font-size:3rem">🏡</div><h2>Visit booked!</h2><p style="color:var(--muted);margin:8px 0 16px">'+h.t+' · '+x.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long'})+' at '+t+'</p><p style="font-size:.9rem">Agent <b>Rakesh (demo)</b> will call you 1 hour before.</p><button class="cta" data-x style="margin-top:18px">Back to homes</button></div>');$('#mod').onclick=null;toast('Site visit confirmed')}}}
+
+var LEADS=[['Ankit Sharma','Sunrise Residency','Buy · ₹60–65 L','Visit booked',1],['Pooja Mishra','Lakeview Heights','Buy · ₹1.1 Cr','New',0],['Rahul Jena','Studio One','Rent · ₹10k','Contacted',2],['Fatima Khan','Green Courtyard Villa','Buy · ₹95 L','New',0],['Sourav Das','Riverside Nest','Rent · ₹15k','Negotiation',3],['Neha Patnaik','Orchid Garden','Buy · ₹72 L','Visit booked',1]];
+var LS=['New','Visit booked','Contacted','Negotiation','Closed'],LC=[['#fdf0e8','#b4532a'],['#eef2e6','#5c6b3a'],['#e8eef6','#2c5282'],['#f6efe1','#8a6116'],['#e6f4ea','#2f6b3f']];
+function agent(){KMDash.open({title:'Ghar Finder — Agent desk',subtitle:'Leads, visits & listing performance',theme:{accent:'#b4532a',bg:'#f6eee3',paper:'#fffaf3',ink:'#2b211b',muted:'#7d6b5d',line:'#e8d9c5',font:'DM Sans, sans-serif'},
+  data:function(r){var n=r==='Today'?13:r==='7 days'?7:30,lab=r==='Today'?KMDash.hours():KMDash.days(n),m=r==='Today'?.15:r==='7 days'?1:4.2;
+    return {kpis:[{label:'New leads',value:Math.round(38*m),delta:'+22%'},{label:'Site visits',value:Math.round(14*m),delta:'+5'},{label:'Listing views',value:Math.round(2860*m).toLocaleString('en-IN'),delta:'+31%'},{label:'Deals closed',value:Math.max(0,Math.round(3*m)),delta:'₹2.4 Cr'}],
+      chart:{title:'Enquiries vs visits',labels:lab,series:[{name:'Enquiries',values:KMDash.series(lab.length,r==='Today'?3:6,r==='Today'?3:4,8),color:'#b4532a'},{name:'Site visits',values:KMDash.series(lab.length,r==='Today'?1:2,r==='Today'?1:2,3),color:'#5c6b3a'}]},
+      donut:{title:'Leads by source',center:'4 src',items:[{label:'Website',value:44,display:'44%',color:'#b4532a'},{label:'Instagram',value:23,display:'23%',color:'#5c6b3a'},{label:'Referrals',value:19,display:'19%',color:'#d9a066'},{label:'Walk-in',value:14,display:'14%',color:'#7d6b5d'}]},
+      feed:[{icon:'🏠',text:'Pooja saved Lakeview Heights',time:'4 min ago'},{icon:'📅',text:'Visit booked — Sunrise Residency, Sat 11 AM',time:'20 min ago'},{icon:'💬',text:'WhatsApp follow-up sent to 6 leads',time:'1 hr ago'}],
+      table:{title:'Lead pipeline',note:'Move leads forward',cols:['Lead','Interested in','Requirement','Stage',''],rows:LEADS.map(function(l,i){return [l[0],l[1],l[2],KMDash.pill(LS[l[4]],LC[l[4]][0],LC[l[4]][1]),l[4]<4?KMDash.btn('→ '+LS[l[4]+1],'adv',String(i)):'🎉']})}}},
+  onAction:function(a,id){var l=LEADS[+id];l[4]=Math.min(4,l[4]+1);toast(l[0]+' → '+LS[l[4]])},
+  liveFeed:function(){var h=H[Math.floor(Math.random()*H.length)];return Math.random()<.5?{icon:'👀',text:'Someone viewed '+h.t}:{icon:'📩',text:'New enquiry for '+h.t+' ('+h.a+')'}}})}
 document.addEventListener('click',function(e){var b=e.target.closest('button,[data-d]');if(!b)return;
+  if(b.id==='agentBtn'){agent();return}
+  if(b.dataset.dg){var mn=document.querySelector('#dmain img');if(mn){mn.src='img/'+b.dataset.dg+'.webp'}return}
   if(b.dataset.o!==undefined){var q=Q[step],v=b.dataset.o;A[q.k]=q.k==='bhk'&&v!=='4+'?+v:v;quiz()}
   else if(b.id==='qn'){if(step<3){step++;quiz()}else{results();window.scrollTo({top:0,behavior:'smooth'})}}
   else if(b.id==='qb'){step--;quiz()}
