@@ -34,9 +34,9 @@
 <script>(function(){try{var t=localStorage.getItem('theme');}catch(e){}if(t!=='light'&&t!=='dark'){t=window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.setAttribute('data-theme',t);})();</script>
 <meta name="theme-color" content="#f7f8f5" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0a110f" media="(prefers-color-scheme: dark)">
 <link rel="stylesheet" href="/style.css">
-<rect width='100' height='100' rx='22' fill='%236ee7b7'/><text x='50' y='68' font-size='52' text-anchor='middle' font-family='Arial' font-weight='700' fill='%2306281c'>K</text></svg>">
 </head>
 <body>
+<div class="progress" aria-hidden="true"></div>
 <!--HEADER-->
 <header><div class="wrap"><nav>
   <a class="logo" href="/"><i>K</i>KnowMinds <span>Media</span></a>
@@ -56,34 +56,38 @@
 <main><div class="wrap">
 
 <section class="hero">
+  <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
   <div>
-    <span class="tag">Websites · Apps · WhatsApp · AI Agents</span>
-    <h1>More customers, <em>fewer missed enquiries.</em></h1>
-    <p class="lead">KnowMinds Media is a web, app and automation studio in Odisha. We build and run the online side of your business — a website that ranks, apps that work, and WhatsApp replies that answer every customer, even when you're busy.</p>
-    <div class="actions">
-      <a class="btn" href="#demo">Book a free demo
+    <span class="tag">We build <span class="rotator" aria-live="off"><span class="rot-word">websites</span></span></span>
+    <h1 class="hero-h1"><span class="ln"><span>More customers,</span></span> <span class="ln"><span><em>fewer missed enquiries.</em></span></span></h1>
+    <p class="lead hero-in" style="--d:.35s">KnowMinds Media is a web, app and automation studio in Odisha. We build and run the online side of your business — a website that ranks, apps that work, and WhatsApp replies that answer every customer, even when you're busy.</p>
+    <div class="actions hero-in" style="--d:.5s">
+      <a class="btn shine" href="#demo">Book a free demo
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       <a class="btn ghost" href="#work">See live work</a>
     </div>
-    <ul class="hero-points">
+    <ul class="hero-points hero-in" style="--d:.65s">
       <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Simple monthly packages</li>
       <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Live in days, not months</li>
       <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Odia, Hindi & English support</li>
     </ul>
   </div>
-  <div class="collage">
+  <div class="collage" id="collage">
     <div class="shot s1"><img src="/img/food.webp" alt="Food ordering web app built by KnowMinds Media" width="960" height="561" fetchpriority="high"></div>
     <div class="shot s2"><img src="/img/clinic.webp" alt="Doctor appointment booking app built by KnowMinds Media" width="960" height="561"></div>
     <div class="badge"><b>24×7</b><small>enquiries<br>answered</small></div>
+    <div class="toast" aria-hidden="true"><span class="tick">✓</span><span class="toast-txt">New booking confirmed</span></div>
   </div>
 </section>
 
 <div class="strip reveal">
-  <div><b>10+</b><span>custom projects delivered</span></div>
-  <div><b>3</b><span>languages: Odia, Hindi, English</span></div>
-  <div><b>24×7</b><span>WhatsApp auto-replies</span></div>
+  <div><b><span class="count" data-to="10">10</span>+</b><span>custom projects delivered</span></div>
+  <div><b><span class="count" data-to="3">3</span></b><span>languages: Odia, Hindi, English</span></div>
+  <div><b><span class="count" data-to="24">24</span>×7</b><span>WhatsApp auto-replies</span></div>
   <div><b>Odisha</b><span>based · clients worldwide</span></div>
 </div>
+
+<div class="marquee" aria-hidden="true"><div class="mq-track"><span>Healthcare</span><span>Real estate</span><span>Restaurants</span><span>Salons</span><span>Clinics</span><span>Retail</span><span>Education</span><span>Travel</span><span>Gyms</span><span>n8n</span><span>WhatsApp Business</span><span>AI agents</span><span>Google Business</span><span>Flutter</span><span>Web apps</span><span>Healthcare</span><span>Real estate</span><span>Restaurants</span><span>Salons</span><span>Clinics</span><span>Retail</span><span>Education</span><span>Travel</span><span>Gyms</span><span>n8n</span><span>WhatsApp Business</span><span>AI agents</span><span>Google Business</span><span>Flutter</span><span>Web apps</span></div></div>
 
 <!-- WORK -->
 <section class="block" id="work">

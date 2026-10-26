@@ -153,6 +153,66 @@
     } else { visible=true; run(0); }
   }
 
+
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // scroll progress bar
+  var bar = document.querySelector('.progress');
+  if (bar) {
+    var upd = function(){ var h=document.documentElement; var p=h.scrollTop/((h.scrollHeight-h.clientHeight)||1); bar.style.transform='scaleX('+Math.min(1,Math.max(0,p))+')'; };
+    window.addEventListener('scroll', upd, {passive:true}); upd();
+  }
+
+  // rotating word in hero tag
+  var rw = document.querySelector('.rot-word');
+  if (rw && !reduce) {
+    var words=['websites','mobile apps','AI agents','n8n automations','WhatsApp bots','Google listings'], wi=0;
+    setInterval(function(){
+      rw.classList.add('out');
+      setTimeout(function(){ wi=(wi+1)%words.length; rw.textContent=words[wi]; rw.classList.remove('out'); rw.classList.add('in'); void rw.offsetWidth; rw.classList.remove('in'); },450);
+    },2200);
+  }
+
+  // hero toast messages
+  var tt = document.querySelector('.toast-txt');
+  if (tt && !reduce) {
+    var msgs=['New booking confirmed','Lead saved to Google Sheet','Reminder sent on WhatsApp','Review request sent','New enquiry answered'], ti=0;
+    setInterval(function(){ tt.classList.add('swap'); setTimeout(function(){ ti=(ti+1)%msgs.length; tt.textContent=msgs[ti]; tt.classList.remove('swap'); },300); },2600);
+  }
+
+  // mouse parallax on hero collage
+  var col = document.getElementById('collage');
+  if (col && !reduce && window.matchMedia('(pointer:fine)').matches) {
+    var hero = document.querySelector('.hero');
+    hero.addEventListener('mousemove', function(e){
+      var r=hero.getBoundingClientRect(); var x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5;
+      col.style.setProperty('--px',(x*14).toFixed(1)+'px'); col.style.setProperty('--py',(y*14).toFixed(1)+'px');
+    });
+    hero.addEventListener('mouseleave', function(){ col.style.setProperty('--px','0px'); col.style.setProperty('--py','0px'); });
+  }
+
+  // spotlight on cards
+  document.querySelectorAll('.card,.wf').forEach(function(el){
+    el.addEventListener('mousemove', function(e){ var r=el.getBoundingClientRect(); el.style.setProperty('--mx',(e.clientX-r.left)+'px'); el.style.setProperty('--my',(e.clientY-r.top)+'px'); });
+  });
+
+  // stagger reveal delays inside grids
+  document.querySelectorAll('.grid,.steps,.wf-grid').forEach(function(g){
+    Array.prototype.forEach.call(g.querySelectorAll(':scope > .reveal'), function(el,i){ el.style.setProperty('--i', i%3); });
+  });
+
+  // count-up numbers
+  var counts = document.querySelectorAll('.count');
+  if (counts.length && 'IntersectionObserver' in window && !reduce) {
+    var cio = new IntersectionObserver(function(es){ es.forEach(function(en){
+      if(!en.isIntersecting) return; cio.unobserve(en.target);
+      var el=en.target, to=+el.dataset.to, t0=null;
+      function step(ts){ if(!t0) t0=ts; var p=Math.min(1,(ts-t0)/1200); el.textContent=Math.round(to*(1-Math.pow(1-p,3))); if(p<1) requestAnimationFrame(step); }
+      el.textContent='0'; requestAnimationFrame(step);
+    }); },{threshold:.6});
+    counts.forEach(function(c){ cio.observe(c); });
+  }
+
   var items = document.querySelectorAll('.reveal');
   if (!('IntersectionObserver' in window)) {
     items.forEach(function (el) { el.classList.add('in'); });
