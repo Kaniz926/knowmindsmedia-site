@@ -24,7 +24,10 @@ button,input,select{font:inherit;color:inherit}
 
 /* login */
 #login{min-height:calc(100vh - 32px);display:grid;grid-template-columns:1.1fr 1fr}
-.l-left{padding:56px 6vw;display:flex;flex-direction:column;justify-content:space-between;gap:40px}
+.l-left{padding:56px 6vw;display:flex;flex-direction:column;justify-content:space-between;gap:40px;position:relative;overflow:hidden;background:linear-gradient(90deg,rgba(7,13,32,.96) 30%,rgba(7,13,32,.6)),url(img/hero.webp) center/cover}
+.l-left>*{position:relative}
+.staff{margin-top:14px;width:100%;border:1px dashed var(--line);background:none;border-radius:12px;padding:10px;color:var(--muted);font-weight:600;cursor:pointer}
+.staff:hover{color:var(--teal);border-color:var(--teal)}
 .l-left h1{font-family:"Space Grotesk";font-size:clamp(2.2rem,4.5vw,3.6rem);line-height:1.02;letter-spacing:-.03em;margin-top:48px}
 .l-left h1 span{color:var(--teal)}
 .l-left p{color:var(--muted);max-width:430px;margin-top:16px}
@@ -134,6 +137,32 @@ main{padding:26px 30px 60px;max-width:1100px;width:100%}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 .foot{margin-top:30px;color:var(--muted);font-size:.8rem;text-align:center}
 .foot a{color:var(--teal)}
+
+.vcard{perspective:1200px;margin:6px 0 16px;position:relative;max-width:380px}
+.vin{position:relative;aspect-ratio:1.586;transition:transform .7s cubic-bezier(.2,.8,.2,1);transform-style:preserve-3d}
+.vcard.flip .vin{transform:rotateY(180deg)}
+.vf{position:absolute;inset:0;border-radius:18px;padding:20px;backface-visibility:hidden;color:#fff;background:linear-gradient(135deg,#1b3a8a 0%,#0f6f6a 60%,#22d3b5 140%);box-shadow:0 20px 40px rgba(0,0,0,.4);overflow:hidden}
+.vf::after{content:"";position:absolute;right:-60px;top:-80px;width:240px;height:240px;border-radius:50%;background:rgba(255,255,255,.08)}
+.vf.back{transform:rotateY(180deg);background:linear-gradient(135deg,#0f1a38,#1b3a8a)}
+.vt{display:flex;justify-content:space-between;align-items:center}.vt b{font-family:Space Grotesk;font-size:1.3rem}.vt span{font-size:.62rem;letter-spacing:.14em;opacity:.8}
+.chip{width:42px;height:32px;border-radius:7px;background:linear-gradient(135deg,#f5d77a,#c79a2c);margin:22px 0 14px}
+.vnum{font-family:Space Grotesk;font-size:1.25rem;letter-spacing:.12em}
+.vb{display:flex;justify-content:space-between;align-items:end;margin-top:14px;font-size:.8rem}.vb small{display:block;font-size:.6rem;opacity:.7;text-transform:uppercase;letter-spacing:.08em}
+.vlogo{display:flex}.vlogo i{width:26px;height:26px;border-radius:50%;background:#ff6b81;opacity:.9}.vlogo i+i{background:#ffc56b;margin-left:-10px}
+.strip{height:40px;background:#000;margin:10px -20px 16px}.cvv{background:#fff;color:#000;border-radius:6px;padding:6px 10px;width:110px;margin-left:auto;text-align:right}.cvv small{display:block;font-size:.6rem}.back p{font-size:.72rem;opacity:.7;margin-top:20px}
+.frz{position:absolute;inset:0;border-radius:18px;background:rgba(160,200,255,.35);backdrop-filter:blur(3px) saturate(.4);display:none;place-items:center;font-weight:700;font-size:1.1rem;aspect-ratio:1.586}
+.vcard.frozen .frz{display:grid}
+.tgl{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-top:1px solid var(--line);gap:10px}.tgl small{display:block;color:var(--muted);font-size:.78rem}
+.sw{width:48px;height:28px;border-radius:999px;border:0;background:var(--line);position:relative;cursor:pointer;flex:none;transition:background .2s}.sw::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:transform .2s}.sw.on{background:var(--teal)}.sw.on::after{transform:translateX(20px)}
+.lim{display:grid;gap:4px;font-size:.86rem;color:var(--muted);margin-bottom:16px}.lim b{color:var(--ink);font-family:Space Grotesk;font-size:1.05rem}.lim input{accent-color:var(--teal)}
+.promo,.promo2{display:flex;gap:14px;align-items:center;border-radius:16px;overflow:hidden;background:var(--panel2);margin-top:6px}.promo img,.promo2 img{width:120px;height:96px;object-fit:cover;flex:none}.promo small,.promo2 small{display:block;color:var(--muted);font-size:.8rem;margin-top:2px}.promo span,.promo2 span{padding-right:12px}
+.promo2{margin-top:16px}
+.goals{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}@media (max-width:860px){.goals{grid-template-columns:1fr}}
+.goal{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px}.goal .e{font-size:1.8rem}.goal b{display:block;margin-top:6px}.goal small{color:var(--muted)}
+.gbar{height:10px;border-radius:9px;background:var(--panel2);overflow:hidden;margin:12px 0 6px}.gbar i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),#8b7bff);transition:width .8s}
+.goal .row2{display:flex;justify-content:space-between;font-size:.82rem;color:var(--muted)}.goal button{margin-top:12px;width:100%}
+.fdc{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;align-items:end}@media (max-width:760px){.fdc{grid-template-columns:1fr}}
+.fdo{background:var(--panel2);border-radius:14px;padding:14px}.fdo small{color:var(--muted);display:block}.fdo b{font-family:Space Grotesk;font-size:1.6rem;color:var(--teal);display:block}.fdo span{font-size:.8rem;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -155,6 +184,7 @@ main{padding:26px 30px 60px;max-width:1100px;width:100%}
       <div class="dots" id="dots"><i></i><i></i><i></i><i></i></div>
       <div class="pad" id="pad"></div>
       <div class="hint">Demo MPIN: <b>1234</b></div>
+      <button class="staff" id="staffBtn">🏦 Bank staff? Open the admin dashboard</button>
     </div>
   </div>
 </section>
@@ -165,6 +195,8 @@ main{padding:26px 30px 60px;max-width:1100px;width:100%}
     <button class="nav" data-v="home" aria-current="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11 12 4l9 7v9h-6v-6H9v6H3z"/></svg>Home</button>
     <button class="nav" data-v="pay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16M14 6l6 6-6 6"/></svg>Pay</button>
     <button class="nav" data-v="bills"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg>Bills</button>
+    <button class="nav" data-v="cards"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20"/></svg>Cards</button>
+    <button class="nav" data-v="goals"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg>Goals</button>
     <button class="nav" data-v="stmt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19h16M7 16V9M12 16V5M17 16v-4"/></svg>Statement</button>
     <div class="grow"></div>
     <div class="timer">Auto logout in <b id="tm">5:00</b></div>
@@ -194,10 +226,25 @@ main{padding:26px 30px 60px;max-width:1100px;width:100%}
       <div class="grid" style="margin-top:16px">
         <div class="card"><div class="ct"><h3>Recent activity</h3><button class="link" data-act="stmt">View all</button></div><div class="tx" id="recent"></div></div>
         <div class="card"><div class="ct"><h3>Quick pay</h3><button class="link" data-act="payee">+ Add</button></div><div class="payees" id="payees"></div>
-          <div style="margin-top:18px;padding:14px;border-radius:14px;background:var(--panel2);font-size:.85rem;color:var(--muted)">💡 <b style="color:var(--ink)">Tip:</b> transfers above ₹50,000 need extra approval — try it to see the flow.</div></div>
+          <div class="promo2"><img src="img/woman.webp" alt="Woman using a banking app"><span><b>Pre-approved personal loan</b><small>Up to ₹3,00,000 at 10.5% — instant credit (demo offer)</small></span></div><div style="margin-top:14px;padding:14px;border-radius:14px;background:var(--panel2);font-size:.85rem;color:var(--muted)">💡 <b style="color:var(--ink)">Tip:</b> transfers above ₹50,000 need extra approval — try it to see the flow.</div></div>
       </div>
     </div>
 
+    <div class="view" id="v-cards"><div class="grid">
+      <div class="card"><div class="ct"><h3>Kosha Platinum Debit</h3><button class="link" id="flip">Flip card ↻</button></div>
+        <div class="vcard" id="vcard"><div class="vin"><div class="vf front"><div class="vt"><b>Kosha</b><span>PLATINUM · DEMO</span></div><div class="chip"></div><div class="vnum" id="vnum">4821 •••• •••• 4821</div><div class="vb"><span><small>Card holder</small><b id="vname">—</b></span><span><small>Valid thru</small><b>09/30</b></span><span class="vlogo"><i></i><i></i></span></div></div><div class="vf back"><div class="strip"></div><div class="cvv"><small>CVV</small><b>•••</b></div><p>Demo card. Not valid for transactions.</p></div></div><div class="frz" id="frz">❄️ Card frozen</div></div>
+        <div class="tgl"><span><b>Freeze card</b><small>Instantly block all transactions</small></span><button class="sw" id="swFreeze" role="switch" aria-checked="false" aria-label="Freeze card"></button></div>
+        <div class="tgl"><span><b>Online payments</b><small>E-commerce & app payments</small></span><button class="sw on" id="swOnline" role="switch" aria-checked="true" aria-label="Online payments"></button></div>
+        <div class="tgl"><span><b>International use</b><small>Payments outside India</small></span><button class="sw" id="swIntl" role="switch" aria-checked="false" aria-label="International use"></button></div>
+      </div>
+      <div class="card"><div class="ct"><h3>Spending limits</h3></div>
+        <label class="lim">Daily ATM withdrawal <b id="l1v"></b><input type="range" id="l1" min="5000" max="100000" step="5000" value="25000"></label>
+        <label class="lim">Daily online spends <b id="l2v"></b><input type="range" id="l2" min="5000" max="200000" step="5000" value="50000"></label>
+        <label class="lim">Contactless (tap & pay) <b id="l3v"></b><input type="range" id="l3" min="0" max="5000" step="500" value="5000"></label>
+        <div class="promo"><img src="img/pay.webp" alt="Phone tapping a card reader"><span><b>Tap to pay</b><small>Pay up to ₹5,000 with a tap — no PIN needed.</small></span></div>
+      </div></div></div>
+    <div class="view" id="v-goals"><div class="ct" style="margin-bottom:14px"><h3 style="font-family:Space Grotesk;font-size:1.2rem">Savings goals</h3><button class="btn" id="newGoal">+ New goal</button></div><div class="goals" id="goals"></div>
+      <div class="card" style="margin-top:16px"><div class="ct"><h3>Fixed deposit calculator</h3></div><div class="fdc"><label class="lim">Amount <b id="fda"></b><input type="range" id="fdA" min="10000" max="1000000" step="10000" value="100000"></label><label class="lim">Tenure <b id="fdt"></b><input type="range" id="fdT" min="6" max="60" step="6" value="24"></label><div class="fdo"><small>Maturity value at 7.1% p.a.</small><b id="fdm"></b><span id="fdi"></span></div></div></div></div>
     <div class="view" id="v-pay"><div class="card"><div class="ct"><h3>Send money to</h3></div><div class="payees" id="payees2" style="flex-wrap:wrap;gap:18px"></div></div></div>
     <div class="view" id="v-bills"><div class="card"><div class="ct"><h3>Pay a bill</h3></div><div class="bills" id="billgrid"></div></div></div>
     <div class="view" id="v-stmt"><div class="card"><div class="ct"><h3>Account statement</h3><button class="link" id="csv">Download CSV</button></div>
@@ -210,6 +257,7 @@ main{padding:26px 30px 60px;max-width:1100px;width:100%}
 <div class="sheet-bg" id="sb"><div class="sheet" id="sheet"></div></div>
 <div class="toast" id="toast"></div>
 
+<script src="/demo-kit/dash.js"></script>
 <script>
 (function(){
 var $=function(s){return document.querySelector(s)}, $$=function(s){return document.querySelectorAll(s)};
@@ -234,7 +282,7 @@ function press(k){if(k==='⌫')pin=pin.slice(0,-1);else if(pin.length<4)pin+=k;d
   if(pin.length===4){setTimeout(function(){if(pin==='1234'){enter()}else{$('#dots').classList.add('shake');toast('Wrong MPIN — the demo MPIN is 1234');setTimeout(function(){$('#dots').classList.remove('shake');pin='';dots()},400)}},180)}}
 function enter(){S=load(sel);pin='';dots();$('#login').style.display='none';$('#app').classList.add('on');
   var h=new Date().getHours();$('#greet').textContent=(h<12?'Good morning':h<17?'Good afternoon':'Good evening')+',';$('#who-name').textContent=USERS[sel].n.split(' ')[0];$('#accno').textContent=USERS[sel].a;
-  go('home');draw();resetIdle();toast('Welcome back, '+USERS[sel].n.split(' ')[0]+' 👋')}
+  go('home');draw();cardsUI();goalsUI();resetIdle();toast('Welcome back, '+USERS[sel].n.split(' ')[0]+' 👋')}
 function logout(m){$('#app').classList.remove('on');$('#login').style.display='';clearInterval(idle);if(m)toast(m)}
 var left=300;function resetIdle(){left=300;clearInterval(idle);idle=setInterval(function(){left--;$('#tm').textContent=Math.floor(left/60)+':'+String(left%60).padStart(2,'0');if(left<=0)logout('Logged out for your security (demo)')},1000)}
 ['click','keydown','touchstart'].forEach(function(ev){document.addEventListener(ev,function(){if(S&&$('#app').classList.contains('on'))left=300},{passive:true})});
@@ -281,7 +329,34 @@ function payBill(i){var b=BILLS[i];sheet('<h2>'+b.i+' '+b.n+'</h2><div class="bi
 function addPayee(){sheet('<h2>Add a payee</h2><label class="field">Name<input id="pn" maxlength="24" placeholder="e.g. Priya"></label><label class="field">UPI ID or account (demo)<input id="pu" placeholder="priya@demo"></label><button class="btn" id="ap" style="width:100%;margin-top:8px">Save payee</button>');
   $('#ap').onclick=function(){var n=$('#pn').value.trim();if(n.length<2)return toast('Enter a name');var cs=['#22d3b5','#ffc56b','#8b7bff','#ff6b81','#5b8cff'];S.payees.unshift({n:n,c:cs[S.payees.length%5]});save();draw();closeS();toast(n+' added to payees')}}
 
+
+/* cards */
+function cardsUI(){if(!S)return;$('#vname').textContent=USERS[S.u].n.toUpperCase();$('#vnum').textContent=USERS[S.u].a.replace('XXXX','4821 ••••')+' •••• '+USERS[S.u].a.slice(-4);S.card=S.card||{f:false,o:true,i:false,l1:25000,l2:50000,l3:5000};
+  $('#vcard').classList.toggle('frozen',S.card.f);[['swFreeze','f'],['swOnline','o'],['swIntl','i']].forEach(function(x){var b=$('#'+x[0]);b.classList.toggle('on',!!S.card[x[1]]);b.setAttribute('aria-checked',!!S.card[x[1]])});
+  [['l1','l1v'],['l2','l2v'],['l3','l3v']].forEach(function(x){$('#'+x[0]).value=S.card[x[0]];$('#'+x[1]).textContent=inr(S.card[x[0]])})}
+['l1','l2','l3'].forEach(function(id){$('#'+id).addEventListener('input',function(){S.card[id]=+this.value;$('#'+id+'v').textContent=inr(+this.value);save()})});
+/* goals */
+function goalsUI(){if(!S)return;S.goals=S.goals||[{e:'🏍️',n:'New bike',t:120000,s:46500},{e:'✈️',n:'Goa trip',t:45000,s:31200},{e:'🎓',n:'Course fees',t:80000,s:12000}];
+  $('#goals').innerHTML=S.goals.map(function(g,i){var p=Math.min(100,Math.round(g.s/g.t*100));return '<div class="goal"><span class="e">'+g.e+'</span><b>'+g.n+'</b><small>'+inr(g.s)+' of '+inr(g.t)+'</small><div class="gbar"><i style="width:'+p+'%"></i></div><div class="row2"><span>'+p+'% saved</span><span>'+(p>=100?'🎉 Done':inr(g.t-g.s)+' to go')+'</span></div><button class="btn ghost" data-addg="'+i+'">+ Add ₹1,000</button></div>'}).join('')}
+function fd(){var a=+$('#fdA').value,t=+$('#fdT').value,m=a*Math.pow(1+.071/4,t/3);$('#fda').textContent=inr(a);$('#fdt').textContent=t+' months';$('#fdm').textContent=inr(Math.round(m));$('#fdi').textContent='Interest earned: '+inr(Math.round(m-a))}
+['fdA','fdT'].forEach(function(id){$('#'+id).addEventListener('input',fd)});fd();
+/* bank admin dashboard */
+var KYC=[['KY-2201','Ritika Panda','Savings','Aadhaar + PAN',0],['KY-2202','Suresh Behera','Current','Aadhaar + GST',0],['KY-2203','Imran Sheikh','Savings','Passport',0],['KY-2204','Lopamudra Rout','Salary','Aadhaar + PAN',1],['KY-2205','Deepak Jena','Savings','Voter ID + PAN',2]];
+function admin(){KMDash.open({title:'Kosha Bank — Branch admin',subtitle:'Bhubaneswar main branch · demo',theme:{accent:'#14b39a',bg:'#0b1430',paper:'#111d40',ink:'#e8eeff',muted:'#8c9bc4',line:'#22335f',font:'Inter, sans-serif'},
+  data:function(r){var n=r==='Today'?13:r==='7 days'?7:30,lab=r==='Today'?KMDash.hours():KMDash.days(n),m=r==='Today'?.15:r==='7 days'?1:4.3;
+    return {kpis:[{label:'Deposits',value:'₹'+(4.82*m).toFixed(2)+' Cr',delta:'+6.2%'},{label:'UPI transactions',value:Math.round(18420*m).toLocaleString('en-IN'),delta:'+14%'},{label:'New accounts',value:Math.round(64*m),delta:'+9'},{label:'KYC pending',value:KYC.filter(function(k){return k[4]===0}).length,delta:'-3'}],
+      chart:{title:'Transaction volume',note:'UPI vs card',labels:lab,series:[{name:'UPI',values:KMDash.series(lab.length,r==='Today'?1400:2600,r==='Today'?900:1400,3),color:'#22d3b5'},{name:'Card',values:KMDash.series(lab.length,r==='Today'?500:900,r==='Today'?300:500,9),color:'#8b7bff'}]},
+      donut:{title:'Accounts by type',center:'12.4k',items:[{label:'Savings',value:68,display:'68%',color:'#22d3b5'},{label:'Salary',value:17,display:'17%',color:'#8b7bff'},{label:'Current',value:11,display:'11%',color:'#ffc56b'},{label:'NRI',value:4,display:'4%',color:'#ff6b81'}]},
+      feed:[{icon:'🆕',text:'New savings account opened online',time:'3 min ago'},{icon:'⚠️',text:'Unusual login blocked — OTP challenge passed',time:'18 min ago'},{icon:'💸',text:'High-value transfer approved (₹6.5 L)',time:'40 min ago'}],
+      table:{title:'KYC approvals',note:'Video-KYC queue',cols:['Ref','Customer','Account','Documents','Status',''],rows:KYC.map(function(k){var st=[['Pending','#3a2f12','#ffc56b'],['Approved','#0f3b33','#22d3b5'],['Rejected','#3b1520','#ff6b81']][k[4]];return [k[0],k[1],k[2],k[3],KMDash.pill(st[0],st[1],st[2]),k[4]===0?{html:'<button class="kmd-act" data-kact="ok" data-kid="'+k[0]+'">Approve</button> <button class="kmd-act" data-kact="no" data-kid="'+k[0]+'">Reject</button>'}:'—']})}}},
+  onAction:function(a,id){var k=KYC.filter(function(x){return x[0]===id})[0];if(k)k[4]=a==='ok'?1:2;toast(id+(a==='ok'?' approved':' rejected'))},
+  liveFeed:function(){var t=[['💳','Card payment ₹'+(Math.floor(Math.random()*4000)+120)+' at Esplanade One'],['📲','UPI transfer ₹'+(Math.floor(Math.random()*9000)+50)],['🆕','New account application received'],['🔐','Customer reset MPIN']][Math.floor(Math.random()*4)];return {icon:t[0],text:t[1]}}})}
 document.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;
+  if(b.id==='staffBtn'){admin();return}
+  if(b.id==='flip'){$('#vcard').classList.toggle('flip');return}
+  if(b.id==='swFreeze'||b.id==='swOnline'||b.id==='swIntl'){var k={swFreeze:'f',swOnline:'o',swIntl:'i'}[b.id];S.card[k]=!S.card[k];save();cardsUI();toast(k==='f'?(S.card.f?'Card frozen ❄️':'Card unfrozen'):'Setting updated');return}
+  if(b.dataset.addg!==undefined){var g=S.goals[+b.dataset.addg];if(S.bal<1000)return toast('Insufficient balance');g.s+=1000;S.bal-=1000;S.tx.unshift({d:new Date().toISOString(),n:'Moved to goal: '+g.n,c:'Others',v:-1000});save();draw();goalsUI();toast('₹1,000 added to '+g.n);return}
+  if(b.id==='newGoal'){S.goals.push({e:['🏠','💍','📱','🚗'][S.goals.length%4],n:['Home deposit','Wedding fund','New phone','Car'][S.goals.length%4],t:[200000,150000,40000,300000][S.goals.length%4],s:0});save();goalsUI();toast('New goal created');return}
   if(b.dataset.u!==undefined){sel=+b.dataset.u;$$('#who button').forEach(function(x){x.setAttribute('aria-pressed',x===b)})}
   else if(b.dataset.k!==undefined)press(b.dataset.k);
   else if(b.dataset.v)go(b.dataset.v);
