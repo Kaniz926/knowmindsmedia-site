@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LeadLoop CRM (Demo) — Sales pipeline demo by KnowMinds Media</title>
+<meta name="description" content="LeadLoop is a demo CRM built by KnowMinds Media: drag-and-drop sales pipeline, lead timeline, follow-ups, WhatsApp templates and live KPIs.">
+<link rel="canonical" href="https://knowmindsmedia.com/crm/">
+<meta name="theme-color" content="#4f46e5">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%234f46e5'/%3E%3Ccircle cx='32' cy='32' r='14' fill='none' stroke='%23d9f99d' stroke-width='6' stroke-dasharray='60 30'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ind:#4f46e5;--ind-l:#eef2ff;--lime:#d9f99d;--lime-d:#65a30d;--ink:#111827;--muted:#6b7280;--line:#e5e7eb;--bg:#f9fafb;--paper:#fff}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Sora,system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:14px;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+.demo{background:var(--lime);color:#365314;text-align:center;font-size:.78rem;padding:6px 12px}
+.demo a{color:#1a2e05;font-weight:700}
+.app{display:grid;grid-template-columns:220px 1fr;min-height:calc(100vh - 28px)}
+.side{background:#0f0e2b;color:#c7c9e0;padding:18px 12px;display:flex;flex-direction:column;gap:4px}
+.logo{display:flex;align-items:center;gap:10px;color:#fff;font-weight:700;font-size:1.1rem;padding:4px 8px 18px}
+.logo svg{width:30px;height:30px}
+.logo small{font-size:.6rem;background:var(--lime);color:#1a2e05;border-radius:4px;padding:1px 5px;font-weight:700}
+.nv{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:10px;border:0;background:none;cursor:pointer;color:#a5a8c8;width:100%;text-align:left}
+.nv[aria-current="true"]{background:#24224f;color:#fff}
+.nv svg{width:17px;height:17px}
+.side .sp{flex:1}
+.me{display:flex;align-items:center;gap:10px;padding:10px;border-top:1px solid #24224f;font-size:.82rem}
+.me i{width:30px;height:30px;border-radius:50%;background:var(--lime);color:#1a2e05;display:grid;place-items:center;font-style:normal;font-weight:700}
+@media (max-width:820px){.app{grid-template-columns:1fr}.side{flex-direction:row;align-items:center;overflow:auto;padding:8px}.logo{padding:0 8px}.side .sp,.me,.nv span{display:none}}
+.main{padding:22px 26px;min-width:0}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.bar h1{font-size:1.4rem;font-weight:700}
+.bar small{color:var(--muted)}
+.tools{display:flex;gap:8px;flex-wrap:wrap}
+.tools input,.tools select{border:1px solid var(--line);border-radius:10px;padding:8px 12px;background:#fff}
+.seg{display:flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}
+.seg button{border:0;background:none;padding:8px 12px;cursor:pointer;font-weight:500}
+.seg button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.btn{border:0;background:var(--ind);color:#fff;border-radius:10px;padding:9px 14px;font-weight:600;cursor:pointer}
+.btn.l{background:var(--lime);color:#1a2e05}
+.btn.g{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.kpi small{color:var(--muted);font-size:.78rem}
+.kpi b{display:block;font-size:1.5rem;font-weight:700;margin-top:4px}
+.kpi .tr{font-size:.75rem;color:var(--lime-d);font-weight:600}
+.kpi svg{width:100%;height:30px;margin-top:6px}
+@media (max-width:980px){.kpis{grid-template-columns:repeat(2,1fr)}}
+.board{display:grid;grid-template-columns:repeat(5,minmax(220px,1fr));gap:12px;overflow-x:auto;padding-bottom:10px}
+.col{background:#f1f2f6;border-radius:14px;padding:10px;min-height:380px;transition:background .15s}
+.col.over{background:var(--ind-l);outline:2px dashed var(--ind)}
+.ch{display:flex;justify-content:space-between;align-items:center;padding:4px 6px 10px;font-weight:600;font-size:.86rem}
+.ch span{display:flex;align-items:center;gap:8px}
+.ch i{width:8px;height:8px;border-radius:50%}
+.ch small{color:var(--muted);font-weight:500}
+.cards{display:grid;gap:8px}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;cursor:grab;transition:box-shadow .15s,transform .15s}
+.card:hover{box-shadow:0 6px 16px rgba(17,24,39,.08)}
+.card.drag{opacity:.4;transform:rotate(2deg)}
+.card b{display:block;font-size:.92rem}
+.card small{color:var(--muted);font-size:.78rem}
+.cf{display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:.78rem}
+.src{border-radius:6px;padding:2px 7px;font-weight:600;font-size:.7rem}
+.due{color:#b45309;font-weight:600}
+.due.late{color:#dc2626}
+.amt{font-weight:700}
+table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+th,td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--line);font-size:.86rem}
+th{background:#f9fafb;color:var(--muted);font-weight:500;font-size:.78rem}
+tr.r{cursor:pointer}tr.r:hover td{background:var(--ind-l)}
+.stg{border-radius:999px;padding:2px 9px;font-size:.74rem;font-weight:600}
+/* drawer */
+.ov{position:fixed;inset:0;background:rgba(17,24,39,.35);display:none;z-index:40;justify-content:flex-end}
+.ov.on{display:flex}
+.dr{width:min(460px,100%);background:#fff;height:100%;overflow:auto;animation:sl .3s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column}
+@keyframes sl{from{transform:translateX(100%)}}
+.dh{padding:20px;border-bottom:1px solid var(--line);position:relative}
+.dh .x{position:absolute;top:16px;right:16px;border:1px solid var(--line);background:#fff;width:32px;height:32px;border-radius:8px;cursor:pointer}
+.av{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-weight:700;font-size:1.1rem;color:#fff;margin-bottom:10px}
+.dh h2{font-size:1.2rem}
+.dh p{color:var(--muted);font-size:.85rem}
+.meta{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:16px 20px;border-bottom:1px solid var(--line)}
+.meta div small{display:block;color:var(--muted);font-size:.74rem}
+.meta select,.meta input{border:1px solid var(--line);border-radius:8px;padding:6px 8px;width:100%;margin-top:2px}
+.acts{display:flex;gap:8px;padding:14px 20px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.tl{padding:16px 20px;flex:1}
+.tl h3{font-size:.9rem;margin-bottom:10px}
+.ev{display:flex;gap:12px;padding-bottom:14px;position:relative}
+.ev::before{content:"";position:absolute;left:13px;top:28px;bottom:0;width:2px;background:var(--line)}
+.ev:last-child::before{display:none}
+.ev i{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:.8rem;flex:none;background:var(--ind-l)}
+.ev div{font-size:.85rem}
+.ev small{display:block;color:var(--muted);font-size:.74rem}
+.note{display:flex;gap:8px;padding:12px 20px;border-top:1px solid var(--line)}
+.note input{flex:1;border:1px solid var(--line);border-radius:10px;padding:9px 12px}
+.tpl{background:#ecfdf5;border:1px solid #a7f3d0;border-radius:12px;padding:12px;font-size:.84rem;margin:0 20px 14px;line-height:1.5}
+.mod{background:#fff;border-radius:18px;width:min(440px,100%);padding:22px;margin:auto;animation:up .25s}
+@keyframes up{from{opacity:0;transform:translateY(12px)}}
+.mod h2{font-size:1.15rem;margin-bottom:12px}
+.mod label{display:grid;gap:4px;font-size:.8rem;color:var(--muted);margin-bottom:10px}
+.mod input,.mod select{border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-size:15px;color:var(--ink)}
+.mod .bad{border-color:#dc2626}
+.ov.c{justify-content:center;align-items:center;padding:14px}
+.toast{position:fixed;bottom:18px;right:18px;background:var(--ink);color:#fff;padding:11px 16px;border-radius:12px;opacity:0;transform:translateY(16px);transition:.3s;z-index:60;font-size:.86rem}
+.toast.on{opacity:1;transform:none}
+.foot{margin-top:24px;color:var(--muted);font-size:.78rem}
+.foot a{color:var(--ind);font-weight:600}
+.move{display:none}
+@media (hover:none){.move{display:block}}
+</style>
+</head>
+<body>
+<div class="demo">Demo CRM by <a href="https://knowmindsmedia.com/" target="_blank" rel="noopener">KnowMinds Media</a> — all leads are fictional sample data. Drag cards between columns to try it.</div>
+<div class="app">
+  <aside class="side">
+    <div class="logo"><svg viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="#4f46e5"/><circle cx="32" cy="32" r="14" fill="none" stroke="#d9f99d" stroke-width="6" stroke-dasharray="60 30"/></svg>LeadLoop <small>DEMO</small></div>
+    <button class="nv" aria-current="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="5" height="16" rx="1"/><rect x="10" y="4" width="5" height="10" rx="1"/><rect x="17" y="4" width="4" height="13" rx="1"/></svg><span>Pipeline</span></button>
+    <button class="nv" id="todayBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span>Follow-ups</span></button>
+    <button class="nv" id="resetBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/></svg><span>Reset demo</span></button>
+    <div class="sp"></div>
+    <div class="me"><i>A</i><div>Aman (Sales)<br><small style="color:#7c7fa8">Demo user</small></div></div>
+  </aside>
+  <main class="main">
+    <div class="bar"><div><h1>Sales pipeline</h1><small id="sub"></small></div>
+      <div class="tools"><input id="q" placeholder="Search leads…" aria-label="Search leads"><select id="src" aria-label="Filter by source"><option value="">All sources</option></select><div class="seg"><button data-view="board" aria-pressed="true">Board</button><button data-view="list">List</button></div><button class="btn" id="addBtn">+ New lead</button></div></div>
+    <div class="kpis" id="kpis"></div>
+    <div id="view"></div>
+    <p class="foot">LeadLoop is a fictional demo · Designed &amp; built by <a href="https://knowmindsmedia.com/" target="_blank" rel="noopener">KnowMinds Media</a> · <a href="https://knowmindsmedia.com/#demo" target="_blank" rel="noopener">Get a custom CRM</a></p>
+  </main>
+</div>
+<div class="ov" id="ov"></div>
+<div class="toast" id="toast"></div>
+<script>
+(function(){
+var $=function(s){return document.querySelector(s)};
+var ST=[['new','New','#94a3b8'],['contacted','Contacted','#60a5fa'],['demo','Demo booked','#a78bfa'],['proposal','Proposal sent','#f59e0b'],['won','Won','#65a30d']];
+var SRC={Website:['#eef2ff','#4338ca'],Instagram:['#fdf2f8','#be185d'],'Google Ads':['#ecfeff','#0e7490'],Referral:['#f0fdf4','#15803d'],WhatsApp:['#ecfdf5','#047857']};
+var COL=['#4f46e5','#db2777','#0891b2','#65a30d','#ea580c','#7c3aed'];
+function d(n){var x=new Date();x.setDate(x.getDate()+n);return x.toISOString().slice(0,10)}
+function seed(){return [
+ {id:1,n:'Glow Unisex Salon',c:'Priya Sahu',s:'new',src:'Instagram',v:18000,f:d(0),city:'Bhubaneswar',ev:[['📥','Lead captured from Instagram ad',-1]]},
+ {id:2,n:'Spice Route Restaurant',c:'Manoj Jena',s:'contacted',src:'Website',v:35000,f:d(1),city:'Cuttack',ev:[['📥','Website form submitted',-4],['📞','Intro call — interested in online ordering',-2]]},
+ {id:3,n:'FitZone Gym',c:'Rahul Das',s:'demo',src:'Google Ads',v:42000,f:d(2),city:'Bhubaneswar',ev:[['📥','Google Ads lead',-6],['💬','WhatsApp follow-up sent',-5],['📅','Demo booked for Friday',-1]]},
+ {id:4,n:'Smile Dental Care',c:'Dr. Neha Roy',s:'proposal',src:'Referral',v:65000,f:d(-1),city:'Puri',ev:[['🤝','Referred by FitZone',-10],['📅','Demo done',-6],['📄','Proposal sent: website + AI receptionist',-3]]},
+ {id:5,n:'Kids Kingdom School',c:'Sanjay Mishra',s:'won',src:'Referral',v:90000,f:d(7),city:'Cuttack',ev:[['📄','Proposal accepted',-2],['🏆','Deal won — onboarding started',-1]]},
+ {id:6,n:'Urban Threads Boutique',c:'Ayesha Khan',s:'new',src:'WhatsApp',v:22000,f:d(0),city:'Bhubaneswar',ev:[['💬','Messaged on WhatsApp',0]]},
+ {id:7,n:'GreenLeaf Pharmacy',c:'Bikram Patra',s:'contacted',src:'Website',v:28000,f:d(-2),city:'Jagatsinghpur',ev:[['📥','Website enquiry',-5],['📞','Call — asked for pricing',-3]]},
+ {id:8,n:'Royal Banquets',c:'Deepak Agarwal',s:'demo',src:'Google Ads',v:55000,f:d(3),city:'Bhubaneswar',ev:[['📥','Google Ads lead',-3],['📅','Demo booked',-1]]}]}
+var L;try{L=JSON.parse(localStorage.getItem('ll_leads'))}catch(e){}if(!L)L=seed();
+var view='board',q='',src='';
+function save(){try{localStorage.setItem('ll_leads',JSON.stringify(L))}catch(e){}}
+function toast(m){var t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove('on')},2000)}
+function inr(n){return n>=100000?'₹'+(n/100000).toFixed(1)+'L':'₹'+(n/1000).toFixed(n%1000?1:0)+'k'}
+function sn(s){return ST.filter(function(x){return x[0]===s})[0]}
+function dueL(f){var n=Math.round((new Date(f)-new Date(d(0)))/864e5);return n<0?['late',Math.abs(n)+'d overdue']:n===0?['','Today']:['',n===1?'Tomorrow':'in '+n+'d']}
+Object.keys(SRC).forEach(function(s){$('#src').insertAdjacentHTML('beforeend','<option>'+s+'</option>')});
+function spark(seedN){var p='',v=10;for(var i=0;i<12;i++){v=Math.max(2,Math.min(28,v+((seedN*7+i*13)%9-4)));p+=(i?'L':'M')+(i*9.1)+' '+(30-v)}return '<svg viewBox="0 0 100 30" preserveAspectRatio="none"><path d="'+p+'" fill="none" stroke="#4f46e5" stroke-width="2"/></svg>'}
+function kpis(){var open=L.filter(function(l){return l.s!=='won'}),won=L.filter(function(l){return l.s==='won'}),pv=open.reduce(function(a,l){return a+l.v},0),wv=won.reduce(function(a,l){return a+l.v},0),due=L.filter(function(l){return l.s!=='won'&&new Date(l.f)<=new Date(d(0))}).length;
+  $('#kpis').innerHTML=[['Open pipeline',inr(pv),open.length+' deals',1],['Won this month',inr(wv),won.length+' deals',2],['Win rate',Math.round(won.length/L.length*100)+'%','of all leads',3],['Follow-ups due',due,'today or overdue',4]].map(function(k){return '<div class="kpi"><small>'+k[0]+'</small><b>'+k[1]+'</b><span class="tr">'+k[2]+'</span>'+spark(k[3])+'</div>'}).join('');
+  $('#sub').textContent=L.length+' leads · '+inr(pv+wv)+' total value'}
+function vis(){return L.filter(function(l){return (!q||(l.n+' '+l.c+' '+l.city).toLowerCase().indexOf(q)>-1)&&(!src||l.src===src)})}
+function render(){kpis();var V=vis();
+  if(view==='board'){$('#view').innerHTML='<div class="board">'+ST.map(function(s){var ls=V.filter(function(l){return l.s===s[0]});return '<div class="col" data-col="'+s[0]+'"><div class="ch"><span><i style="background:'+s[2]+'"></i>'+s[1]+'</span><small>'+ls.length+' · '+inr(ls.reduce(function(a,l){return a+l.v},0))+'</small></div><div class="cards">'+ls.map(card).join('')+'</div></div>'}).join('')+'</div>';dnd()}
+  else{$('#view').innerHTML='<div style="overflow:auto"><table><tr><th>Business</th><th>Contact</th><th>Stage</th><th>Source</th><th>Value</th><th>Follow-up</th></tr>'+V.map(function(l){var s=sn(l.s),du=dueL(l.f);return '<tr class="r" data-open="'+l.id+'"><td><b>'+l.n+'</b><br><small style="color:var(--muted)">'+l.city+'</small></td><td>'+l.c+'</td><td><span class="stg" style="background:'+s[2]+'22;color:'+s[2]+'">'+s[1]+'</span></td><td>'+l.src+'</td><td class="amt">'+inr(l.v)+'</td><td class="due '+du[0]+'">'+(l.s==='won'?'—':du[1])+'</td></tr>'}).join('')+'</table></div>'}}
+function card(l){var c=SRC[l.src],du=dueL(l.f);return '<div class="card" draggable="true" data-id="'+l.id+'" data-open="'+l.id+'"><b>'+l.n+'</b><small>'+l.c+' · '+l.city+'</small><div class="cf"><span class="src" style="background:'+c[0]+';color:'+c[1]+'">'+l.src+'</span><span class="amt">'+inr(l.v)+'</span></div>'+(l.s==='won'?'':'<div class="cf"><span class="due '+du[0]+'">⏰ '+du[1]+'</span></div>')+'</div>'}
+function move(id,to){var l=L.filter(function(x){return x.id===id})[0];if(!l||l.s===to)return;var from=sn(l.s)[1];l.s=to;l.ev.push([to==='won'?'🏆':'➡️','Moved from '+from+' to '+sn(to)[1],0]);save();render();toast(to==='won'?'🎉 Deal won: '+l.n:'Moved to '+sn(to)[1])}
+function dnd(){var dragId=null;document.querySelectorAll('.card').forEach(function(c){c.addEventListener('dragstart',function(e){dragId=+c.dataset.id;c.classList.add('drag');e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',c.dataset.id)});c.addEventListener('dragend',function(){c.classList.remove('drag')})});
+  document.querySelectorAll('.col').forEach(function(col){col.addEventListener('dragover',function(e){e.preventDefault();col.classList.add('over')});col.addEventListener('dragleave',function(){col.classList.remove('over')});col.addEventListener('drop',function(e){e.preventDefault();col.classList.remove('over');move(+e.dataTransfer.getData('text/plain')||dragId,col.dataset.col)})})}
+function ov(h,center){var o=$('#ov');o.className='ov on'+(center?' c':'');o.innerHTML=h}
+function close(){$('#ov').className='ov'}
+function ago(n){return n===0?'Today':n===-1?'Yesterday':Math.abs(n)+' days ago'}
+function open(id){var l=L.filter(function(x){return x.id===id})[0],ci=id%COL.length;
+  ov('<aside class="dr"><div class="dh"><button class="x" data-x aria-label="Close">✕</button><div class="av" style="background:'+COL[ci]+'">'+l.n[0]+'</div><h2>'+l.n+'</h2><p>'+l.c+' · '+l.city+' · via '+l.src+'</p></div><div class="meta"><div><small>Stage</small><select id="ms">'+ST.map(function(s){return '<option value="'+s[0]+'" '+(s[0]===l.s?'selected':'')+'>'+s[1]+'</option>'}).join('')+'</select></div><div><small>Deal value (₹)</small><input id="mv" type="number" value="'+l.v+'" min="0" step="1000"></div><div><small>Next follow-up</small><input id="mf" type="date" value="'+l.f+'"></div><div><small>Owner</small><select><option>Aman</option><option>Sneha</option></select></div></div><div class="acts"><button class="btn l" id="wa">💬 WhatsApp template</button><button class="btn g" id="call">📞 Log call</button><button class="btn g" id="mail">✉️ Log email</button></div><div id="tplBox"></div><div class="tl"><h3>Activity</h3><div id="tl">'+tl(l)+'</div></div><form class="note" id="nf"><input id="ni" placeholder="Add a note and press Enter" aria-label="Add note"><button class="btn">Add</button></form></aside>');
+  $('#ms').onchange=function(){move(id,this.value);open(id)};
+  $('#mv').onchange=function(){l.v=Math.max(0,+this.value||0);l.ev.push(['💰','Deal value updated to '+inr(l.v),0]);save();render();$('#tl').innerHTML=tl(l)};
+  $('#mf').onchange=function(){l.f=this.value;l.ev.push(['⏰','Follow-up set for '+new Date(this.value).toLocaleDateString('en-IN',{day:'numeric',month:'short'}),0]);save();render();$('#tl').innerHTML=tl(l);toast('Follow-up scheduled')};
+  $('#nf').onsubmit=function(e){e.preventDefault();var v=$('#ni').value.trim();if(!v)return;l.ev.push(['📝',v,0]);save();$('#ni').value='';$('#tl').innerHTML=tl(l)};
+  $('#call').onclick=function(){l.ev.push(['📞','Call logged',0]);save();$('#tl').innerHTML=tl(l);toast('Call logged')};
+  $('#mail').onclick=function(){l.ev.push(['✉️','Email logged',0]);save();$('#tl').innerHTML=tl(l);toast('Email logged')};
+  $('#wa').onclick=function(){var t='Hi '+l.c.split(' ').pop()+', this is Aman from KnowMinds Media 👋 Following up on '+l.n+' — would '+new Date(l.f).toLocaleDateString('en-IN',{weekday:'long'})+' work for a quick 15-min call?';$('#tplBox').innerHTML='<div class="tpl">'+t+'<br><button class="btn l" id="cp" style="margin-top:8px;padding:6px 10px">Copy message</button></div>';$('#cp').onclick=function(){try{navigator.clipboard.writeText(t)}catch(e){}l.ev.push(['💬','WhatsApp follow-up sent',0]);save();$('#tl').innerHTML=tl(l);toast('Copied — paste in WhatsApp')}}}
+function tl(l){return l.ev.slice().reverse().map(function(e){return '<div class="ev"><i>'+e[0]+'</i><div>'+e[1]+'<small>'+ago(e[2])+'</small></div></div>'}).join('')}
+function addLead(){ov('<div class="mod"><h2>New lead</h2><form id="af" novalidate><label>Business name<input name="n" autocomplete="off"></label><label>Contact person<input name="c" autocomplete="off"></label><label>City<input name="city" value="Bhubaneswar"></label><label>Source<select name="src">'+Object.keys(SRC).map(function(s){return '<option>'+s+'</option>'}).join('')+'</select></label><label>Estimated value (₹)<input name="v" type="number" value="25000" step="1000"></label><div style="display:flex;gap:8px;justify-content:flex-end"><button type="button" class="btn g" data-x>Cancel</button><button class="btn">Add lead</button></div></form></div>',1);
+  $('#af').onsubmit=function(e){e.preventDefault();var f=e.target,ok=true;['n','c'].forEach(function(k){var g=f[k].value.trim().length>1;f[k].classList.toggle('bad',!g);if(!g)ok=false});if(!ok)return;
+    L.unshift({id:Date.now(),n:f.n.value.trim(),c:f.c.value.trim(),city:f.city.value.trim()||'—',s:'new',src:f.src.value,v:+f.v.value||0,f:d(1),ev:[['📥','Lead added manually',0]]});save();close();render();toast('Lead added to New')}}
+function today(){var due=L.filter(function(l){return l.s!=='won'&&new Date(l.f)<=new Date(d(1))}).sort(function(a,b){return new Date(a.f)-new Date(b.f)});
+  ov('<div class="mod"><h2>Follow-ups (today & tomorrow)</h2>'+(due.length?due.map(function(l){var du=dueL(l.f);return '<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)"><span><b>'+l.n+'</b><br><small class="due '+du[0]+'">'+du[1]+' · '+sn(l.s)[1]+'</small></span><button class="btn g" data-open="'+l.id+'">Open</button></div>'}).join(''):'<p style="color:var(--muted)">All caught up 🎉</p>')+'<div style="text-align:right;margin-top:12px"><button class="btn g" data-x>Close</button></div></div>',1)}
+document.addEventListener('click',function(e){var b=e.target.closest('[data-open],button');if(!b)return;
+  if(b.dataset.open&&!b.classList.contains('drag')){open(+b.dataset.open)}
+  else if(b.dataset.view){view=b.dataset.view;document.querySelectorAll('[data-view]').forEach(function(x){x.setAttribute('aria-pressed',x===b)});render()}
+  else if(b.id==='addBtn')addLead();
+  else if(b.id==='todayBtn')today();
+  else if(b.id==='resetBtn'){L=seed();save();render();toast('Demo data reset')}
+  else if(b.hasAttribute('data-x'))close();
+});
+$('#ov').addEventListener('click',function(e){if(e.target.id==='ov')close()});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});
+$('#q').addEventListener('input',function(){q=this.value.toLowerCase();render()});
+$('#src').addEventListener('change',function(){src=this.value;render()});
+render();
+})();
+</script>
+</body>
+</html>

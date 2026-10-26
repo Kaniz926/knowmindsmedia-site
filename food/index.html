@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tiffin Tales (Demo) — Food ordering demo by KnowMinds Media</title>
+<meta name="description" content="Tiffin Tales is a demo food-ordering app built by KnowMinds Media: build-your-own thali, chef combos, delivery slots and a live order tracker.">
+<link rel="canonical" href="https://knowmindsmedia.com/food/">
+<meta name="theme-color" content="#ffd23f">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23ffd23f'/%3E%3Ccircle cx='32' cy='32' r='18' fill='%23111'/%3E%3Ccircle cx='32' cy='32' r='8' fill='%23ff5d3a'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{--y:#ffd23f;--ink:#111;--paper:#fffdf5;--o:#ff5d3a;--g:#2bb673;--muted:#5b5747;--line:#111}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Bricolage Grotesque",system-ui,sans-serif;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased}
+button,input,select{font:inherit;color:inherit}
+.demo{background:var(--ink);color:var(--y);font-size:.82rem;text-align:center;padding:7px 12px;font-weight:500}
+.demo a{color:#fff;font-weight:800}
+.wrap{max-width:1160px;margin:0 auto;padding:0 18px}
+header{background:var(--y);border-bottom:3px solid var(--ink)}
+header .wrap{display:flex;justify-content:space-between;align-items:center;height:74px}
+.logo{font-weight:800;font-size:1.6rem;letter-spacing:-.03em;display:flex;align-items:center;gap:8px}
+.logo svg{width:36px;height:36px}
+.meal{display:flex;background:#fff;border:3px solid var(--ink);border-radius:999px;padding:4px;gap:2px}
+.meal button{border:0;background:none;border-radius:999px;padding:7px 14px;font-weight:800;cursor:pointer}
+.meal button[aria-pressed="true"]{background:var(--ink);color:var(--y)}
+@media (max-width:640px){header .wrap{height:auto;padding:10px 18px;flex-wrap:wrap;gap:8px}.meal button{padding:6px 10px;font-size:.85rem}}
+.hero{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:center;padding:34px 0 10px}
+.hero h1{font-size:clamp(2.4rem,6vw,4.6rem);font-weight:800;line-height:.92;letter-spacing:-.045em}
+.hero h1 mark{background:var(--o);color:#fff;padding:0 .15em;border-radius:10px;display:inline-block;transform:rotate(-2deg)}
+.hero p{font-size:1.1rem;color:var(--muted);margin-top:14px;max-width:460px}
+.sticker{justify-self:center;width:210px;height:210px;border-radius:50%;background:var(--o);color:#fff;display:grid;place-items:center;text-align:center;font-weight:800;font-size:1.3rem;line-height:1.1;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);animation:spin 18s linear infinite}
+.sticker span{animation:spin 18s linear infinite reverse;display:block}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (max-width:760px){.hero{grid-template-columns:1fr}.sticker{width:150px;height:150px;font-size:1rem}}
+.tabs{display:flex;gap:10px;margin:26px 0 18px;flex-wrap:wrap}
+.tabs button{border:3px solid var(--ink);background:#fff;border-radius:14px;padding:10px 18px;font-weight:800;cursor:pointer;box-shadow:4px 4px 0 var(--ink);transition:.1s}
+.tabs button:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
+.tabs button[aria-pressed="true"]{background:var(--y)}
+.builder{display:grid;grid-template-columns:1fr 380px;gap:22px;align-items:start}
+@media (max-width:940px){.builder{grid-template-columns:1fr}}
+.grp{background:#fff;border:3px solid var(--ink);border-radius:22px;padding:18px;margin-bottom:16px}
+.grp h3{font-size:1.25rem;font-weight:800;display:flex;justify-content:space-between;align-items:baseline}
+.grp h3 small{font-size:.8rem;font-weight:500;color:var(--muted)}
+.items{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:12px}
+.it{border:2.5px solid var(--ink);border-radius:16px;padding:12px;background:var(--paper);cursor:pointer;text-align:left;position:relative;transition:.12s}
+.it:hover{transform:translateY(-2px)}
+.it[aria-pressed="true"]{background:var(--y);box-shadow:4px 4px 0 var(--ink)}
+.it .e{font-size:1.7rem;display:block}
+.it b{display:block;font-size:.95rem;line-height:1.2;margin-top:4px}
+.it small{color:var(--muted);font-weight:500}
+.it .veg{position:absolute;top:10px;right:10px;width:14px;height:14px;border:2px solid var(--g);display:grid;place-items:center}
+.it .veg::after{content:"";width:6px;height:6px;border-radius:50%;background:var(--g)}
+.it .veg.nv{border-color:#c0392b}.it .veg.nv::after{background:#c0392b}
+.plate{position:sticky;top:12px;background:var(--ink);color:#fff;border-radius:26px;padding:20px;border:3px solid var(--ink)}
+.plate h3{font-size:1.4rem;font-weight:800;color:var(--y)}
+.plate svg{width:100%;max-width:260px;display:block;margin:10px auto}
+.pl-list{display:grid;gap:6px;font-size:.92rem;margin:8px 0}
+.pl-list div{display:flex;justify-content:space-between;border-bottom:1px dashed #444;padding:4px 0}
+.pl-tot{display:flex;justify-content:space-between;font-size:1.4rem;font-weight:800;margin-top:6px}
+.add{width:100%;border:3px solid var(--y);background:var(--y);color:var(--ink);border-radius:16px;padding:14px;font-weight:800;font-size:1.05rem;cursor:pointer;margin-top:12px}
+.add:disabled{opacity:.35;cursor:not-allowed}
+.combo{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media (max-width:900px){.combo{grid-template-columns:1fr}}
+.cb{border:3px solid var(--ink);border-radius:22px;overflow:hidden;background:#fff;display:flex;flex-direction:column}
+.cb .top{padding:20px;font-size:3rem;display:flex;justify-content:space-between;align-items:start}
+.cb .top span{font-size:.8rem;font-weight:800;background:var(--ink);color:var(--y);border-radius:8px;padding:4px 8px}
+.cb .bd{padding:0 20px 20px;flex:1;display:flex;flex-direction:column}
+.cb h4{font-size:1.3rem;font-weight:800}
+.cb p{color:var(--muted);font-size:.9rem;margin:4px 0 12px;flex:1}
+.cb .row{display:flex;justify-content:space-between;align-items:center}
+.cb .row b{font-size:1.3rem}
+.cb button{border:3px solid var(--ink);background:var(--y);border-radius:12px;padding:8px 14px;font-weight:800;cursor:pointer}
+/* bag */
+.bagbtn{position:fixed;right:18px;bottom:18px;border:3px solid var(--ink);background:var(--o);color:#fff;border-radius:999px;padding:14px 22px;font-weight:800;cursor:pointer;box-shadow:5px 5px 0 var(--ink);z-index:20;display:none}
+.bagbtn.on{display:block;animation:wob .5s}
+@keyframes wob{30%{transform:rotate(-4deg) scale(1.06)}60%{transform:rotate(3deg)}}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;z-index:40;align-items:flex-end;justify-content:center}
+.ov.on{display:flex}
+.sheet{background:var(--paper);border:3px solid var(--ink);border-bottom:0;border-radius:28px 28px 0 0;width:min(560px,100%);max-height:92vh;overflow:auto;padding:22px;animation:sl .3s cubic-bezier(.2,.8,.2,1)}
+@keyframes sl{from{transform:translateY(100%)}}
+.sheet h2{font-size:1.7rem;font-weight:800;display:flex;justify-content:space-between;align-items:center}
+.sheet h2 button{border:3px solid var(--ink);background:#fff;border-radius:50%;width:38px;height:38px;cursor:pointer;font-size:1rem}
+.li{display:flex;justify-content:space-between;align-items:center;gap:10px;border-bottom:2px dashed #ddd;padding:10px 0}
+.li small{display:block;color:var(--muted);font-size:.82rem}
+.qt{display:flex;align-items:center;gap:8px;border:2.5px solid var(--ink);border-radius:10px;padding:2px}
+.qt button{border:0;background:none;width:26px;height:26px;font-weight:800;cursor:pointer}
+.slots{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.slots button{border:2.5px solid var(--ink);background:#fff;border-radius:12px;padding:8px 12px;font-weight:800;cursor:pointer}
+.slots button[aria-pressed="true"]{background:var(--y)}
+.sheet label{display:grid;gap:4px;font-weight:800;font-size:.9rem;margin-top:10px}
+.sheet input{border:2.5px solid var(--ink);border-radius:12px;padding:11px 12px;font-size:16px;background:#fff}
+.sheet input.bad{border-color:#c0392b;background:#fff3f1}
+.tot{display:flex;justify-content:space-between;font-weight:800;font-size:1.3rem;margin-top:14px}
+.go{width:100%;border:3px solid var(--ink);background:var(--o);color:#fff;border-radius:16px;padding:15px;font-weight:800;font-size:1.05rem;cursor:pointer;margin-top:14px;box-shadow:5px 5px 0 var(--ink)}
+/* tracker */
+.trk{text-align:center}
+.trk .eta{font-size:3.4rem;font-weight:800;letter-spacing:-.04em;line-height:1}
+.st{display:grid;gap:10px;margin:18px 0;text-align:left}
+.st div{display:flex;gap:12px;align-items:center;border:2.5px solid #ddd;border-radius:14px;padding:10px 12px;color:#aaa;font-weight:800;transition:.3s}
+.st div.on{border-color:var(--ink);color:var(--ink);background:var(--y)}
+.st div.done{border-color:var(--g);color:var(--g)}
+.st i{font-style:normal;font-size:1.4rem}
+.road{position:relative;height:56px;border:2.5px solid var(--ink);border-radius:14px;background:repeating-linear-gradient(90deg,#fff 0 18px,#f1efe4 18px 36px);overflow:hidden}
+.road .rider{position:absolute;top:8px;left:0;font-size:1.8rem;transition:left 1s linear}
+.road .home{position:absolute;right:8px;top:8px;font-size:1.8rem}
+.stars{display:flex;justify-content:center;gap:6px;margin:10px 0}
+.stars button{border:0;background:none;font-size:2rem;cursor:pointer;filter:grayscale(1);opacity:.5}
+.stars button.on{filter:none;opacity:1}
+.toast{position:fixed;top:16px;left:50%;transform:translate(-50%,-30px);background:var(--ink);color:var(--y);font-weight:800;border-radius:14px;padding:12px 18px;opacity:0;transition:.3s;z-index:60}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+footer{margin-top:50px;border-top:3px solid var(--ink);background:var(--y);padding:24px 0 30px;font-weight:500}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+footer a{color:var(--ink);font-weight:800}
+</style>
+</head>
+<body>
+<div class="demo">Demo app by <a href="https://knowmindsmedia.com/" target="_blank" rel="noopener">KnowMinds Media</a> — Tiffin Tales is fictional. No real food will arrive (sorry!).</div>
+<header><div class="wrap"><div class="logo"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="29" fill="#fff" stroke="#111" stroke-width="4"/><circle cx="32" cy="32" r="16" fill="#111"/><circle cx="32" cy="32" r="7" fill="#ff5d3a"/></svg>Tiffin Tales</div>
+<div class="meal" id="meal"><button data-m="Breakfast">Breakfast</button><button data-m="Lunch" aria-pressed="true">Lunch</button><button data-m="Dinner">Dinner</button></div></div></header>
+<main class="wrap">
+  <section class="hero"><div><h1>Build your <mark>own thali.</mark> We'll cook it fresh.</h1><p>Pick a base, a dal, two sabzis and something sweet — or grab a chef combo. Hot, home-style and tracked live to your door.</p></div><div class="sticker"><span>Free<br>delivery<br>today!</span></div></section>
+  <div class="tabs"><button data-tab="build" aria-pressed="true">🍽️ Build a thali</button><button data-tab="combo">⭐ Chef combos</button></div>
+  <section id="t-build" class="builder"><div id="groups"></div>
+    <aside class="plate"><h3>Your thali</h3><svg viewBox="0 0 200 200" id="plateSvg"></svg><div class="pl-list" id="plist"></div><div class="pl-tot"><span>Total</span><span id="ptot">₹0</span></div><button class="add" id="addThali" disabled>Pick a base to start</button></aside>
+  </section>
+  <section id="t-combo" class="combo" hidden></section>
+</main>
+<button class="bagbtn" id="bagBtn">🛍️ Bag · <span id="bagN">0</span> · <span id="bagT">₹0</span></button>
+<div class="ov" id="ov"><div class="sheet" id="sheet"></div></div>
+<div class="toast" id="toast"></div>
+<footer><div class="wrap"><span>© 2026 Tiffin Tales — a fictional demo restaurant.</span><span>Designed &amp; built by <a href="https://knowmindsmedia.com/" target="_blank" rel="noopener">KnowMinds Media</a> · <a href="https://knowmindsmedia.com/#demo" target="_blank" rel="noopener">Get an ordering app →</a></span></div></footer>
+<script>
+(function(){
+var $=function(s){return document.querySelector(s)};
+var MENU={
+ Lunch:{base:[['🍚','Steamed rice',40,1],['🫓','Phulka (4)',50,1],['🍛','Jeera rice',60,1]],dal:[['🥣','Dalma',60,1],['🍲','Dal tadka',55,1],['🫘','Rajma',70,1]],sabzi:[['🥔','Aloo posto',70,1],['🍆','Baigan bharta',65,1],['🥬','Saag bhaja',50,1],['🍗','Chicken kosha',140,0],['🐟','Fish curry',150,0],['🧀','Paneer butter',120,1]],extra:[['🥗','Salad',25,1],['🥛','Raita',30,1],['🍮','Rasagola (2)',40,1],['🥭','Mango pickle',15,1]]},
+ Breakfast:{base:[['🫓','Puri (4)',50,1],['🥞','Chakuli pitha (3)',60,1],['🍞','Toast (2)',35,1]],dal:[['🍲','Ghugni',45,1],['🥔','Aloo dum',50,1],['🥥','Coconut chutney',25,1]],sabzi:[['🍳','Masala omelette',60,0],['🥚','Boiled eggs (2)',35,0],['🥬','Upma',50,1],['🌶️','Bara (2)',40,1]],extra:[['☕','Masala chai',25,1],['🧃','Fresh juice',60,1],['🍌','Banana',15,1]]},
+ Dinner:{base:[['🫓','Butter roti (4)',60,1],['🍚','Steamed rice',40,1],['🍛','Veg pulao',80,1]],dal:[['🍲','Dal makhani',80,1],['🥣','Dalma',60,1],['🫘','Chana masala',70,1]],sabzi:[['🧀','Kadai paneer',130,1],['🍗','Butter chicken',170,0],['🐑','Mutton curry',220,0],['🥦','Mix veg',80,1],['🍄','Mushroom masala',110,1]],extra:[['🍮','Gulab jamun (2)',40,1],['🥗','Salad',25,1],['🥛','Lassi',50,1]]}};
+var LIM={base:1,dal:1,sabzi:2,extra:3},LAB={base:'1. Pick a base',dal:'2. Add a dal',sabzi:'3. Choose up to 2 sabzis',extra:'4. Extras (up to 3)'};
+var COMBOS=[['🥘','Odia Special','Rice, dalma, aloo posto, saag, rasagola',229,'Bestseller'],['🍗','Protein Power','Jeera rice, dal tadka, chicken kosha, salad',279,'High protein'],['🥗','Light & Green','Phulka, moong dal, mix veg, salad, buttermilk',199,'Under 500 kcal']];
+var meal='Lunch',pick={base:[],dal:[],sabzi:[],extra:[]},bag=[],slot='ASAP';
+function toast(m){var t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove('on')},1800)}
+function inr(n){return '₹'+n}
+function groups(){var M=MENU[meal];$('#groups').innerHTML=Object.keys(LIM).map(function(g){return '<div class="grp"><h3>'+LAB[g]+'<small>'+pick[g].length+'/'+LIM[g]+'</small></h3><div class="items">'+M[g].map(function(x,i){return '<button class="it" data-g="'+g+'" data-i="'+i+'" aria-pressed="'+(pick[g].indexOf(i)>-1)+'"><span class="veg'+(x[3]?'':' nv')+'" title="'+(x[3]?'Veg':'Non-veg')+'"></span><span class="e">'+x[0]+'</span><b>'+x[1]+'</b><small>'+inr(x[2])+'</small></button>'}).join('')+'</div></div>'}).join('');plate()}
+function chosen(){var M=MENU[meal],out=[];Object.keys(pick).forEach(function(g){pick[g].forEach(function(i){out.push(M[g][i])})});return out}
+function plate(){var c=chosen(),tot=c.reduce(function(a,x){return a+x[2]},0);
+  var pos=[[100,100,34],[60,58,24],[140,58,24],[52,130,22],[148,130,22],[100,160,20],[100,45,18],[150,95,16]];
+  var s='<circle cx="100" cy="100" r="92" fill="#e9e6d9" stroke="#ffd23f" stroke-width="4"/><circle cx="100" cy="100" r="80" fill="#f6f3e7"/>';
+  c.forEach(function(x,i){var p=pos[i]||pos[7];s+='<g style="animation:pop .35s"><circle cx="'+p[0]+'" cy="'+p[1]+'" r="'+p[2]+'" fill="#fff" stroke="#ddd"/><text x="'+p[0]+'" y="'+(p[1]+p[2]*.35)+'" font-size="'+p[2]*1.05+'" text-anchor="middle">'+x[0]+'</text></g>'});
+  if(!c.length)s+='<text x="100" y="105" text-anchor="middle" font-size="12" fill="#999" font-family="Bricolage Grotesque">Your plate is empty</text>';
+  $('#plateSvg').innerHTML=s;$('#plist').innerHTML=c.map(function(x){return '<div><span>'+x[0]+' '+x[1]+'</span><span>'+inr(x[2])+'</span></div>'}).join('');$('#ptot').textContent=inr(tot);
+  var b=$('#addThali');var ok=pick.base.length&&pick.dal.length&&pick.sabzi.length;b.disabled=!ok;b.textContent=!pick.base.length?'Pick a base to start':!pick.dal.length?'Now add a dal':!pick.sabzi.length?'Add at least 1 sabzi':'Add thali to bag · '+inr(tot)}
+function combos(){$('#t-combo').innerHTML=COMBOS.map(function(c,i){return '<div class="cb"><div class="top">'+c[0]+'<span>'+c[4]+'</span></div><div class="bd"><h4>'+c[1]+'</h4><p>'+c[2]+'</p><div class="row"><b>'+inr(c[3])+'</b><button data-combo="'+i+'">Add +</button></div></div></div>'}).join('')}
+function bagUI(){var n=bag.reduce(function(a,x){return a+x.q},0),t=bag.reduce(function(a,x){return a+x.q*x.p},0);$('#bagN').textContent=n+' item'+(n!==1?'s':'');$('#bagT').textContent=inr(t);var b=$('#bagBtn');b.classList.remove('on');void b.offsetWidth;b.classList.toggle('on',n>0)}
+function addBag(name,desc,p){var f=bag.filter(function(x){return x.n===name&&x.d===desc})[0];if(f)f.q++;else bag.push({n:name,d:desc,p:p,q:1});bagUI();toast('Added to bag 🛍️')}
+function sheet(h){$('#sheet').innerHTML=h;$('#ov').classList.add('on')}
+function close(){$('#ov').classList.remove('on')}
+function checkout(){var t=bag.reduce(function(a,x){return a+x.q*x.p},0),d=t>=299?0:30;
+  sheet('<h2>Your bag <button data-close aria-label="Close">✕</button></h2>'+bag.map(function(x,i){return '<div class="li"><div><b>'+x.n+'</b><small>'+x.d+'</small></div><div style="display:flex;gap:10px;align-items:center"><div class="qt"><button data-bq="'+i+'" data-dd="-1">−</button><b>'+x.q+'</b><button data-bq="'+i+'" data-dd="1">+</button></div><b>'+inr(x.q*x.p)+'</b></div></div>'}).join('')+
+  '<label style="margin-top:16px">When?</label><div class="slots">'+['ASAP','12:30 PM','1:30 PM','7:30 PM','8:30 PM'].map(function(s){return '<button data-slot="'+s+'" aria-pressed="'+(slot===s)+'">'+(s==='ASAP'?'⚡ ASAP (35 min)':'🕒 '+s)+'</button>'}).join('')+'</div><label>Deliver to<input id="addr" placeholder="Any demo address" autocomplete="off"></label><label>Phone<input id="ph" inputmode="numeric" maxlength="10" placeholder="10 digits" autocomplete="off"></label><div class="li"><span>Delivery</span><b>'+(d?inr(d):'Free')+'</b></div><div class="tot"><span>To pay</span><span>'+inr(t+d)+'</span></div><button class="go" id="place">Place order · Cash on delivery</button>')}
+function track(){var st=0,eta=35,pos=0;var S=[['🧾','Order received'],['👩‍🍳','Cooking your thali'],['🛵','Out for delivery'],['🏠','Delivered']];
+  function draw(){sheet('<h2>Live tracking <button data-close aria-label="Close">✕</button></h2><div class="trk"><p style="color:var(--muted);font-weight:500">'+(st<3?'Arriving in':'Enjoy your meal!')+'</p><div class="eta">'+(st<3?eta+' min':'🎉')+'</div><div class="st">'+S.map(function(s,i){return '<div class="'+(i<st?'done':i===st?'on':'')+'"><i>'+(i<st?'✅':s[0])+'</i>'+s[1]+'</div>'}).join('')+'</div><div class="road"><span class="rider" style="left:calc('+pos+'% - '+pos*.4+'px)">🛵</span><span class="home">🏠</span></div>'+(st===3?'<p style="margin-top:14px;font-weight:800">How was it?</p><div class="stars">'+[1,2,3,4,5].map(function(n){return '<button data-star="'+n+'">⭐</button>'}).join('')+'</div>':'<p style="color:var(--muted);font-size:.85rem;margin-top:10px;font-weight:500">Demo runs fast-forward ⏩</p>')+'</div>')}
+  draw();var iv=setInterval(function(){eta=Math.max(0,eta-3);if(st===0&&eta<=32)st=1;if(st===1&&eta<=20)st=2;if(st===2)pos=Math.min(88,pos+14);if(st===2&&eta<=0){st=3;pos=88;clearInterval(iv);toast('Delivered! 🎉')}if($('#ov').classList.contains('on'))draw();else clearInterval(iv)},1100)}
+document.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;
+  if(b.dataset.m){meal=b.dataset.m;pick={base:[],dal:[],sabzi:[],extra:[]};document.querySelectorAll('#meal button').forEach(function(x){x.setAttribute('aria-pressed',x===b)});groups();toast(meal+' menu')}
+  else if(b.dataset.g){var g=b.dataset.g,i=+b.dataset.i,a=pick[g],k=a.indexOf(i);if(k>-1)a.splice(k,1);else{if(a.length>=LIM[g]){if(LIM[g]===1)a.length=0;else return toast('Max '+LIM[g]+' — remove one first')}a.push(i)}groups()}
+  else if(b.id==='addThali'){var c=chosen();addBag('Custom '+meal+' thali',c.map(function(x){return x[1]}).join(', '),c.reduce(function(a,x){return a+x[2]},0));pick={base:[],dal:[],sabzi:[],extra:[]};groups()}
+  else if(b.dataset.tab){document.querySelectorAll('[data-tab]').forEach(function(x){x.setAttribute('aria-pressed',x===b)});$('#t-build').hidden=b.dataset.tab!=='build';$('#t-combo').hidden=b.dataset.tab!=='combo'}
+  else if(b.dataset.combo){var cc=COMBOS[+b.dataset.combo];addBag(cc[1]+' combo',cc[2],cc[3])}
+  else if(b.id==='bagBtn')checkout();
+  else if(b.dataset.bq){var x=bag[+b.dataset.bq];x.q+=+b.dataset.dd;if(x.q<1)bag.splice(+b.dataset.bq,1);bagUI();if(bag.length)checkout();else close()}
+  else if(b.dataset.slot){slot=b.dataset.slot;var a1=$('#addr').value,p1=$('#ph').value;checkout();$('#addr').value=a1;$('#ph').value=p1}
+  else if(b.id==='place'){var ad=$('#addr'),ph=$('#ph'),ok=true;ad.classList.toggle('bad',ad.value.trim().length<4);ph.classList.toggle('bad',!/^[6-9]\d{9}$/.test(ph.value));if(ad.value.trim().length<4||!/^[6-9]\d{9}$/.test(ph.value))return toast('Please fill address & phone');bag=[];bagUI();track()}
+  else if(b.dataset.star){var n=+b.dataset.star;document.querySelectorAll('.stars button').forEach(function(s,i){s.classList.toggle('on',i<n)});toast('Thanks for rating '+n+'★')}
+  else if(b.hasAttribute('data-close'))close();
+});
+$('#ov').addEventListener('click',function(e){if(e.target.id==='ov')close()});
+groups();combos();
+})();
+</script>
+</body>
+</html>

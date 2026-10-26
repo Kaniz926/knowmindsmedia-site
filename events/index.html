@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Utsav Passes (Demo) — Event ticketing demo by KnowMinds Media</title>
+<meta name="description" content="Utsav Passes is a demo event-ticketing app built by KnowMinds Media: date-strip discovery, ticket tiers with live stock, group discounts, QR passes and add-to-calendar.">
+<link rel="canonical" href="https://knowmindsmedia.com/events/">
+<meta name="theme-color" content="#ec4899">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23ec4899'/%3E%3Cpath d='M14 22h36v8a4 4 0 0 0 0 8v8H14v-8a4 4 0 0 0 0-8z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--pink:#ec4899;--vio:#7c3aed;--org:#f97316;--ink:#1a1033;--muted:#6e6585;--line:#ece7f4;--bg:#fdfbff}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Karla,system-ui,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+button,input,select{font:inherit;color:inherit}
+.syne{font-family:Syne,sans-serif}
+.demo{background:linear-gradient(90deg,var(--vio),var(--pink),var(--org));color:#fff;text-align:center;font-size:.8rem;padding:7px 12px;font-weight:600}
+.demo a{color:#fff}
+.wrap{max-width:1180px;margin:0 auto;padding:0 18px}
+header .wrap{display:flex;justify-content:space-between;align-items:center;height:74px}
+.logo{display:flex;align-items:center;gap:10px;font-family:Syne;font-weight:800;font-size:1.5rem;letter-spacing:-.02em}
+.logo svg{width:36px;height:36px}
+.logo small{font-family:Karla;font-size:.65rem;font-weight:700;color:var(--pink);border:1.5px solid var(--pink);border-radius:5px;padding:1px 5px}
+.hb{border:1.5px solid var(--ink);background:#fff;border-radius:999px;padding:8px 16px;font-weight:700;cursor:pointer}
+.hero h1{font-family:Syne;font-weight:800;font-size:clamp(2.4rem,7vw,5.4rem);line-height:.92;letter-spacing:-.04em;margin:16px 0 10px}
+.hero h1 .g{background:linear-gradient(90deg,var(--vio),var(--pink),var(--org));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--muted);font-size:1.1rem}
+.ctl{display:flex;gap:10px;align-items:center;margin:24px 0 10px;flex-wrap:wrap}
+.ctl select{border:1.5px solid var(--line);border-radius:12px;padding:9px 12px;background:#fff;font-weight:600}
+.dates{display:flex;gap:8px;overflow-x:auto;padding:6px 0 10px;scroll-snap-type:x mandatory}
+.dates button{flex:none;scroll-snap-align:start;width:72px;border:1.5px solid var(--line);background:#fff;border-radius:18px;padding:10px 0;cursor:pointer;text-align:center;position:relative}
+.dates button small{display:block;font-size:.72rem;color:var(--muted);font-weight:700;text-transform:uppercase}
+.dates button b{font-family:Syne;font-size:1.5rem;display:block;line-height:1.1}
+.dates button .dot{position:absolute;bottom:6px;left:50%;transform:translateX(-50%);width:6px;height:6px;border-radius:50%;background:var(--pink)}
+.dates button[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.dates button[aria-pressed="true"] small{color:#c9bfe6}
+.cats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.cats button{border:0;background:#f2edf9;border-radius:999px;padding:8px 14px;font-weight:700;cursor:pointer}
+.cats button[aria-pressed="true"]{background:var(--pink);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:50px}
+@media (max-width:960px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:600px){.grid{grid-template-columns:1fr}}
+.ev{border-radius:24px;overflow:hidden;background:#fff;border:1.5px solid var(--line);cursor:pointer;transition:transform .25s,box-shadow .25s;display:flex;flex-direction:column;text-align:left;padding:0}
+.ev:hover{transform:translateY(-5px) rotate(-.4deg);box-shadow:0 20px 40px rgba(124,58,237,.15)}
+.poster{aspect-ratio:4/3;position:relative;color:#fff;padding:18px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden}
+.poster .big{font-family:Syne;font-weight:800;font-size:1.9rem;line-height:.95;letter-spacing:-.02em;position:relative;z-index:1;text-transform:uppercase}
+.poster .shape{position:absolute;border-radius:50%;opacity:.35}
+.poster .tg{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:.8rem}
+.poster .tg span{background:rgba(255,255,255,.25);backdrop-filter:blur(4px);border-radius:999px;padding:3px 10px}
+.so{background:#111!important}
+.evb{padding:14px 16px 16px}
+.evb b{font-size:1.05rem;display:block}
+.evb small{color:var(--muted)}
+.evf{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+.evf .p{font-family:Syne;font-weight:800;font-size:1.2rem}
+.fill{height:6px;border-radius:9px;background:var(--line);overflow:hidden;margin-top:8px}
+.fill i{display:block;height:100%;background:linear-gradient(90deg,var(--vio),var(--pink))}
+.empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:40px 0}
+.ov{position:fixed;inset:0;background:rgba(26,16,51,.55);z-index:40;display:none;place-items:center;padding:14px}
+.ov.on{display:grid}
+.mod{background:#fff;border-radius:28px;width:min(720px,100%);max-height:94vh;overflow:auto;position:relative;animation:pop .3s cubic-bezier(.2,1.2,.4,1)}
+@keyframes pop{from{opacity:0;transform:scale(.94)}}
+.x{position:absolute;top:14px;right:14px;width:38px;height:38px;border-radius:50%;border:0;background:rgba(255,255,255,.9);cursor:pointer;z-index:3}
+.mod .poster{aspect-ratio:auto;min-height:200px}
+.mb{padding:22px 24px 26px}
+.mb h2{font-family:Syne;font-weight:800;font-size:1.7rem;line-height:1.05}
+.info{display:flex;gap:16px;flex-wrap:wrap;color:var(--muted);font-weight:600;margin:10px 0 16px;font-size:.92rem}
+.tier{border:1.5px solid var(--line);border-radius:18px;padding:14px 16px;display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;margin-bottom:10px}
+.tier.out{opacity:.5}
+.tier b{font-size:1.05rem}
+.tier small{display:block;color:var(--muted)}
+.tier .left{font-size:.78rem;font-weight:700;color:var(--org)}
+.step{display:flex;align-items:center;gap:10px}
+.step button{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--ink);background:#fff;cursor:pointer;font-weight:800}
+.step button:disabled{opacity:.3;cursor:not-allowed}
+.step span{min-width:18px;text-align:center;font-weight:800;font-size:1.1rem}
+.sum{background:#f7f3fd;border-radius:18px;padding:14px 16px;margin-top:12px}
+.sum div{display:flex;justify-content:space-between;padding:3px 0}
+.sum .t{font-family:Syne;font-weight:800;font-size:1.3rem;border-top:1.5px dashed #d9cfee;margin-top:6px;padding-top:8px}
+.disc{color:#059669;font-weight:700}
+.cta{width:100%;border:0;background:linear-gradient(90deg,var(--vio),var(--pink));color:#fff;border-radius:16px;padding:15px;font-weight:800;font-size:1.05rem;cursor:pointer;margin-top:14px}
+.cta:disabled{opacity:.4;cursor:not-allowed}
+.cta.o{background:#fff;color:var(--ink);border:1.5px solid var(--ink)}
+.att{display:grid;gap:8px;margin-top:10px}
+.att input{border:1.5px solid var(--line);border-radius:12px;padding:11px 12px;font-size:16px}
+.att input.bad{border-color:#dc2626}
+.passes{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 2px 14px}
+.pass{flex:none;width:250px;scroll-snap-align:center;border-radius:22px;overflow:hidden;background:#fff;border:1.5px solid var(--line);box-shadow:0 10px 30px rgba(124,58,237,.12)}
+.pass .ph{padding:14px 16px;color:#fff}
+.pass .ph b{font-family:Syne;font-size:1.1rem;display:block;line-height:1.1}
+.pass .pb{padding:14px 16px;text-align:center}
+.pass svg{width:150px;height:150px;margin:6px auto;display:block}
+.pass .nm{font-weight:800}
+.pass small{color:var(--muted);display:block}
+.row2{display:flex;gap:10px;margin-top:6px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,20px);background:var(--ink);color:#fff;padding:12px 18px;border-radius:14px;font-weight:700;opacity:0;transition:.3s;z-index:60}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+footer{border-top:1.5px solid var(--line);padding:24px 0 34px;color:var(--muted);font-size:.86rem}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+footer a{color:var(--pink);font-weight:700}
+</style>
+</head>
+<body>
+<div class="demo">Demo app by <a href="https://knowmindsmedia.com/" target="_blank" rel="noopener">KnowMinds Media</a> — Utsav Passes and all events are fictional. Passes are not valid for entry.</div>
+<header><div class="wrap"><div class="logo"><svg viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="#1a1033"/><path d="M14 22h36v8a4 4 0 0 0 0 8v8H14v-8a4 4 0 0 0 0-8z" fill="#ec4899"/><path d="M36 22v24" stroke="#1a1033" stroke-width="2" stroke-dasharray="3 3"/></svg>Utsav Passes<small>DEMO</small></div><button class="hb" id="myBtn">🎟️ My passes</button></div></header>
+<main class="wrap">
+  <section class="hero"><h1>What's on <span class="g">this week?</span></h1><p>Concerts, comedy, workshops and food fests across Odisha — book in seconds, show a QR at the gate.</p></section>
+  <div class="ctl"><select id="city" aria-label="City"><option>Bhubaneswar</option><option>Cuttack</option><option>Puri</option></select><span style="color:var(--muted);font-weight:600">Pick a date ↓</span></div>
+  <div class="dates" id="dates"></div>
+  <div class="cats" id="cats"></div>
+  <section class="grid" id="grid"></section>
+</main>
+<footer><div class="wrap"><span>© 2026 Utsav Passes — fictional demo events.</span><span>Designed &amp; built by <a href="https://knowmindsmedia.com/" target="_blank" rel="noopener">KnowMinds Media</a> · <a href="https://knowmindsmedia.com/#demo" target="_blank" rel="noopener">Get a ticketing app</a></span></div></footer>
+<div class="ov" id="ov"><div class="mod" id="mod"></div></div>
+<div class="toast" id="toast"></div>
+<script>
+(function(){
+var $=function(s){return document.querySelector(s)};
+var GR=[['#7c3aed','#ec4899'],['#f97316','#facc15'],['#0ea5e9','#22d3ee'],['#16a34a','#a3e635'],['#e11d48','#f97316'],['#4338ca','#06b6d4']];
+var CATS=['All','Music','Comedy','Workshop','Food','Sports'];
+var EV=[
+ {id:1,t:'Monsoon Indie Nights',c:'Music',v:'Pathani Samanta Planetarium Lawns',city:'Bhubaneswar',d:0,h:'7:00 PM',tiers:[['Early bird',499,0,100],['General',799,64,200],['VIP lounge',1999,6,40]]},
+ {id:2,t:'Stand-up: Odia Jokes Only',c:'Comedy',v:'The Black Box Café',city:'Bhubaneswar',d:1,h:'8:30 PM',tiers:[['Standard',399,22,80],['Front row',699,3,12]]},
+ {id:3,t:'Pattachitra Painting Workshop',c:'Workshop',v:'Raghurajpur Craft Village',city:'Puri',d:2,h:'10:00 AM',tiers:[['Participant',1200,9,20],['Participant + kit',1800,4,10]]},
+ {id:4,t:'Street Food Carnival',c:'Food',v:'Barabati Stadium Grounds',city:'Cuttack',d:2,h:'5:00 PM',tiers:[['Entry',149,420,1000],['Entry + 5 food coupons',499,85,300]]},
+ {id:5,t:'Sunrise Beach 5K Run',c:'Sports',v:'Puri Beach, Blue Flag Zone',city:'Puri',d:4,h:'5:30 AM',tiers:[['Runner',599,140,500],['Runner + T-shirt',899,0,150]]},
+ {id:6,t:'Sufi & Folk Evening',c:'Music',v:'Rabindra Mandap',city:'Bhubaneswar',d:5,h:'6:30 PM',tiers:[['Balcony',350,55,150],['Stalls',650,18,200],['Premium',1200,0,30]]},
+ {id:7,t:'Startup Pitch Night',c:'Workshop',v:'Startup Odisha Hub',city:'Bhubaneswar',d:6,h:'6:00 PM',tiers:[['Audience',0,48,120],['Founder pass',299,7,30]]},
+ {id:8,t:'Cuttack Comic Con-ish',c:'Comedy',v:'Netaji Indoor Hall',city:'Cuttack',d:7,h:'4:00 PM',tiers:[['Day pass',299,0,400],['Cosplay pass',499,0,100]]},
+ {id:9,t:'Odisha Craft Beer & BBQ',c:'Food',v:'Riverside Deck',city:'Cuttack',d:8,h:'7:30 PM',tiers:[['Entry',799,36,150]]}
+];
+function L(k,d){try{return JSON.parse(localStorage.getItem('up_'+k))||d}catch(e){return d}}function S(k,v){try{localStorage.setItem('up_'+k,JSON.stringify(v))}catch(e){}}
+var city='Bhubaneswar',day=-1,cat='All',passes=L('passes',[]),wait=L('wait',[]);
+function toast(m){var t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove('on')},2000)}
+function inr(n){return n?'₹'+n.toLocaleString('en-IN'):'Free'}
+function dd(i){var d=new Date();d.setDate(d.getDate()+i);return d}
+function left(e){return e.tiers.reduce(function(a,t){return a+t[2]},0)}
+function cap(e){return e.tiers.reduce(function(a,t){return a+t[3]},0)}
+function from(e){var av=e.tiers.filter(function(t){return t[2]>0});return av.length?Math.min.apply(0,av.map(function(t){return t[1]})):null}
+function poster(e,big){var g=GR[e.id%GR.length],so=!left(e);return '<div class="poster'+(so?' so':'')+'" style="background:linear-gradient(135deg,'+g[0]+','+g[1]+')"><span class="shape" style="width:'+(120+e.id*14)+'px;height:'+(120+e.id*14)+'px;background:#fff;right:-'+(30+e.id*4)+'px;top:-'+(20+e.id*5)+'px"></span><span class="shape" style="width:80px;height:80px;background:'+g[0]+';left:-20px;bottom:-20px;opacity:.6"></span><div class="tg"><span>'+e.c+'</span><span>'+dd(e.d).toLocaleDateString('en-IN',{day:'numeric',month:'short'})+'</span></div><div class="big"'+(big?' style="font-size:2.6rem"':'')+'>'+e.t+'</div>'+(so?'<div class="tg"><span style="background:#ec4899">SOLD OUT</span></div>':'')+'</div>'}
+function dates(){$('#dates').innerHTML='<button data-d="-1" aria-pressed="'+(day===-1)+'"><small>All</small><b>★</b></button>'+[0,1,2,3,4,5,6,7,8,9].map(function(i){var d=dd(i),has=EV.some(function(e){return e.d===i&&e.city===city});return '<button data-d="'+i+'" aria-pressed="'+(day===i)+'"><small>'+(i===0?'Today':d.toLocaleDateString('en-IN',{weekday:'short'}))+'</small><b>'+d.getDate()+'</b>'+(has?'<span class="dot"></span>':'')+'</button>'}).join('')}
+$('#cats').innerHTML=CATS.map(function(c){return '<button data-c="'+c+'" aria-pressed="'+(c==='All')+'">'+c+'</button>'}).join('');
+function grid(){var l=EV.filter(function(e){return e.city===city&&(day<0||e.d===day)&&(cat==='All'||e.c===cat)});
+  $('#grid').innerHTML=l.length?l.map(function(e){var f=from(e),sold=cap(e)-left(e);return '<button class="ev" data-e="'+e.id+'">'+poster(e)+'<div class="evb"><b>'+e.t+'</b><small>'+e.v+' · '+e.h+'</small><div class="fill"><i style="width:'+Math.round(sold/cap(e)*100)+'%"></i></div><div class="evf"><small>'+(left(e)?Math.round(sold/cap(e)*100)+'% sold':'Join waitlist')+'</small><span class="p">'+(f===null?'—':(f?'from '+inr(f):'Free'))+'</span></div></div></button>'}).join(''):'<div class="empty">No events on this day in '+city+'. Try another date ✨</div>'}
+function mod(h){$('#mod').innerHTML='<button class="x" data-x aria-label="Close">✕</button>'+h;$('#ov').classList.add('on');$('#mod').scrollTop=0}
+function close(){$('#ov').classList.remove('on');$('#mod').onclick=null}
+function open(id){var e=EV.filter(function(x){return x.id===id})[0],q=e.tiers.map(function(){return 0});
+  if(!left(e)){var on=wait.indexOf(id)>-1;mod(poster(e,1)+'<div class="mb"><h2>'+e.t+'</h2><div class="info"><span>📅 '+dd(e.d).toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long'})+'</span><span>⏰ '+e.h+'</span><span>📍 '+e.v+'</span></div><p>All tickets are sold out. Join the waitlist and we\'ll message you if seats open up.</p><button class="cta" id="wl" '+(on?'disabled':'')+'>'+(on?'✓ You\'re on the waitlist':'Join waitlist')+'</button></div>');$('#mod').onclick=function(ev){if(ev.target.id==='wl'){wait.push(id);S('wait',wait);toast('Added to waitlist 🔔');open(id)}};return}
+  function draw(){var n=q.reduce(function(a,b){return a+b},0),sub=q.reduce(function(a,b,i){return a+b*e.tiers[i][1]},0),disc=n>=4?Math.round(sub*.1):0,fee=sub?Math.round((sub-disc)*.05):0;
+    mod(poster(e,1)+'<div class="mb"><h2>'+e.t+'</h2><div class="info"><span>📅 '+dd(e.d).toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long'})+'</span><span>⏰ '+e.h+'</span><span>📍 '+e.v+'</span></div>'+
+    e.tiers.map(function(t,i){var out=t[2]===0;return '<div class="tier'+(out?' out':'')+'"><div><b>'+t[0]+'</b><small>'+inr(t[1])+(out?' · sold out':'')+'</small>'+(!out&&t[2]<=10?'<span class="left">🔥 only '+t[2]+' left</span>':'')+'</div><div class="step"><button data-m="'+i+'" '+(q[i]?'':'disabled')+' aria-label="Fewer">−</button><span>'+q[i]+'</span><button data-p="'+i+'" '+(out||q[i]>=Math.min(t[2],6)||n>=6?'disabled':'')+' aria-label="More">+</button></div></div>'}).join('')+
+    '<p style="font-size:.85rem;color:var(--muted)">Max 6 per booking · <b style="color:#059669">Book 4+ and save 10%</b></p>'+(n?'<div class="sum"><div><span>'+n+' ticket'+(n>1?'s':'')+'</span><span>'+inr(sub)+'</span></div>'+(disc?'<div class="disc"><span>Group discount</span><span>−'+inr(disc)+'</span></div>':'')+(fee?'<div><span>Booking fee</span><span>'+inr(fee)+'</span></div>':'')+'<div class="t"><span>Total</span><span>'+(sub-disc+fee?inr(sub-disc+fee):'Free')+'</span></div></div>':'')+'<button class="cta" id="next" '+(n?'':'disabled')+'>'+(n?'Add attendee names →':'Select tickets')+'</button></div>')}
+  draw();$('#mod').onclick=function(ev){var b=ev.target.closest('button');if(!b)return;if(b.dataset.p!==undefined){q[+b.dataset.p]++;draw()}if(b.dataset.m!==undefined){q[+b.dataset.m]--;draw()}if(b.id==='next')names(e,q)}}
+function names(e,q){var list=[];q.forEach(function(n,i){for(var k=0;k<n;k++)list.push(e.tiers[i][0])});
+  mod('<div class="mb" style="padding-top:28px"><h2>Who\'s going?</h2><p style="color:var(--muted);margin:6px 0">One name per pass — it appears on the QR ticket.</p><div class="att">'+list.map(function(t,i){return '<input data-n="'+i+'" placeholder="Attendee '+(i+1)+' · '+t+'" autocomplete="off">'}).join('')+'</div><button class="cta" id="pay">Confirm & get passes (demo)</button><button class="cta o" id="bk">← Back</button></div>');
+  $('#mod').onclick=function(ev){var b=ev.target.closest('button');if(!b)return;if(b.id==='bk')open(e.id);if(b.id==='pay'){var ins=document.querySelectorAll('[data-n]'),ok=true,nm=[];ins.forEach(function(x){var g=x.value.trim().length>1;x.classList.toggle('bad',!g);if(!g)ok=false;nm.push(x.value.trim())});if(!ok)return toast('Please add every attendee name');
+    var bid='UP'+Math.random().toString(36).slice(2,7).toUpperCase(),mine=nm.map(function(n,i){return {b:bid,id:bid+'-'+(i+1),e:e.id,n:n,t:list[i]}});q.forEach(function(n,i){e.tiers[i][2]-=n});passes=mine.concat(passes);S('passes',passes);grid();show(mine,true)}}}
+function qr(s){var h=7,c='<svg viewBox="0 0 25 25"><rect width="25" height="25" fill="#fff"/>';for(var y=0;y<25;y++)for(var x=0;x<25;x++){h=(h*167+s.charCodeAt((x*y+x)%s.length)+x+y*3)%2027;var f=(x<7&&y<7)||(x>17&&y<7)||(x<7&&y>17);if(f){var a=x>17?x-18:x,b=y>17?y-18:y;if(a===0||a===6||b===0||b===6||(a>1&&a<5&&b>1&&b<5))c+='<rect x="'+x+'" y="'+y+'" width="1" height="1" fill="#1a1033"/>'}else if(h%2===0)c+='<rect x="'+x+'" y="'+y+'" width="1" height="1" fill="#1a1033"/>'}return c+'</svg>'}
+function show(ps,fresh){var e=EV.filter(function(x){return x.id===ps[0].e})[0];
+  mod('<div class="mb" style="padding-top:28px"><h2>'+(fresh?'You\'re in! 🎉':'My passes')+'</h2><p style="color:var(--muted);margin:6px 0 10px">'+(fresh?'Swipe to see every pass. Show the QR at the gate (demo).':ps.length+' pass'+(ps.length>1?'es':''))+'</p><div class="passes">'+ps.map(function(p){var ev=EV.filter(function(x){return x.id===p.e})[0],g=GR[ev.id%GR.length];return '<div class="pass"><div class="ph" style="background:linear-gradient(135deg,'+g[0]+','+g[1]+')"><b>'+ev.t+'</b><small style="color:#fff;opacity:.9">'+dd(ev.d).toLocaleDateString('en-IN',{day:'numeric',month:'short'})+' · '+ev.h+'</small></div><div class="pb">'+qr(p.id)+'<span class="nm">'+p.n+'</span><small>'+p.t+' · '+p.id+'</small></div></div>'}).join('')+'</div>'+(fresh?'<div class="row2"><button class="cta" id="ics" style="margin-top:0">📅 Add to calendar</button><button class="cta o" id="sh" style="margin-top:0">📤 Share</button></div>':''));
+  $('#mod').onclick=function(ev){var b=ev.target.closest('button');if(!b)return;if(b.id==='ics'){var d=dd(e.d),m=e.h.match(/(\d+):(\d+) (AM|PM)/),hr=+m[1]%12+(m[3]==='PM'?12:0);d.setHours(hr,+m[2],0,0);var z=function(x){return x.toISOString().replace(/[-:]/g,'').split('.')[0]+'Z'},end=new Date(d.getTime()+3*36e5);
+    var ics='BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Utsav Passes Demo//EN\r\nBEGIN:VEVENT\r\nUID:'+ps[0].b+'@events.knowmindsmedia.com\r\nDTSTAMP:'+z(new Date())+'\r\nDTSTART:'+z(d)+'\r\nDTEND:'+z(end)+'\r\nSUMMARY:'+e.t+' (demo)\r\nLOCATION:'+e.v+', '+e.city+'\r\nEND:VEVENT\r\nEND:VCALENDAR';var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([ics],{type:'text/calendar'}));a.download='utsav-'+e.id+'.ics';a.click();toast('Calendar file downloaded')}
+    if(b.id==='sh'){var t='I\'m going to '+e.t+' on '+dd(e.d).toLocaleDateString('en-IN',{day:'numeric',month:'short'})+'! 🎉';if(navigator.share)navigator.share({title:e.t,text:t}).catch(function(){});else{try{navigator.clipboard.writeText(t)}catch(x){}toast('Copied to share')}}}}
+document.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;
+  if(b.dataset.d!==undefined){day=+b.dataset.d;dates();grid()}
+  else if(b.dataset.c){cat=b.dataset.c;document.querySelectorAll('#cats button').forEach(function(x){x.setAttribute('aria-pressed',x===b)});grid()}
+  else if(b.dataset.e){open(+b.dataset.e)}
+  else if(b.id==='myBtn'){if(!passes.length)return toast('No passes yet — book an event!');show(passes)}
+  else if(b.hasAttribute('data-x'))close();
+});
+$('#ov').addEventListener('click',function(e){if(e.target.id==='ov')close()});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});
+$('#city').addEventListener('change',function(){city=this.value;day=-1;dates();grid()});
+dates();grid();
+})();
+</script>
+</body>
+</html>

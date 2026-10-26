@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sehat Clinic (Demo) — Appointment booking demo by KnowMinds Media</title>
+<meta name="description" content="Sehat Clinic is a demo doctor-appointment app built by KnowMinds Media: symptom-based booking, doctor selection, time slots and a live token queue.">
+<link rel="canonical" href="https://knowmindsmedia.com/clinic/">
+<meta name="theme-color" content="#0f766e">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='32' fill='%230f766e'/%3E%3Cpath d='M28 16h8v12h12v8H36v12h-8V36H16v-8h12z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--teal:#0f766e;--teal-l:#ccfbef;--teal-xl:#effdf8;--ink:#12302c;--muted:#5e7a75;--line:#d7ece7;--bg:#f6fbfa;--coral:#f97362;--sun:#fbbf24;--r:22px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Nunito,system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased}
+button,input,select{font:inherit;color:inherit}
+.demo{background:var(--teal);color:#d9fff6;text-align:center;font-size:.82rem;padding:7px 12px}
+.demo a{color:#fff;font-weight:800}
+.wrap{max-width:1120px;margin:0 auto;padding:0 18px}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:72px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:900;font-size:1.3rem;color:var(--ink);text-decoration:none}
+.logo i{width:38px;height:38px;border-radius:50%;background:var(--teal);display:grid;place-items:center;color:#fff;font-style:normal;font-size:1.3rem}
+.logo small{display:block;font-size:.7rem;font-weight:700;color:var(--muted);margin-top:-4px}
+.pill{border:2px solid var(--line);background:#fff;border-radius:999px;padding:9px 16px;font-weight:800;cursor:pointer;font-size:.9rem}
+.pill:hover{border-color:var(--teal)}
+.intro{display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:center;padding:20px 0 30px}
+.intro h1{font-size:clamp(2rem,4.2vw,3.2rem);line-height:1.08;font-weight:900;letter-spacing:-.02em}
+.intro h1 span{color:var(--teal);background:var(--teal-l);border-radius:12px;padding:0 10px}
+.intro p{color:var(--muted);font-size:1.08rem;margin-top:14px;max-width:480px}
+.stats{display:flex;gap:26px;margin-top:20px}
+.stats b{display:block;font-size:1.5rem;font-weight:900;color:var(--teal)}
+.stats span{font-size:.82rem;color:var(--muted)}
+.ill{background:var(--teal-l);border-radius:40px;aspect-ratio:1.15;position:relative;overflow:hidden}
+.ill svg{position:absolute;inset:0;width:100%;height:100%}
+.q-card{position:absolute;right:16px;bottom:16px;background:#fff;border-radius:18px;padding:12px 16px;box-shadow:0 14px 40px rgba(15,118,110,.18);font-weight:800;font-size:.9rem;display:flex;align-items:center;gap:10px}
+.q-card i{width:12px;height:12px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 0 rgba(34,197,94,.5);animation:pl 1.6s infinite;font-style:normal}
+@keyframes pl{70%{box-shadow:0 0 0 10px rgba(34,197,94,0)}}
+@media (max-width:820px){.intro{grid-template-columns:1fr}.ill{max-height:260px}}
+
+.book{background:#fff;border:2px solid var(--line);border-radius:30px;padding:26px;display:grid;grid-template-columns:1fr 280px;gap:26px;margin-bottom:40px}
+@media (max-width:900px){.book{grid-template-columns:1fr;padding:18px}}
+.steps{display:flex;gap:6px;margin-bottom:22px}
+.steps div{flex:1;height:6px;border-radius:99px;background:var(--line);position:relative;overflow:hidden}
+.steps div.on::after{content:"";position:absolute;inset:0;background:var(--teal);animation:fill .4s forwards}
+@keyframes fill{from{transform:translateX(-100%)}}
+.stl{font-size:.8rem;font-weight:800;color:var(--teal);text-transform:uppercase;letter-spacing:.08em}
+.stage h2{font-size:1.6rem;font-weight:900;margin:4px 0 16px}
+.stage{animation:in .35s}
+@keyframes in{from{opacity:0;transform:translateX(14px)}}
+.sym{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media (max-width:640px){.sym{grid-template-columns:repeat(2,1fr)}}
+.sym button{border:2px solid var(--line);background:var(--teal-xl);border-radius:20px;padding:18px 10px;cursor:pointer;font-weight:800;display:flex;flex-direction:column;align-items:center;gap:8px;transition:.15s}
+.sym button:hover{border-color:var(--teal);transform:translateY(-3px)}
+.sym span{font-size:2rem}
+.docs{display:grid;gap:12px}
+.doc{display:grid;grid-template-columns:64px 1fr auto;gap:14px;align-items:center;border:2px solid var(--line);border-radius:20px;padding:14px;cursor:pointer;background:#fff;text-align:left;transition:.15s}
+.doc:hover,.doc[aria-pressed="true"]{border-color:var(--teal);background:var(--teal-xl)}
+.face{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;font-size:1.6rem;font-weight:900;color:#fff}
+.doc b{font-size:1.05rem}
+.doc small{display:block;color:var(--muted);font-size:.84rem}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.tags span{font-size:.72rem;font-weight:800;background:var(--teal-l);color:var(--teal);border-radius:99px;padding:2px 8px}
+.tags span.sun{background:#fff4d6;color:#a16207}
+.fee{text-align:right;font-weight:900;font-size:1.1rem}
+.fee small{font-weight:700}
+.days{display:flex;gap:8px;overflow:auto;padding-bottom:6px;margin-bottom:16px}
+.day{border:2px solid var(--line);border-radius:16px;padding:10px 0;min-width:68px;text-align:center;cursor:pointer;background:#fff;font-weight:800}
+.day small{display:block;font-size:.72rem;color:var(--muted);font-weight:700}
+.day[aria-pressed="true"]{background:var(--teal);border-color:var(--teal);color:#fff}
+.day[aria-pressed="true"] small{color:#ccfbef}
+.slots h4{font-size:.9rem;margin:12px 0 8px;color:var(--muted)}
+.sl{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:8px}
+.sl button{border:2px solid var(--line);border-radius:12px;padding:9px 0;font-weight:800;cursor:pointer;background:#fff}
+.sl button:disabled{opacity:.4;text-decoration:line-through;cursor:not-allowed}
+.sl button[aria-pressed="true"]{background:var(--teal);color:#fff;border-color:var(--teal)}
+.f{display:grid;gap:12px}
+.f label{display:grid;gap:6px;font-weight:800;font-size:.9rem}
+.f input,.f select{border:2px solid var(--line);border-radius:14px;padding:12px 14px;background:#fff;font-size:16px}
+.f input:focus,.f select:focus{outline:none;border-color:var(--teal)}
+.f .bad{border-color:var(--coral);background:#fff5f3}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mode{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mode label{flex-direction:row;display:flex;align-items:center;gap:10px;border:2px solid var(--line);border-radius:14px;padding:12px;cursor:pointer}
+.mode input{accent-color:var(--teal);width:18px;height:18px}
+.nav{display:flex;justify-content:space-between;margin-top:22px}
+.go{border:0;background:var(--teal);color:#fff;border-radius:14px;padding:13px 22px;font-weight:900;cursor:pointer;font-size:1rem}
+.go:disabled{opacity:.4;cursor:not-allowed}
+.back{border:0;background:none;font-weight:800;color:var(--muted);cursor:pointer}
+.sum{background:var(--teal-xl);border-radius:22px;padding:20px;align-self:start;position:sticky;top:16px}
+.sum h3{font-weight:900;margin-bottom:12px}
+.sum div{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px dashed var(--line);font-size:.9rem}
+.sum div span{color:var(--muted)}
+.sum div b{text-align:right}
+.sum p{font-size:.8rem;color:var(--muted);margin-top:12px}
+.token{text-align:center;padding:10px 0}
+.tk{width:150px;height:150px;border-radius:50%;margin:10px auto 16px;background:conic-gradient(var(--teal) var(--p,0%),var(--teal-l) 0);display:grid;place-items:center;transition:--p .5s}
+.tk div{width:122px;height:122px;border-radius:50%;background:#fff;display:grid;place-items:center;align-content:center}
+.tk b{font-size:2.6rem;font-weight:900;color:var(--teal);line-height:1}
+.tk small{font-size:.75rem;color:var(--muted);font-weight:800}
+.qline{display:flex;justify-content:center;gap:6px;margin:12px 0}
+.qline i{width:30px;height:30px;border-radius:50%;background:var(--line);display:grid;place-items:center;font-style:normal;font-size:.75rem;font-weight:900;color:var(--muted);transition:.4s}
+.qline i.done{background:var(--teal-l);color:var(--teal)}
+.qline i.me{background:var(--coral);color:#fff;transform:scale(1.15)}
+.live{display:inline-flex;align-items:center;gap:8px;background:#ecfdf5;color:#047857;border-radius:99px;padding:6px 14px;font-weight:800;font-size:.85rem}
+.live i{width:9px;height:9px;border-radius:50%;background:#22c55e;animation:pl 1.6s infinite}
+.appts{display:grid;gap:10px}
+.ap{border:2px solid var(--line);border-radius:18px;padding:14px;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+.ap b{display:block}
+.ap small{color:var(--muted)}
+.ap .acts{display:flex;gap:8px}
+.ap .acts button{border:2px solid var(--line);background:#fff;border-radius:10px;padding:6px 12px;font-weight:800;cursor:pointer;font-size:.82rem}
+.ap .acts .cx{color:var(--coral)}
+.toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,20px);background:var(--ink);color:#fff;padding:12px 18px;border-radius:14px;font-weight:700;opacity:0;transition:.3s;z-index:50}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+footer{border-top:2px solid var(--line);padding:24px 0 34px;color:var(--muted);font-size:.86rem}
+footer .wrap{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+footer a{color:var(--teal);font-weight:800}
+</style>
+</head>
+<body>
+<div class="demo">Demo app by <a href="https://knowmindsmedia.com/" target="_blank" rel="noopener">KnowMinds Media</a> — Sehat Clinic is fictional. Please don't enter real medical or personal details.</div>
+<header><div class="wrap"><a class="logo" href="#"><i>+</i><span>Sehat Clinic<small>Family health · demo</small></span></a><button class="pill" id="myBtn">My appointments</button></div></header>
+<main class="wrap">
+  <section class="intro">
+    <div>
+      <h1>Tell us what's wrong. <span>We'll find</span> the right doctor.</h1>
+      <p>Start with your symptom — we'll suggest the right specialist, show live availability and give you a token so you don't wait in line.</p>
+      <div class="stats"><div><b>12</b><span>specialists</span></div><div><b>~15 min</b><span>avg. wait</span></div><div><b>4.8★</b><span>patient rating</span></div></div>
+    </div>
+    <div class="ill" aria-hidden="true">
+      <svg viewBox="0 0 400 340"><circle cx="300" cy="70" r="60" fill="#99f6e4"/><rect x="70" y="80" width="200" height="220" rx="28" fill="#fff"/><rect x="95" y="110" width="150" height="16" rx="8" fill="#ccfbef"/><rect x="95" y="140" width="110" height="12" rx="6" fill="#e2f4f0"/><rect x="95" y="175" width="150" height="70" rx="16" fill="#0f766e"/><path d="M118 210h20l8-14 12 28 9-14h40" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="95" y="260" width="70" height="22" rx="11" fill="#f97362"/><circle cx="320" cy="230" r="44" fill="#fff"/><path d="M308 230h24M320 218v24" stroke="#0f766e" stroke-width="8" stroke-linecap="round"/></svg>
+      <div class="q-card"><i></i>Now serving token #14</div>
+    </div>
+  </section>
+
+  <section class="book" id="book">
+    <div>
+      <div class="steps" id="steps"><div></div><div></div><div></div><div></div></div>
+      <div id="stage"></div>
+    </div>
+    <aside class="sum" id="sum"></aside>
+  </section>
+</main>
+<footer><div class="wrap"><span>© 2026 Sehat Clinic is a fictional demo — not medical advice.</span><span>Designed &amp; built by <a href="https://knowmindsmedia.com/" target="_blank" rel="noopener">KnowMinds Media</a> · <a href="https://knowmindsmedia.com/#demo" target="_blank" rel="noopener">Get a booking system</a></span></div></footer>
+<div class="toast" id="toast"></div>
+<script>
+(function(){
+var $=function(s){return document.querySelector(s)};
+var SYM=[['🤒','Fever & cold','General Physician'],['🦴','Joint / back pain','Orthopaedics'],['🧴','Skin & hair','Dermatology'],['👶','Child health','Paediatrics'],['🦷','Teeth & gums','Dental'],['❤️','BP / heart','Cardiology'],['🤰','Women\'s health','Gynaecology'],['🤔','Not sure','General Physician']];
+var DOC={'General Physician':[{n:'Dr. Sunita Rath',e:11,l:['Odia','Hindi','English'],f:400,c:'#0f766e'},{n:'Dr. Arjun Behera',e:6,l:['Odia','English'],f:300,c:'#f97362'}],
+'Orthopaedics':[{n:'Dr. Manas Sahoo',e:15,l:['Odia','English'],f:700,c:'#6366f1'}],'Dermatology':[{n:'Dr. Priyanka Nayak',e:9,l:['Odia','Hindi','English'],f:600,c:'#db2777'}],
+'Paediatrics':[{n:'Dr. Lipsa Mohanty',e:12,l:['Odia','Hindi'],f:500,c:'#f59e0b'},{n:'Dr. Imran Khan',e:8,l:['Hindi','English','Urdu'],f:500,c:'#0ea5e9'}],
+'Dental':[{n:'Dr. Sneha Panda',e:7,l:['Odia','English'],f:350,c:'#14b8a6'}],'Cardiology':[{n:'Dr. Bikash Das',e:20,l:['Odia','Hindi','English'],f:900,c:'#ef4444'}],
+'Gynaecology':[{n:'Dr. Ritu Agarwal',e:14,l:['Hindi','English'],f:700,c:'#a855f7'}]};
+var st={s:0,sym:null,dept:null,doc:null,day:0,slot:null,mode:'In clinic'};
+var appts=[];try{appts=JSON.parse(localStorage.getItem('sehat_appts'))||[]}catch(e){}
+function save(){try{localStorage.setItem('sehat_appts',JSON.stringify(appts))}catch(e){}}
+function toast(m){var t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove('on')},2000)}
+function day(i){var d=new Date();d.setDate(d.getDate()+i);return d}
+function dl(i){return i===0?'Today':i===1?'Tomorrow':day(i).toLocaleDateString('en-IN',{weekday:'short'})}
+function full(i,t){var h=0;for(var k=0;k<t.length;k++)h=(h*31+t.charCodeAt(k)+i*7+(st.doc?st.doc.n.length:0))%97;return h%4===0||(i===0&&parseInt(t)<new Date().getHours()%12)}
+function steps(){[].forEach.call($('#steps').children,function(d,i){d.classList.toggle('on',i<=st.s)})}
+function sum(){var r=[['Concern',st.sym?st.sym:'—'],['Speciality',st.dept||'—'],['Doctor',st.doc?st.doc.n:'—'],['When',st.slot?dl(st.day)+', '+st.slot:'—'],['Visit',st.mode],['Fee',st.doc?'₹'+st.doc.f:'—']];
+  $('#sum').innerHTML='<h3>Your visit</h3>'+r.map(function(x){return '<div><span>'+x[0]+'</span><b>'+x[1]+'</b></div>'}).join('')+'<p>Pay at the clinic. Free cancellation up to 2 hours before.</p>'}
+function render(){steps();sum();var h='';
+  if(st.s===0){h='<span class="stl">Step 1 of 4</span><h2>What\'s bothering you?</h2><div class="sym">'+SYM.map(function(x,i){return '<button data-sym="'+i+'"><span>'+x[0]+'</span>'+x[1]+'</button>'}).join('')+'</div>'}
+  if(st.s===1){var d=DOC[st.dept];h='<span class="stl">Step 2 of 4 · '+st.dept+'</span><h2>Choose your doctor</h2><div class="docs">'+d.map(function(x,i){return '<button class="doc" data-doc="'+i+'" aria-pressed="'+(st.doc===x)+'"><span class="face" style="background:'+x.c+'">'+x.n.split(' ')[1][0]+'</span><span><b>'+x.n+'</b><small>'+st.dept+' · '+x.e+' yrs experience</small><span class="tags">'+x.l.map(function(l){return '<span>'+l+'</span>'}).join('')+'<span class="sun">Next: '+(i?'Tomorrow':'Today')+'</span></span></span><span class="fee">₹'+x.f+'<br><small>consult</small></span></button>'}).join('')+'</div>'+nav(!st.doc)}
+  if(st.s===2){var times={Morning:['9:00 AM','9:30 AM','10:00 AM','10:30 AM','11:00 AM','11:30 AM'],Evening:['5:00 PM','5:30 PM','6:00 PM','6:30 PM','7:00 PM','7:30 PM']};
+    h='<span class="stl">Step 3 of 4</span><h2>Pick a time</h2><div class="days">'+[0,1,2,3,4,5,6].map(function(i){var d=day(i);return '<button class="day" data-day="'+i+'" aria-pressed="'+(st.day===i)+'"><small>'+dl(i)+'</small>'+d.getDate()+'<small>'+d.toLocaleDateString('en-IN',{month:'short'})+'</small></button>'}).join('')+'</div><div class="slots">'+Object.keys(times).map(function(k){return '<h4>'+k+'</h4><div class="sl">'+times[k].map(function(t){var f=full(st.day,t);return '<button data-slot="'+t+'" '+(f?'disabled aria-label="'+t+' full"':'')+' aria-pressed="'+(st.slot===t)+'">'+t+'</button>'}).join('')+'</div>'}).join('')+'</div>'+nav(!st.slot)}
+  if(st.s===3){h='<span class="stl">Step 4 of 4</span><h2>Patient details</h2><form class="f" id="pf" novalidate><label>Patient name<input name="n" placeholder="Any demo name" autocomplete="off"></label><div class="row2"><label>Age<input name="a" inputmode="numeric" maxlength="3" placeholder="e.g. 32"></label><label>Mobile<input name="p" inputmode="numeric" maxlength="10" placeholder="10 digits" autocomplete="off"></label></div><div class="mode"><label><input type="radio" name="m" value="In clinic" '+(st.mode==='In clinic'?'checked':'')+'> 🏥 In clinic</label><label><input type="radio" name="m" value="Video call" '+(st.mode==='Video call'?'checked':'')+'> 📹 Video call</label></div></form><div class="nav"><button class="back" data-back>← Back</button><button class="go" id="confirm">Confirm booking</button></div>'}
+  if(st.s===4){var a=appts[0];h='<div class="token"><span class="live"><i></i>Live queue</span><div class="tk" id="tk"><div><small>YOUR TOKEN</small><b>#'+a.tok+'</b><small id="eta"></small></div></div><h2 style="margin:0">You\'re booked, '+a.pt.split(' ')[0]+'!</h2><p style="color:var(--muted);margin:6px 0 4px">'+a.doc+' · '+a.when+' · '+a.mode+'</p><div class="qline" id="ql"></div><p style="color:var(--muted);font-size:.85rem" id="qmsg"></p><div class="nav" style="justify-content:center;gap:12px"><button class="go" data-new>Book another</button></div></div>';}
+  $('#stage').innerHTML='<div class="stage">'+h+'</div>';
+  if(st.s===4)queue();
+}
+function nav(dis){return '<div class="nav"><button class="back" data-back>← Back</button><button class="go" data-next '+(dis?'disabled':'')+'>Continue →</button></div>'}
+var qt;function queue(){clearInterval(qt);var a=appts[0],serving=a.tok-5;function tick(){var ahead=a.tok-serving;
+  $('#ql').innerHTML=[0,1,2,3,4,5].map(function(i){var n=a.tok-5+i;return '<i class="'+(n<serving?'done':'')+(n===a.tok?' me':'')+'">'+n+'</i>'}).join('');
+  $('#eta').textContent=ahead>0?'~'+ahead*4+' min':'Your turn!';$('#tk').style.setProperty('--p',((5-ahead)/5*100)+'%');
+  $('#qmsg').textContent=ahead>0?'Now serving #'+serving+' · '+ahead+' patient'+(ahead>1?'s':'')+' ahead of you (demo speeds this up)':'Please proceed to the doctor\'s room 🙂';
+  if(ahead<=0){clearInterval(qt);toast('It\'s your turn! (demo)')}serving++}
+  tick();qt=setInterval(tick,3500)}
+function mine(){clearInterval(qt);st.s=-1;steps();$('#sum').innerHTML='<h3>Tips</h3><p>Reschedule moves your visit to the next free day. Cancelled bookings free the slot for others.</p>';
+  $('#stage').innerHTML='<div class="stage"><span class="stl">Your bookings</span><h2>My appointments</h2><div class="appts">'+(appts.length?appts.map(function(a,i){return '<div class="ap"><div><b>'+a.doc+' · Token #'+a.tok+'</b><small>'+a.when+' · '+a.mode+' · '+a.pt+'</small></div><div class="acts"><button data-rs="'+i+'">Reschedule</button><button class="cx" data-cx="'+i+'">Cancel</button></div></div>'}).join(''):'<p style="color:var(--muted)">No appointments yet.</p>')+'</div><div class="nav"><span></span><button class="go" data-new>Book a visit</button></div></div>';
+  document.getElementById('book').scrollIntoView({behavior:'smooth'})}
+document.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;
+  if(b.dataset.sym!==undefined){var s=SYM[+b.dataset.sym];st.sym=s[1];st.dept=s[2];st.doc=null;st.slot=null;st.s=1;render()}
+  else if(b.dataset.doc!==undefined){st.doc=DOC[st.dept][+b.dataset.doc];st.slot=null;render()}
+  else if(b.dataset.day!==undefined){st.day=+b.dataset.day;st.slot=null;render()}
+  else if(b.dataset.slot){st.slot=b.dataset.slot;render()}
+  else if(b.hasAttribute('data-next')){st.s++;render()}
+  else if(b.hasAttribute('data-back')){st.s--;render()}
+  else if(b.hasAttribute('data-new')){st={s:0,sym:null,dept:null,doc:null,day:0,slot:null,mode:'In clinic'};clearInterval(qt);render()}
+  else if(b.id==='confirm'){var f=$('#pf'),ok=true;[['n',function(v){return v.trim().length>1}],['a',function(v){return +v>0&&+v<120}],['p',function(v){return /^[6-9]\d{9}$/.test(v)}]].forEach(function(r){var el=f[r[0]],g=r[1](el.value);el.classList.toggle('bad',!g);if(!g)ok=false});
+    if(!ok)return toast('Please check the highlighted fields');st.mode=f.m.value;
+    appts.unshift({doc:st.doc.n,dept:st.dept,when:dl(st.day)+' '+day(st.day).toLocaleDateString('en-IN',{day:'numeric',month:'short'})+', '+st.slot,mode:st.mode,pt:f.n.value.trim(),tok:14+Math.floor(Math.random()*6)+5});save();st.s=4;render();toast('Appointment confirmed ✓')}
+  else if(b.id==='myBtn'){mine()}
+  else if(b.dataset.cx!==undefined){appts.splice(+b.dataset.cx,1);save();mine();toast('Appointment cancelled')}
+  else if(b.dataset.rs!==undefined){var a=appts[+b.dataset.rs];a.when='Rescheduled → '+dl(2)+' '+day(2).toLocaleDateString('en-IN',{day:'numeric',month:'short'})+', 10:30 AM';save();mine();toast('Moved to '+dl(2)+', 10:30 AM')}
+});
+document.addEventListener('change',function(e){if(e.target.name==='m'){st.mode=e.target.value;sum()}});
+render();
+})();
+</script>
+</body>
+</html>

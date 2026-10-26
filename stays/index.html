@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Konark Stays (Demo) — Hotel booking demo by KnowMinds Media</title>
+<meta name="description" content="Konark Stays is a demo hotel-booking site built by KnowMinds Media: experience-first search, room selection with add-ons and a printable booking voucher.">
+<link rel="canonical" href="https://knowmindsmedia.com/stays/">
+<meta name="theme-color" content="#0c2340">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230c2340'/%3E%3Ccircle cx='32' cy='32' r='16' fill='none' stroke='%23d9b779' stroke-width='4'/%3E%3Cpath d='M32 10v44M10 32h44M16 16l32 32M48 16 16 48' stroke='%23d9b779' stroke-width='2'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0c2340;--navy2:#16345c;--gold:#d9b779;--sand:#f4ede1;--paper:#fbf8f2;--ink:#14202f;--muted:#6c7586;--line:#e3dac9}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Jost,system-ui,sans-serif;font-weight:400;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased}
+button,input,select{font:inherit;color:inherit}
+.serif{font-family:"Cormorant Garamond",serif}
+.demo{background:var(--gold);color:var(--navy);text-align:center;font-size:.8rem;padding:7px 12px;letter-spacing:.02em}
+.demo a{color:var(--navy);font-weight:600}
+header{position:absolute;left:0;right:0;top:31px;z-index:5}
+header .wrap{display:flex;justify-content:space-between;align-items:center;height:80px;color:#fff}
+.wrap{max-width:1200px;margin:0 auto;padding:0 22px}
+.logo{display:flex;align-items:center;gap:12px;font-family:"Cormorant Garamond";font-size:1.7rem;font-weight:600;letter-spacing:.04em}
+.logo svg{width:34px;height:34px}
+.logo small{font-family:Jost;font-size:.62rem;letter-spacing:.3em;display:block;margin-top:-6px;color:var(--gold)}
+.mine{background:none;border:1px solid rgba(255,255,255,.5);color:#fff;padding:9px 18px;cursor:pointer;letter-spacing:.08em;font-size:.82rem;text-transform:uppercase}
+.hero{background:var(--navy);color:#fff;min-height:560px;position:relative;overflow:hidden;display:flex;align-items:flex-end}
+.hero svg.bg{position:absolute;inset:0;width:100%;height:100%}
+.hero .wrap{position:relative;padding-bottom:60px;width:100%}
+.eyeb{letter-spacing:.32em;text-transform:uppercase;font-size:.75rem;color:var(--gold)}
+.hero h1{font-family:"Cormorant Garamond";font-weight:500;font-size:clamp(2.8rem,7vw,5.6rem);line-height:.95;margin:14px 0 18px;max-width:780px}
+.hero p{max-width:480px;color:#c7d2e3;font-weight:300;font-size:1.08rem}
+.exp{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);margin-top:-40px;position:relative;z-index:3;border:1px solid var(--line)}
+.exp button{background:#fff;border:0;padding:26px 22px;text-align:left;cursor:pointer;transition:.2s;position:relative}
+.exp button::after{content:"";position:absolute;left:0;bottom:0;height:3px;width:0;background:var(--gold);transition:width .3s}
+.exp button:hover::after,.exp button[aria-pressed="true"]::after{width:100%}
+.exp button[aria-pressed="true"]{background:var(--sand)}
+.exp .i{font-size:1.6rem}
+.exp b{display:block;font-family:"Cormorant Garamond";font-size:1.5rem;font-weight:600;margin-top:6px}
+.exp small{color:var(--muted)}
+@media (max-width:860px){.exp{grid-template-columns:1fr 1fr}.hero{min-height:480px}}
+.search{display:flex;gap:1px;background:var(--line);border:1px solid var(--line);margin:28px 0 8px;flex-wrap:wrap}
+.search label{flex:1;min-width:160px;background:#fff;padding:12px 18px;display:grid;gap:2px;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.search input{border:0;font-size:1rem;letter-spacing:0;text-transform:none;color:var(--ink);background:none;padding:2px 0}
+.gst{display:flex;align-items:center;gap:12px}
+.gst button{width:28px;height:28px;border:1px solid var(--line);background:#fff;border-radius:50%;cursor:pointer}
+.gst span{font-size:1rem;color:var(--ink);letter-spacing:0;min-width:56px;text-align:center}
+.sec{padding:40px 0}
+.sh{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:24px;flex-wrap:wrap}
+.sh h2{font-family:"Cormorant Garamond";font-weight:500;font-size:2.6rem;line-height:1}
+.sh p{color:var(--muted);max-width:420px}
+.props{display:grid;gap:30px}
+.prop{display:grid;grid-template-columns:1.3fr 1fr;gap:0;background:#fff;border:1px solid var(--line)}
+.prop:nth-child(even){grid-template-columns:1fr 1.3fr}
+.prop:nth-child(even) .gal{order:2}
+.gal{position:relative;min-height:330px;overflow:hidden}
+.gal svg{position:absolute;inset:0;width:100%;height:100%;transition:opacity .5s}
+.gdots{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);display:flex;gap:6px}
+.gdots button{width:8px;height:8px;border-radius:50%;border:0;background:rgba(255,255,255,.5);cursor:pointer}
+.gdots button.on{background:#fff;width:22px;border-radius:9px}
+.gnav{position:absolute;top:50%;transform:translateY(-50%);width:38px;height:38px;border-radius:50%;border:0;background:rgba(255,255,255,.85);cursor:pointer}
+.gnav.l{left:12px}.gnav.r{right:12px}
+.pinfo{padding:34px;display:flex;flex-direction:column}
+.pinfo .eyeb{color:var(--muted)}
+.pinfo h3{font-family:"Cormorant Garamond";font-weight:600;font-size:2.1rem;line-height:1.05;margin:8px 0}
+.pinfo p{color:var(--muted);font-weight:300}
+.amen{display:flex;flex-wrap:wrap;gap:6px 16px;margin:16px 0;font-size:.88rem}
+.pfoot{margin-top:auto;display:flex;justify-content:space-between;align-items:end;padding-top:18px;border-top:1px solid var(--line)}
+.pfoot b{font-family:"Cormorant Garamond";font-size:2rem;font-weight:600}
+.pfoot small{color:var(--muted)}
+.btn{background:var(--navy);color:#fff;border:0;padding:13px 22px;letter-spacing:.14em;text-transform:uppercase;font-size:.78rem;cursor:pointer;font-weight:500}
+.btn:hover{background:var(--navy2)}
+.btn.gold{background:var(--gold);color:var(--navy)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+@media (max-width:860px){.prop,.prop:nth-child(even){grid-template-columns:1fr}.prop:nth-child(even) .gal{order:0}.gal{min-height:240px}.pinfo{padding:22px}}
+/* booking panel */
+.ov{position:fixed;inset:0;background:rgba(12,35,64,.6);z-index:40;display:none;justify-content:flex-end}
+.ov.on{display:flex}
+.panel{width:min(560px,100%);height:100%;background:var(--paper);overflow:auto;animation:sl .35s cubic-bezier(.2,.8,.2,1)}
+@keyframes sl{from{transform:translateX(100%)}}
+.ph{background:var(--navy);color:#fff;padding:26px;position:relative}
+.ph h2{font-family:"Cormorant Garamond";font-weight:500;font-size:2rem;line-height:1.05}
+.ph .x{position:absolute;top:18px;right:18px;background:none;border:1px solid rgba(255,255,255,.4);color:#fff;width:36px;height:36px;cursor:pointer}
+.pst{display:flex;gap:18px;margin-top:14px;font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;color:#7f92b0}
+.pst span.on{color:var(--gold)}
+.pb{padding:24px 26px}
+.room{border:1px solid var(--line);background:#fff;padding:16px 18px;margin-bottom:12px;cursor:pointer;display:flex;justify-content:space-between;gap:14px;text-align:left;width:100%}
+.room[aria-pressed="true"]{border-color:var(--navy);box-shadow:inset 0 0 0 1px var(--navy)}
+.room b{font-family:"Cormorant Garamond";font-size:1.4rem;font-weight:600;display:block}
+.room small{color:var(--muted)}
+.room .rp{text-align:right;white-space:nowrap}
+.room .left{font-size:.75rem;color:#b45309}
+.addon{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.addon input{accent-color:var(--navy);width:18px;height:18px;margin-right:10px}
+.f label{display:grid;gap:4px;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+.f input,.f select{border:0;border-bottom:1px solid var(--ink);background:none;padding:8px 0;font-size:16px;letter-spacing:0;text-transform:none;color:var(--ink)}
+.f input:focus{outline:none;border-color:var(--gold)}
+.f .bad{border-color:#b91c1c}
+.bill{background:var(--sand);padding:16px 18px;margin:16px 0}
+.bill div{display:flex;justify-content:space-between;padding:4px 0;font-size:.92rem}
+.bill .t{border-top:1px solid #d5c7ad;margin-top:6px;padding-top:10px;font-family:"Cormorant Garamond";font-size:1.5rem;font-weight:600}
+.voucher{border:1px solid var(--navy);margin-top:4px}
+.vh{background:var(--navy);color:#fff;padding:18px 20px;display:flex;justify-content:space-between;align-items:center}
+.vh b{font-family:"Cormorant Garamond";font-size:1.6rem;font-weight:600}
+.vb{display:grid;grid-template-columns:1fr 120px;gap:16px;padding:18px 20px;background:#fff}
+.vb dl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:.9rem}
+.vb dt{color:var(--muted);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;padding-top:3px}
+.vb svg{width:120px;height:120px}
+.vf{border-top:1px dashed var(--navy);padding:12px 20px;font-size:.8rem;color:var(--muted);background:#fff}
+.bk{display:grid;gap:12px}
+.bki{border:1px solid var(--line);background:#fff;padding:14px 16px}
+.bki b{font-family:"Cormorant Garamond";font-size:1.3rem}
+.toast{position:fixed;bottom:22px;left:22px;background:var(--navy);color:#fff;padding:12px 18px;opacity:0;transform:translateY(20px);transition:.3s;z-index:60;border-left:3px solid var(--gold)}
+.toast.on{opacity:1;transform:none}
+footer{background:var(--navy);color:#9fb0c9;padding:34px 0;margin-top:40px;font-size:.88rem}
+footer .wrap{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+footer a{color:var(--gold)}
+@media print{body *{visibility:hidden}.voucher,.voucher *{visibility:visible}.voucher{position:absolute;top:0;left:0;width:100%}}
+</style>
+</head>
+<body>
+<div class="demo">Demo website by <a href="https://knowmindsmedia.com/" target="_blank" rel="noopener">KnowMinds Media</a> — Konark Stays and its properties are fictional. No real bookings.</div>
+<header><div class="wrap"><div class="logo"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="16" fill="none" stroke="#d9b779" stroke-width="3"/><path d="M32 8v48M8 32h48M15 15l34 34M49 15 15 49" stroke="#d9b779" stroke-width="1.6"/><circle cx="32" cy="32" r="4" fill="#d9b779"/></svg><span>KONARK STAYS<small>COLLECTION · DEMO</small></span></div><button class="mine" id="mine">My bookings</button></div></header>
+<section class="hero"><svg class="bg" viewBox="0 0 1400 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0c2340"/><stop offset=".7" stop-color="#2b4a75"/><stop offset="1" stop-color="#d9b779"/></linearGradient></defs><rect width="1400" height="600" fill="url(#sky)"/><circle cx="1050" cy="390" r="90" fill="#f3d08d" opacity=".9"/><path d="M0 470 C300 440 500 500 800 460 S1200 430 1400 470V600H0Z" fill="#0c2340" opacity=".8"/><path d="M760 470h260l-20-60h-40l-15-50h-20l-10-40h-30l-10 40h-20l-15 50h-40z" fill="#0a1c33"/><circle cx="890" cy="430" r="18" fill="none" stroke="#d9b779" stroke-width="3"/><path d="M0 520 C350 500 700 545 1400 515V600H0Z" fill="#081729"/></svg>
+  <div class="wrap"><span class="eyeb">Odisha · Handpicked stays</span><h1>Choose the journey. We'll find the stay.</h1><p>From temple towns to quiet beaches and misty hills — start with the experience you want.</p></div></section>
+<div class="wrap">
+  <div class="exp" id="exp"></div>
+  <div class="search">
+    <label>Check-in<input type="date" id="ci"></label>
+    <label>Check-out<input type="date" id="co"></label>
+    <label>Guests<span class="gst"><button data-g="-1" aria-label="Fewer guests">−</button><span id="gn">2 adults</span><button data-g="1" aria-label="More guests">+</button></span></label>
+  </div>
+  <section class="sec"><div class="sh"><div><span class="eyeb" style="color:var(--muted)" id="exE"></span><h2 id="exH"></h2></div><p id="exP"></p></div><div class="props" id="props"></div></section>
+</div>
+<footer><div class="wrap"><span>© 2026 Konark Stays — fictional demo brand.</span><span>Designed &amp; built by <a href="https://knowmindsmedia.com/" target="_blank" rel="noopener">KnowMinds Media</a> · <a href="https://knowmindsmedia.com/#demo" target="_blank" rel="noopener">Get a booking website</a></span></div></footer>
+<div class="ov" id="ov"><aside class="panel" id="panel"></aside></div>
+<div class="toast" id="toast"></div>
+<script>
+(function(){
+var $=function(s){return document.querySelector(s)};
+var EXP={beach:['🌊','Beach escapes','Puri · Gopalpur','Wake up to the Bay of Bengal'],temple:['🛕','Temple trail','Konark · Bhubaneswar','Stay close to living heritage'],hills:['⛰️','Hill retreats','Daringbadi · Koraput','Coffee, mist and pine forests'],lake:['🦩','Lake & wildlife','Chilika · Satkosia','Dolphins, birds and sunsets']};
+var SC={beach:[['#f3c98b','#2b6cb0','#0c2340'],['#ffd8a8','#4fa3d1','#163a5f'],['#f6b38a','#1e5a8a','#0a2440']],temple:[['#e8b36b','#8b4a2b','#3a1f12'],['#f0c27b','#a0522d','#4a2511'],['#d99a5b','#6b3a1f','#2c160a']],hills:[['#c9dcc0','#5e7f5b','#2b3f2a'],['#dfe8d0','#7a9a6a','#34502e'],['#b8cfb0','#4f6e4b','#22351f']],lake:[['#f7c6a3','#5f9ea0','#1f4f5c'],['#ffd1b3','#6aa8b0','#245866'],['#f2b896','#4f8e96','#1a4550']]};
+var P={beach:[{n:'Sagar Tide Resort',l:'Puri',p:6800,r:4.7,a:['Sea-facing rooms','Pool','Spa','Beach access'],d:'Low-rise cottages steps from the sand, ten minutes from the Jagannath temple.'},{n:'Gopalpur Lighthouse Inn',l:'Gopalpur-on-Sea',p:4200,r:4.5,a:['Heritage building','Sea view','Café'],d:'A colonial-era inn with wide verandahs and slow, salty afternoons.'}],
+ temple:[{n:'Surya Courtyard',l:'Konark',p:5200,r:4.8,a:['Sun temple 1 km','Courtyard pool','Odia thali'],d:'Built around a courtyard inspired by temple architecture — sunrise walks included.'},{n:'Ekamra Heritage House',l:'Old Town, Bhubaneswar',p:3600,r:4.6,a:['Walk to Lingaraj','Rooftop','Guided walks'],d:'A restored family home in the old temple quarter, run by local hosts.'}],
+ hills:[{n:'Pine Mist Cottages',l:'Daringbadi',p:3900,r:4.6,a:['Bonfire','Coffee estate','Valley view'],d:'Wooden cottages among pines, often called the Kashmir of Odisha.'},{n:'Koraput Coffee Lodge',l:'Koraput',p:4500,r:4.7,a:['Plantation tours','Tribal market trips','Organic food'],d:'Wake up on a working coffee estate surrounded by the Eastern Ghats.'}],
+ lake:[{n:'Chilika Flamingo Camp',l:'Satapada, Chilika',p:4800,r:4.5,a:['Dolphin boat ride','Lake-view tents','Bird watching'],d:'Luxury tents on the edge of Asia\'s largest brackish lagoon.'},{n:'Satkosia River Lodge',l:'Satkosia Gorge',p:5600,r:4.8,a:['River safari','Jungle walks','Glamping'],d:'Sandy riverbanks inside the gorge, with gharials and hornbills for company.'}]};
+var ROOMS=[['Classic Room','Queen bed · 280 sq ft',1,'3 left'],['Deluxe View','King bed · balcony · 360 sq ft',1.35,'2 left'],['Family Suite','2 rooms · sleeps 4 · 540 sq ft',1.9,'1 left']];
+var ADD=[['Breakfast for all guests',450,'pp'],['Airport / station pickup',1200,'once'],['Late checkout (2 PM)',900,'once'],['Guided local experience',1500,'once']];
+var exp='temple',guests=2,gi={},bk=[];try{bk=JSON.parse(localStorage.getItem('ks_bk'))||[]}catch(e){}
+function toast(m){var t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove('on')},2200)}
+function inr(n){return '₹'+Math.round(n).toLocaleString('en-IN')}
+function iso(d){return d.toISOString().slice(0,10)}
+var t1=new Date();t1.setDate(t1.getDate()+7);var t2=new Date(t1);t2.setDate(t2.getDate()+2);$('#ci').value=iso(t1);$('#co').value=iso(t2);$('#ci').min=iso(new Date());
+function nights(){var n=Math.round((new Date($('#co').value)-new Date($('#ci').value))/864e5);return n>0?n:1}
+function scene(c,v){var s='<svg viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice"><rect width="600" height="400" fill="'+c[0]+'"/>';
+  if(v===0)s+='<circle cx="430" cy="150" r="56" fill="#fff4d6" opacity=".9"/><path d="M0 260 C150 230 300 280 600 250V400H0Z" fill="'+c[1]+'"/><path d="M0 310 C200 290 400 330 600 300V400H0Z" fill="'+c[2]+'"/>';
+  if(v===1)s+='<rect x="0" y="230" width="600" height="170" fill="'+c[2]+'" opacity=".25"/><rect x="140" y="120" width="320" height="200" fill="#fff" opacity=".9"/><rect x="160" y="140" width="130" height="120" fill="'+c[1]+'" opacity=".35"/><rect x="310" y="140" width="130" height="120" fill="'+c[1]+'" opacity=".2"/><rect x="190" y="230" width="220" height="40" rx="6" fill="'+c[2]+'"/><rect x="190" y="210" width="220" height="24" rx="6" fill="'+c[0]+'"/>';
+  if(v===2)s+='<path d="M0 400V250l120-70 90 50 140-110 130 90 120-50v240Z" fill="'+c[1]+'"/><path d="M0 400V300l160-40 140 50 160-60 140 40v110Z" fill="'+c[2]+'"/><circle cx="110" cy="90" r="30" fill="#fff" opacity=".6"/>';
+  return s+'</svg>'}
+function expUI(){$('#exp').innerHTML=Object.keys(EXP).map(function(k){var e=EXP[k];return '<button data-e="'+k+'" aria-pressed="'+(k===exp)+'"><span class="i">'+e[0]+'</span><b>'+e[1]+'</b><small>'+e[2]+'</small></button>'}).join('');
+  var e=EXP[exp];$('#exE').textContent=e[2];$('#exH').textContent=e[1];$('#exP').textContent=e[3]+' — '+P[exp].length+' handpicked stays, prices per night.';
+  $('#props').innerHTML=P[exp].map(function(p,i){gi[i]=gi[i]||0;return '<article class="prop"><div class="gal" data-gal="'+i+'">'+scene(SC[exp][i%3],gi[i])+'<button class="gnav l" data-gp="'+i+'" data-d="-1" aria-label="Previous photo">‹</button><button class="gnav r" data-gp="'+i+'" data-d="1" aria-label="Next photo">›</button><div class="gdots">'+[0,1,2].map(function(k){return '<button class="'+(k===gi[i]?'on':'')+'" data-gs="'+i+'" data-k="'+k+'" aria-label="Photo '+(k+1)+'"></button>'}).join('')+'</div></div><div class="pinfo"><span class="eyeb">'+p.l+' · ★ '+p.r+'</span><h3>'+p.n+'</h3><p>'+p.d+'</p><div class="amen">'+p.a.map(function(a){return '<span>✦ '+a+'</span>'}).join('')+'</div><div class="pfoot"><div><small>from</small><br><b>'+inr(p.p)+'</b><small> / night</small></div><button class="btn" data-book="'+i+'">Reserve</button></div></div></article>'}).join('')}
+var B;function panel(h){$('#panel').innerHTML=h;$('#ov').classList.add('on');$('#panel').scrollTop=0}
+function head(t,s){return '<div class="ph"><button class="x" data-x aria-label="Close">✕</button><span class="eyeb">'+B.p.l+'</span><h2>'+t+'</h2><div class="pst">'+['Room','Extras','Guest','Voucher'].map(function(x,i){return '<span class="'+(i===s?'on':'')+'">'+(i+1)+'. '+x+'</span>'}).join('')+'</div></div>'}
+function calc(){var n=nights(),room=B.p.p*ROOMS[B.r][2]*n,ad=0;B.ad.forEach(function(i){ad+=ADD[i][2]==='pp'?ADD[i][1]*guests*n:ADD[i][1]});var tax=(room+ad)*.12;return {n:n,room:room,ad:ad,tax:tax,tot:room+ad+tax}}
+function bill(){var c=calc();return '<div class="bill"><div><span>'+ROOMS[B.r][0]+' × '+c.n+' night'+(c.n>1?'s':'')+'</span><span>'+inr(c.room)+'</span></div>'+(c.ad?'<div><span>Extras</span><span>'+inr(c.ad)+'</span></div>':'')+'<div><span>Taxes (12%)</span><span>'+inr(c.tax)+'</span></div><div class="t"><span>Total</span><span>'+inr(c.tot)+'</span></div></div>'}
+function step(s){
+  if(s===0)panel(head(B.p.n,0)+'<div class="pb"><p style="color:var(--muted);margin-bottom:14px">'+$('#ci').value+' → '+$('#co').value+' · '+guests+' guests</p>'+ROOMS.map(function(r,i){var dis=i===0&&guests>2;return '<button class="room" data-r="'+i+'" aria-pressed="'+(B.r===i)+'" '+(dis?'disabled style="opacity:.45"':'')+'><span><b>'+r[0]+'</b><small>'+r[1]+'</small><br><span class="left">'+(dis?'Max 2 guests':r[3])+'</span></span><span class="rp"><b>'+inr(B.p.p*r[2])+'</b><small>per night</small></span></button>'}).join('')+bill()+'<button class="btn" data-s="1" style="width:100%">Continue to extras</button></div>');
+  if(s===1)panel(head(B.p.n,1)+'<div class="pb">'+ADD.map(function(a,i){return '<label class="addon"><span><input type="checkbox" data-ad="'+i+'" '+(B.ad.indexOf(i)>-1?'checked':'')+'>'+a[0]+'</span><span>'+inr(a[1])+(a[2]==='pp'?' /guest/night':'')+'</span></label>'}).join('')+'<div id="bl">'+bill()+'</div><div style="display:flex;gap:10px"><button class="btn gold" data-s="0">Back</button><button class="btn" data-s="2" style="flex:1">Guest details</button></div></div>');
+  if(s===2)panel(head(B.p.n,2)+'<div class="pb"><form class="f" id="gf" novalidate><label>Lead guest name<input name="n" autocomplete="off" placeholder="Any demo name"></label><label>Mobile<input name="m" inputmode="numeric" maxlength="10" autocomplete="off" placeholder="10 digits"></label><label>Arrival time<select name="a"><option>Before 12 PM</option><option selected>12 PM – 4 PM</option><option>After 4 PM</option></select></label><label>Special request<input name="r" placeholder="e.g. Ground floor room" autocomplete="off"></label></form>'+bill()+'<p style="font-size:.82rem;color:var(--muted);margin-bottom:12px">Pay at the property. Free cancellation until 48 hours before check-in (demo).</p><div style="display:flex;gap:10px"><button class="btn gold" data-s="1">Back</button><button class="btn" id="conf" style="flex:1">Confirm reservation</button></div></div>');
+  if(s===3){var b=bk[0];panel(head('Your stay is confirmed',3)+'<div class="pb"><div class="voucher"><div class="vh"><span><span class="eyeb" style="color:var(--gold)">Booking voucher</span><br><b>'+b.p+'</b></span><span style="text-align:right;font-size:.85rem">ID<br><b style="font-size:1.2rem">'+b.id+'</b></span></div><div class="vb"><dl><dt>Guest</dt><dd>'+b.g+'</dd><dt>Stay</dt><dd>'+b.ci+' → '+b.co+'</dd><dt>Room</dt><dd>'+b.room+'</dd><dt>Guests</dt><dd>'+b.n+'</dd><dt>Extras</dt><dd>'+(b.ex||'None')+'</dd><dt>Total</dt><dd><b>'+inr(b.tot)+'</b> · pay at hotel</dd></dl>'+qr(b.id)+'</div><div class="vf">Show this voucher at the front desk. Demo booking — not valid for a real stay.</div></div><div style="display:flex;gap:10px;margin-top:16px"><button class="btn gold" onclick="window.print()">Print / save PDF</button><button class="btn" data-x style="flex:1">Done</button></div></div>')}}
+function qr(s){var h=0,c='<svg viewBox="0 0 21 21" aria-label="Booking code"><rect width="21" height="21" fill="#fff"/>';for(var y=0;y<21;y++)for(var x=0;x<21;x++){h=(h*131+s.charCodeAt((x+y)%s.length)+x*7+y*13)%1009;var f=(x<7&&y<7)||(x>13&&y<7)||(x<7&&y>13);if(f){var e=x>13?x-14:x,g=y>13?y-14:y;if(e===0||e===6||g===0||g===6||(e>1&&e<5&&g>1&&g<5))c+='<rect x="'+x+'" y="'+y+'" width="1" height="1" fill="#0c2340"/>'}else if(h%3===0)c+='<rect x="'+x+'" y="'+y+'" width="1" height="1" fill="#0c2340"/>'}return c+'</svg>'}
+function mine(){B=B||{p:{l:'Konark Stays'}};panel('<div class="ph"><button class="x" data-x aria-label="Close">✕</button><span class="eyeb">Your account</span><h2>My bookings</h2></div><div class="pb bk">'+(bk.length?bk.map(function(b){return '<div class="bki"><b>'+b.p+'</b><br><small style="color:var(--muted)">'+b.id+' · '+b.ci+' → '+b.co+' · '+b.room+' · '+inr(b.tot)+'</small></div>'}).join(''):'<p style="color:var(--muted)">No bookings yet.</p>')+'</div>')}
+document.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;
+  if(b.dataset.e){exp=b.dataset.e;gi={};expUI();window.scrollTo({top:$('.sec').offsetTop-20,behavior:'smooth'})}
+  else if(b.dataset.g){guests=Math.max(1,Math.min(6,guests+ +b.dataset.g));$('#gn').textContent=guests+(guests>1?' adults':' adult')}
+  else if(b.dataset.gp!==undefined){var i=+b.dataset.gp;gi[i]=(gi[i]+ +b.dataset.d+3)%3;expUI()}
+  else if(b.dataset.gs!==undefined){gi[+b.dataset.gs]=+b.dataset.k;expUI()}
+  else if(b.dataset.book!==undefined){if(new Date($('#co').value)<=new Date($('#ci').value))return toast('Check-out must be after check-in');B={p:P[exp][+b.dataset.book],r:guests>2?2:0,ad:[]};step(0)}
+  else if(b.dataset.r!==undefined){B.r=+b.dataset.r;step(0)}
+  else if(b.dataset.s!==undefined){step(+b.dataset.s)}
+  else if(b.id==='conf'){var f=$('#gf'),ok=true;[['n',function(v){return v.trim().length>1}],['m',function(v){return /^[6-9]\d{9}$/.test(v)}]].forEach(function(r){var el=f[r[0]],g=r[1](el.value);el.classList.toggle('bad',!g);if(!g)ok=false});if(!ok)return toast('Please check name and mobile');
+    var c=calc();bk.unshift({id:'KS-'+Math.random().toString(36).slice(2,8).toUpperCase(),p:B.p.n,g:f.n.value.trim(),ci:$('#ci').value,co:$('#co').value,room:ROOMS[B.r][0],n:guests,ex:B.ad.map(function(i){return ADD[i][0]}).join(', '),tot:c.tot});try{localStorage.setItem('ks_bk',JSON.stringify(bk))}catch(e){}step(3);toast('Reservation confirmed ✦')}
+  else if(b.id==='mine')mine();
+  else if(b.hasAttribute('data-x'))$('#ov').classList.remove('on');
+});
+document.addEventListener('change',function(e){if(e.target.dataset.ad!==undefined){var i=+e.target.dataset.ad,k=B.ad.indexOf(i);if(e.target.checked&&k<0)B.ad.push(i);if(!e.target.checked&&k>-1)B.ad.splice(k,1);$('#bl').innerHTML=bill()}
+  if(e.target.id==='ci'){var d=new Date(e.target.value);d.setDate(d.getDate()+1);$('#co').min=iso(d);if(new Date($('#co').value)<=new Date(e.target.value))$('#co').value=iso(d)}});
+$('#ov').addEventListener('click',function(e){if(e.target.id==='ov')$('#ov').classList.remove('on')});
+expUI();
+})();
+</script>
+</body>
+</html>

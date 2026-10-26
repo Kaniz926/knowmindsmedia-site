@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aushadh Plus (Demo) — Online pharmacy demo by KnowMinds Media</title>
+<meta name="description" content="Aushadh Plus is a demo online-pharmacy app built by KnowMinds Media: medicine search, prescription upload and verification, cheaper alternatives and refill reminders.">
+<link rel="canonical" href="https://knowmindsmedia.com/pharmacy/">
+<meta name="theme-color" content="#16a34a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='20' fill='%2316a34a'/%3E%3Crect x='14' y='24' width='36' height='16' rx='8' fill='%23fff'/%3E%3Crect x='32' y='24' width='18' height='16' rx='8' fill='%23bbf7d0'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--g:#16a34a;--gd:#15803d;--gl:#dcfce7;--gxl:#f0fdf4;--p:#7c3aed;--pl:#ede9fe;--ink:#0f172a;--muted:#64748b;--line:#e2e8f0;--bg:#f8fafc;--warn:#f59e0b}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Outfit,system-ui,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+button,input,select{font:inherit;color:inherit}
+.demo{background:var(--p);color:#f3efff;text-align:center;font-size:.82rem;padding:7px 12px}
+.demo a{color:#fff;font-weight:600}
+.wrap{max-width:1140px;margin:0 auto;padding:0 18px}
+header{background:#fff;border-bottom:1px solid var(--line)}
+header .wrap{display:flex;justify-content:space-between;align-items:center;height:68px;gap:12px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.3rem}
+.logo svg{width:34px;height:34px}
+.logo span small{display:block;font-size:.68rem;font-weight:500;color:var(--g);margin-top:-3px}
+.hr{display:flex;gap:8px}
+.hb{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 14px;cursor:pointer;font-weight:500;font-size:.9rem;position:relative;display:flex;align-items:center;gap:6px}
+.hb .c{background:var(--g);color:#fff;border-radius:999px;font-size:.72rem;padding:1px 7px;font-weight:700}
+@media (max-width:560px){.hb .t{display:none}}
+.top{background:linear-gradient(180deg,#fff,var(--gxl));border-bottom:1px solid var(--line);padding:36px 0 30px}
+.top h1{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;letter-spacing:-.02em;line-height:1.1;text-align:center}
+.top h1 em{font-style:normal;color:var(--g)}
+.top p{text-align:center;color:var(--muted);margin-top:8px}
+.sbox{max-width:680px;margin:22px auto 0;position:relative}
+.sbox input{width:100%;border:2px solid var(--g);border-radius:999px;padding:16px 130px 16px 52px;font-size:1.05rem;background:#fff;box-shadow:0 10px 30px rgba(22,163,74,.12)}
+.sbox input:focus{outline:none;box-shadow:0 0 0 5px rgba(22,163,74,.15)}
+.sbox svg{position:absolute;left:20px;top:50%;transform:translateY(-50%);width:20px;height:20px;color:var(--muted)}
+.sbox button{position:absolute;right:6px;top:6px;bottom:6px;border:0;border-radius:999px;background:var(--g);color:#fff;padding:0 22px;font-weight:600;cursor:pointer}
+.sugg{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px;font-size:.85rem;color:var(--muted)}
+.sugg button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:4px 12px;cursor:pointer}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:26px 0}
+@media (max-width:760px){.two{grid-template-columns:1fr}}
+.big{border-radius:24px;padding:24px;display:flex;gap:18px;align-items:center;cursor:pointer;border:0;text-align:left;transition:transform .2s}
+.big:hover{transform:translateY(-3px)}
+.big.rx{background:var(--pl)}
+.big.rf{background:#fef3c7}
+.big .ic{width:62px;height:62px;border-radius:18px;background:#fff;display:grid;place-items:center;font-size:1.8rem;flex:none}
+.big b{font-size:1.2rem;display:block}
+.big small{color:var(--muted)}
+.rxs{margin-top:8px;font-size:.84rem;font-weight:600}
+.rxs.ok{color:var(--g)}.rxs.wait{color:var(--p)}
+.sec h2{font-size:1.4rem;font-weight:600;margin:10px 0 14px;display:flex;justify-content:space-between;align-items:baseline}
+.sec h2 small{font-size:.85rem;color:var(--muted);font-weight:400}
+.cats{display:flex;gap:8px;overflow:auto;margin-bottom:14px;padding-bottom:4px}
+.cats button{border:1px solid var(--line);background:#fff;border-radius:12px;padding:8px 14px;cursor:pointer;white-space:nowrap;font-weight:500}
+.cats button[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.meds{display:grid;gap:10px;margin-bottom:40px}
+.med{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px 16px;display:grid;grid-template-columns:56px 1fr auto;gap:14px;align-items:center}
+.pill{width:56px;height:56px;border-radius:16px;display:grid;place-items:center}
+.pill i{width:34px;height:14px;border-radius:7px;display:block;transform:rotate(-30deg);background:linear-gradient(90deg,var(--a) 50%,var(--b) 50%)}
+.med b{font-size:1.02rem}
+.med small{display:block;color:var(--muted);font-size:.84rem}
+.tags{display:flex;gap:6px;margin-top:5px;flex-wrap:wrap}
+.tag{font-size:.7rem;font-weight:600;border-radius:6px;padding:2px 7px}
+.tag.rx{background:var(--pl);color:var(--p)}
+.tag.otc{background:var(--gl);color:var(--gd)}
+.tag.alt{background:#fef3c7;color:#92400e;cursor:pointer;border:0}
+.mr{text-align:right;display:grid;gap:6px;justify-items:end}
+.mr b{font-size:1.1rem}
+.mr s{color:var(--muted);font-size:.8rem}
+.addb{border:1.5px solid var(--g);background:#fff;color:var(--g);border-radius:10px;padding:7px 16px;font-weight:600;cursor:pointer}
+.addb.in{background:var(--g);color:#fff}
+@media (max-width:560px){.med{grid-template-columns:44px 1fr}.pill{width:44px;height:44px}.mr{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center}}
+.ov{position:fixed;inset:0;background:rgba(15,23,42,.5);z-index:40;display:none;place-items:center;padding:14px}
+.ov.on{display:grid}
+.mod{background:#fff;border-radius:26px;width:min(520px,100%);max-height:92vh;overflow:auto;padding:24px;position:relative;animation:up .3s}
+@keyframes up{from{opacity:0;transform:scale(.96)}}
+.mod h2{font-size:1.4rem;font-weight:600;margin-bottom:6px}
+.mod .x{position:absolute;top:14px;right:14px;width:36px;height:36px;border-radius:50%;border:0;background:var(--bg);cursor:pointer}
+.drop{border:2px dashed var(--p);border-radius:20px;padding:28px;text-align:center;background:var(--pl);margin:14px 0;cursor:pointer;display:block}
+.drop input{display:none}
+.drop b{display:block;margin-top:6px}
+.prog{height:8px;border-radius:9px;background:var(--line);overflow:hidden;margin:10px 0}
+.prog i{display:block;height:100%;background:var(--p);width:0;transition:width .4s}
+.alts{display:grid;gap:8px;margin:14px 0}
+.alt{border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.save{color:var(--g);font-weight:700;font-size:.85rem}
+.ci{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);gap:10px}
+.ci small{display:block;color:var(--muted)}
+.q{display:flex;align-items:center;gap:8px}
+.q button{width:28px;height:28px;border-radius:8px;border:1px solid var(--line);background:#fff;cursor:pointer}
+.row{display:flex;justify-content:space-between;padding:4px 0}
+.row.t{font-weight:700;font-size:1.15rem;border-top:1px solid var(--line);margin-top:6px;padding-top:10px}
+.cta{width:100%;border:0;background:var(--g);color:#fff;border-radius:14px;padding:14px;font-weight:600;font-size:1rem;cursor:pointer;margin-top:12px}
+.cta:disabled{opacity:.4;cursor:not-allowed}
+.warn{background:#fef3c7;border-radius:12px;padding:10px 12px;font-size:.85rem;color:#92400e;margin:10px 0}
+.fld{display:grid;gap:4px;margin:10px 0;font-size:.88rem;font-weight:500}
+.fld input,.fld select{border:1px solid var(--line);border-radius:12px;padding:11px 12px;font-size:16px}
+.fld .bad{border-color:#dc2626}
+.days{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0}
+.days button{border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px 0;cursor:pointer;font-weight:600}
+.days button[aria-pressed="true"]{background:#f59e0b;border-color:#f59e0b;color:#fff}
+.rem{display:grid;gap:8px}
+.rem div{border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;justify-content:space-between;align-items:center}
+.track{display:grid;gap:0;margin:16px 0}
+.track div{display:flex;gap:12px;align-items:flex-start;padding-bottom:16px;position:relative;color:var(--muted)}
+.track div::before{content:"";width:14px;height:14px;border-radius:50%;border:3px solid var(--line);flex:none;margin-top:3px;background:#fff;z-index:1}
+.track div::after{content:"";position:absolute;left:6px;top:16px;bottom:0;width:2px;background:var(--line)}
+.track div:last-child::after{display:none}
+.track div.on{color:var(--ink);font-weight:600}.track div.on::before{border-color:var(--g);background:var(--g)}
+.toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,20px);background:var(--ink);color:#fff;padding:12px 18px;border-radius:14px;opacity:0;transition:.3s;z-index:60}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+footer{background:#fff;border-top:1px solid var(--line);padding:24px 0 30px;color:var(--muted);font-size:.86rem}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+footer a{color:var(--g);font-weight:600}
+</style>
+</head>
+<body>
+<div class="demo">Demo app by <a href="https://knowmindsmedia.com/" target="_blank" rel="noopener">KnowMinds Media</a> — Aushadh Plus is fictional and not a real pharmacy. Medicine info here is sample data, not medical advice.</div>
+<header><div class="wrap"><div class="logo"><svg viewBox="0 0 64 64"><rect width="64" height="64" rx="20" fill="#16a34a"/><rect x="14" y="24" width="36" height="16" rx="8" fill="#fff"/><rect x="32" y="24" width="18" height="16" rx="8" fill="#bbf7d0"/></svg><span>Aushadh Plus<small>Medicines in 2 hours · demo</small></span></div>
+<div class="hr"><button class="hb" id="remBtn">⏰ <span class="t">Reminders</span></button><button class="hb" id="ordBtn">📦 <span class="t">Orders</span></button><button class="hb" id="cartBtn">🛒 <span class="t">Cart</span> <span class="c" id="cc">0</span></button></div></div></header>
+<section class="top"><div class="wrap"><h1>Your medicines, <em>cheaper</em> and at your door.</h1><p>Search by brand or salt · compare generics · upload prescriptions in seconds</p>
+  <form class="sbox" id="sf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" placeholder="Search e.g. paracetamol, cetirizine, ORS" aria-label="Search medicines" autocomplete="off"><button type="submit">Search</button></form>
+  <div class="sugg">Popular: <button data-q="paracetamol">Paracetamol</button><button data-q="vitamin">Vitamins</button><button data-q="sugar">Sugar care</button><button data-q="ors">ORS</button></div></div></section>
+<main class="wrap">
+  <div class="two">
+    <button class="big rx" id="upBtn"><span class="ic">📄</span><span><b>Upload prescription</b><small>Needed for medicines marked Rx. A pharmacist checks it.</small><span class="rxs" id="rxs"></span></span></button>
+    <button class="big rf" id="remBtn2"><span class="ic">⏰</span><span><b>Never run out</b><small>Set monthly refill reminders for regular medicines.</small></span></button>
+  </div>
+  <section class="sec"><h2>Medicines <small id="cnt"></small></h2><div class="cats" id="cats"></div><div class="meds" id="meds"></div></section>
+</main>
+<footer><div class="wrap"><span>© 2026 Aushadh Plus — fictional demo. Always consult a doctor before taking medicines.</span><span>Designed &amp; built by <a href="https://knowmindsmedia.com/" target="_blank" rel="noopener">KnowMinds Media</a> · <a href="https://knowmindsmedia.com/#demo" target="_blank" rel="noopener">Get a pharmacy app</a></span></div></footer>
+<div class="ov" id="ov"><div class="mod" id="mod"></div></div>
+<div class="toast" id="toast"></div>
+<script>
+(function(){
+var $=function(s){return document.querySelector(s)};
+var M=[
+ {id:1,n:'Calpex 650',s:'Paracetamol 650 mg',pk:'Strip of 15 tablets',p:34,m:38,rx:0,c:'Fever & pain',col:['#fff','#60a5fa'],g:'Paracetamol'},
+ {id:2,n:'Generic Paracetamol 650',s:'Paracetamol 650 mg',pk:'Strip of 15 tablets',p:18,m:22,rx:0,c:'Fever & pain',col:['#fff','#e5e7eb'],g:'Paracetamol'},
+ {id:3,n:'Allerfree 10',s:'Cetirizine 10 mg',pk:'Strip of 10 tablets',p:22,m:25,rx:0,c:'Allergy',col:['#fff','#f472b6'],g:'Cetirizine'},
+ {id:4,n:'Generic Cetirizine 10',s:'Cetirizine 10 mg',pk:'Strip of 10 tablets',p:9,m:12,rx:0,c:'Allergy',col:['#fff','#e5e7eb'],g:'Cetirizine'},
+ {id:5,n:'Glucobal 500',s:'Metformin 500 mg',pk:'Strip of 20 tablets',p:48,m:55,rx:1,c:'Sugar care',col:['#fff','#34d399'],g:'Metformin'},
+ {id:6,n:'Generic Metformin 500',s:'Metformin 500 mg',pk:'Strip of 20 tablets',p:21,m:26,rx:1,c:'Sugar care',col:['#fff','#e5e7eb'],g:'Metformin'},
+ {id:7,n:'Amlopress 5',s:'Amlodipine 5 mg',pk:'Strip of 15 tablets',p:41,m:46,rx:1,c:'BP & heart',col:['#fff','#f87171'],g:'Amlodipine'},
+ {id:8,n:'Generic Amlodipine 5',s:'Amlodipine 5 mg',pk:'Strip of 15 tablets',p:16,m:20,rx:1,c:'BP & heart',col:['#fff','#e5e7eb'],g:'Amlodipine'},
+ {id:9,n:'HydraSure ORS',s:'Oral rehydration salts',pk:'Pack of 5 sachets',p:95,m:110,rx:0,c:'Stomach',col:['#fb923c','#fdba74'],g:'ORS'},
+ {id:10,n:'VitaDaily Multivitamin',s:'Multivitamin & minerals',pk:'Bottle of 30 tablets',p:299,m:349,rx:0,c:'Vitamins',col:['#facc15','#fde68a'],g:'Multivitamin'},
+ {id:11,n:'D3 Sun 60K',s:'Vitamin D3 60,000 IU',pk:'Strip of 4 capsules',p:112,m:128,rx:0,c:'Vitamins',col:['#fbbf24','#fff7ed'],g:'Vitamin D3'},
+ {id:12,n:'Acidease 40',s:'Pantoprazole 40 mg',pk:'Strip of 15 tablets',p:89,m:99,rx:1,c:'Stomach',col:['#fff','#a78bfa'],g:'Pantoprazole'},
+ {id:13,n:'Generic Pantoprazole 40',s:'Pantoprazole 40 mg',pk:'Strip of 15 tablets',p:34,m:40,rx:1,c:'Stomach',col:['#fff','#e5e7eb'],g:'Pantoprazole'}
+];
+var CATS=['All','Fever & pain','Allergy','Sugar care','BP & heart','Stomach','Vitamins'];
+function L(k,d){try{return JSON.parse(localStorage.getItem('ap_'+k))||d}catch(e){return d}}function S(k,v){try{localStorage.setItem('ap_'+k,JSON.stringify(v))}catch(e){}}
+var cart=L('cart',{}),rx=L('rx',null),rem=L('rem',[]),ord=L('ord',[]),cat='All',q='';
+function toast(m){var t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove('on')},2000)}
+function by(id){return M.filter(function(x){return x.id===id})[0]}
+function alts(m){return M.filter(function(x){return x.g===m.g&&x.id!==m.id&&x.p<m.p})}
+function inr(n){return '₹'+n}
+function rxUI(){var e=$('#rxs');if(!rx){e.textContent='';return}e.className='rxs '+(rx.st==='ok'?'ok':'wait');e.textContent=rx.st==='ok'?'✓ Prescription verified: '+rx.f:'⏳ Verifying '+rx.f+'…'}
+$('#cats').innerHTML=CATS.map(function(c){return '<button data-c="'+c+'" aria-pressed="'+(c==='All')+'">'+c+'</button>'}).join('');
+function list(){var l=M.filter(function(m){return (cat==='All'||m.c===cat)&&(!q||(m.n+' '+m.s+' '+m.c+' '+m.g).toLowerCase().indexOf(q)>-1)});
+  $('#cnt').textContent=l.length+' results';
+  $('#meds').innerHTML=l.length?l.map(function(m){var a=alts(m)[0],inC=cart[m.id];return '<div class="med"><span class="pill" style="background:'+m.col[1]+'33"><i style="--a:'+m.col[0]+';--b:'+m.col[1]+'"></i></span><div><b>'+m.n+'</b><small>'+m.s+' · '+m.pk+'</small><div class="tags"><span class="tag '+(m.rx?'rx':'otc')+'">'+(m.rx?'Rx · prescription needed':'No prescription needed')+'</span>'+(a?'<button class="tag alt" data-alt="'+m.id+'">💡 Save '+Math.round((1-a.p/m.p)*100)+'% with a generic</button>':'')+'</div></div><div class="mr"><div><b>'+inr(m.p)+'</b> <s>'+inr(m.m)+'</s></div><button class="addb'+(inC?' in':'')+'" data-add="'+m.id+'">'+(inC?'✓ Added ('+inC+')':'Add')+'</button></div></div>'}).join(''):'<p style="color:var(--muted);padding:20px 0">No medicines found for “'+q+'”.</p>'}
+function cartN(){$('#cc').textContent=Object.keys(cart).reduce(function(a,k){return a+cart[k]},0);S('cart',cart)}
+function add(id){cart[id]=(cart[id]||0)+1;cartN();list();var m=by(id);toast(m.rx&&!(rx&&rx.st==='ok')?'Added — this needs a prescription at checkout':'Added to cart')}
+function mod(h){$('#mod').innerHTML='<button class="x" data-x aria-label="Close">✕</button>'+h;$('#ov').classList.add('on')}
+function close(){$('#ov').classList.remove('on')}
+function upload(){mod('<h2>Upload prescription</h2><p style="color:var(--muted);font-size:.92rem">Photo or PDF of a valid prescription. In this demo nothing leaves your device — only the file name is shown.</p><label class="drop">📷<b>Choose a file</b><small style="color:var(--muted)">JPG, PNG or PDF</small><input type="file" id="rf" accept="image/*,.pdf"></label><div id="up"></div>');
+  $('#rf').onchange=function(){var f=this.files[0];if(!f)return;rx={f:f.name.slice(0,28),st:'wait'};S('rx',rx);rxUI();$('#up').innerHTML='<p style="font-weight:600">'+rx.f+'</p><div class="prog"><i id="pg"></i></div><p id="pt" style="color:var(--muted);font-size:.88rem">Uploading…</p>';
+    var steps=[[30,'Uploading…'],[65,'Pharmacist reviewing (demo)…'],[100,'✓ Verified by pharmacist']],i=0;var iv=setInterval(function(){var s=steps[i++];$('#pg').style.width=s[0]+'%';$('#pt').textContent=s[1];if(i===3){clearInterval(iv);rx.st='ok';S('rx',rx);rxUI();toast('Prescription verified ✓');$('#pt').style.color='var(--g)'}},900)}}
+function showAlt(id){var m=by(id),a=alts(m);mod('<h2>Cheaper options for '+m.n+'</h2><p style="color:var(--muted);font-size:.9rem">Same salt: <b>'+m.s+'</b>. Ask your doctor or pharmacist before switching brands.</p><div class="alts"><div class="alt"><span><b>'+m.n+'</b><br><small style="color:var(--muted)">current choice</small></span><b>'+inr(m.p)+'</b></div>'+a.map(function(x){return '<div class="alt"><span><b>'+x.n+'</b><br><span class="save">Save '+inr(m.p-x.p)+' ('+Math.round((1-x.p/m.p)*100)+'%)</span></span><button class="addb" data-swap="'+m.id+'" data-to="'+x.id+'">Choose</button></div>'}).join('')+'</div>')}
+function cartM(){var ids=Object.keys(cart),sub=0,needRx=false;ids.forEach(function(k){var m=by(+k);sub+=m.p*cart[k];if(m.rx)needRx=true});var del=sub>=299||!sub?0:29,ok=!needRx||(rx&&rx.st==='ok');
+  mod('<h2>Your cart</h2>'+(ids.length?ids.map(function(k){var m=by(+k);return '<div class="ci"><div><b>'+m.n+'</b><small>'+m.pk+(m.rx?' · Rx':'')+'</small></div><div class="q"><button data-cq="'+k+'" data-d="-1">−</button>'+cart[k]+'<button data-cq="'+k+'" data-d="1">+</button><b style="min-width:54px;text-align:right">'+inr(m.p*cart[k])+'</b></div></div>'}).join('')+
+  (needRx&&!ok?'<div class="warn">⚠️ Your cart has prescription medicines. <button class="tag alt" id="upFromCart" style="font-size:.85rem">Upload prescription</button></div>':needRx?'<div class="warn" style="background:var(--gl);color:var(--gd)">✓ Prescription verified</div>':'')+
+  '<div class="row"><span>Subtotal</span><span>'+inr(sub)+'</span></div><div class="row"><span>Delivery</span><span>'+(del?inr(del):'Free')+'</span></div><div class="row t"><span>Total</span><span>'+inr(sub+del)+'</span></div><label class="fld">Delivery address<input id="ad" placeholder="Any demo address" autocomplete="off"></label><button class="cta" id="place" '+(ok?'':'disabled')+'>'+(ok?'Place order · delivery in ~2 hrs':'Upload prescription to continue')+'</button>':'<p style="color:var(--muted);padding:20px 0">Cart is empty.</p>'))}
+function orders(){mod('<h2>My orders</h2>'+(ord.length?ord.map(function(o,i){var st=Math.min(3,Math.floor((Date.now()-o.t)/20000));return '<div style="border:1px solid var(--line);border-radius:16px;padding:14px;margin-top:10px"><b>'+o.id+' · '+inr(o.tot)+'</b><br><small style="color:var(--muted)">'+o.n+' item(s) · '+new Date(o.t).toLocaleString('en-IN')+'</small><div class="track">'+['Order placed','Packed by pharmacist','Out for delivery','Delivered'].map(function(s,j){return '<div class="'+(j<=st?'on':'')+'">'+s+'</div>'}).join('')+'</div></div>'}).join(''):'<p style="color:var(--muted);padding:16px 0">No orders yet.</p>')+'<p style="font-size:.8rem;color:var(--muted)">Demo: status moves forward every 20 seconds.</p>')}
+function reminders(){var sel=null,day=1;function draw(){var opts=M.filter(function(m){return m.c!=='Fever & pain'});mod('<h2>Refill reminders ⏰</h2><p style="color:var(--muted);font-size:.9rem">We\'ll remind you on WhatsApp before you run out (demo).</p><label class="fld">Medicine<select id="rm">'+opts.map(function(m){return '<option value="'+m.id+'" '+(sel===m.id?'selected':'')+'>'+m.n+'</option>'}).join('')+'</select></label><b style="font-size:.88rem">Remind me every</b><div class="days">'+[[7,'Week'],[15,'15 days'],[30,'Month'],[60,'2 months']].map(function(d){return '<button data-every="'+d[0]+'" aria-pressed="'+(day===d[0])+'">'+d[1]+'</button>'}).join('')+'</div><button class="cta" id="saveRem">Save reminder</button><h2 style="font-size:1.05rem;margin-top:18px">Active reminders</h2><div class="rem">'+(rem.length?rem.map(function(r,i){return '<div><span><b>'+by(r.id).n+'</b><br><small style="color:var(--muted)">every '+r.d+' days · next on '+new Date(r.next).toLocaleDateString('en-IN',{day:'numeric',month:'short'})+'</small></span><button class="addb" data-delrem="'+i+'">Remove</button></div>'}).join(''):'<small style="color:var(--muted)">None yet.</small>')+'</div>');
+  $('#rm').onchange=function(){sel=+this.value}}
+  draw();$('#mod').onclick=function(e){var b=e.target.closest('button');if(!b)return;if(b.dataset.every){day=+b.dataset.every;sel=+$('#rm').value;draw()}if(b.id==='saveRem'){var id=+$('#rm').value;rem.unshift({id:id,d:day,next:Date.now()+day*864e5});S('rem',rem);toast('Reminder saved for '+by(id).n);draw()}if(b.dataset.delrem!==undefined){rem.splice(+b.dataset.delrem,1);S('rem',rem);draw()}}}
+document.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;
+  if(b.dataset.add)add(+b.dataset.add);
+  else if(b.dataset.c){cat=b.dataset.c;document.querySelectorAll('#cats button').forEach(function(x){x.setAttribute('aria-pressed',x===b)});list()}
+  else if(b.dataset.q&&!b.dataset.d){$('#q').value=b.dataset.q;q=b.dataset.q;list();$('#meds').scrollIntoView({behavior:'smooth'})}
+  else if(b.dataset.alt)showAlt(+b.dataset.alt);
+  else if(b.dataset.swap){var f=+b.dataset.swap,t=+b.dataset.to,n=cart[f]||1;delete cart[f];cart[t]=(cart[t]||0)+n;cartN();list();close();toast('Switched to '+by(t).n+' 💚')}
+  else if(b.dataset.cq){var k=b.dataset.cq;cart[k]+=+b.dataset.d;if(cart[k]<1)delete cart[k];cartN();list();cartM()}
+  else if(b.id==='upBtn'||b.id==='upFromCart')upload();
+  else if(b.id==='cartBtn')cartM();
+  else if(b.id==='ordBtn')orders();
+  else if(b.id==='remBtn'||b.id==='remBtn2')reminders();
+  else if(b.id==='place'){if($('#ad').value.trim().length<4){$('#ad').classList.add('bad');return toast('Please enter an address')}var tot=0,n=0;Object.keys(cart).forEach(function(k){tot+=by(+k).p*cart[k];n+=cart[k]});tot+=tot>=299?0:29;ord.unshift({id:'AP'+Date.now().toString().slice(-6),t:Date.now(),tot:tot,n:n});S('ord',ord);cart={};cartN();list();orders();toast('Order placed ✓')}
+  else if(b.hasAttribute('data-x'))close();
+});
+$('#ov').addEventListener('click',function(e){if(e.target.id==='ov')close()});
+$('#sf').addEventListener('submit',function(e){e.preventDefault();q=$('#q').value.trim().toLowerCase();list();$('#meds').scrollIntoView({behavior:'smooth'})});
+$('#q').addEventListener('input',function(){q=this.value.trim().toLowerCase();list()});
+if(rx&&rx.st==='wait'){rx.st='ok';S('rx',rx)}rxUI();cartN();list();
+})();
+</script>
+</body>
+</html>
