@@ -24,7 +24,7 @@
     <li><a href="/#services">Services</a></li>
     <li><a href="/#process">How we work</a></li>
     <li><a href="/#faq">FAQ</a></li>
-    <li><a class="nav-cta" href="/contact.html">Get a free plan</a></li>
+    <li><a class="nav-cta" href="/#demo">Book a free demo</a></li>
   </ul>
 </nav></div></header>
 <!--/HEADER-->
@@ -37,7 +37,7 @@
     <h1>More customers, <em>fewer missed enquiries.</em></h1>
     <p class="lead">KnowMinds Media builds and runs the online side of your business — a website that ranks, apps that work, and WhatsApp replies that answer every customer, even when you're busy.</p>
     <div class="actions">
-      <a class="btn" href="/contact.html">Get a free plan for your business
+      <a class="btn" href="#demo">Book a free demo
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       <a class="btn ghost" href="#work">See live work</a>
     </div>
@@ -155,7 +155,7 @@
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Steps aside automatically when you or your staff reply</li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>We handle all the setup — no Meta forms, no card details</li>
       </ul>
-      <div class="actions" style="margin-top:24px"><a class="btn" href="/contact.html">Ask for a demo</a></div>
+      <div class="actions" style="margin-top:24px"><a class="btn" href="#demo">Ask for a demo</a></div>
     </div>
     <div class="phone" role="img" aria-label="Example WhatsApp conversation after a missed call">
       <div class="screen">
@@ -169,6 +169,58 @@
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- DEMO FORM -->
+<section class="block" id="demo">
+  <div class="demo reveal">
+    <div class="demo-intro">
+      <span class="eyebrow">Book a free demo</span>
+      <h2>See it working for your business</h2>
+      <p>Fill in a few details and we'll contact you within one business day to set up a short demo — on a call or on WhatsApp.</p>
+      <ul class="ticks">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Free, no obligation</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Takes about 15 minutes</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>We'll suggest the right setup for you</li>
+      </ul>
+    </div>
+    <form class="demo-form" id="demo-form" action="https://formsubmit.co/hello@knowmindsmedia.com" method="POST" novalidate>
+      <input type="hidden" name="_subject" value="New demo request — knowmindsmedia.com">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="row">
+        <label>Your name<input name="Name" required autocomplete="name" placeholder="e.g. Rakesh Das"></label>
+        <label>Business name<input name="Business" required autocomplete="organization" placeholder="e.g. Glow Salon"></label>
+      </div>
+      <div class="row">
+        <label>WhatsApp / phone<input name="Phone" type="tel" required autocomplete="tel" inputmode="tel" placeholder="10-digit mobile number" pattern="[0-9+ \-]{10,15}"></label>
+        <label>Email <span class="opt">(optional)</span><input name="Email" type="email" autocomplete="email" placeholder="you@business.com"></label>
+      </div>
+      <div class="row">
+        <label>City<input name="City" required autocomplete="address-level2" placeholder="e.g. Bhubaneswar"></label>
+        <label>Type of business
+          <select name="Business type" required>
+            <option value="" selected disabled>Choose one</option>
+            <option>Salon / parlour</option><option>Clinic / dentist / doctor</option><option>Restaurant / café</option>
+            <option>Gym / fitness</option><option>Shop / retail</option><option>Real estate</option><option>Other</option>
+          </select></label>
+      </div>
+      <fieldset>
+        <legend>Interested in</legend>
+        <div class="pills">
+          <label><input type="checkbox" name="Interested in" value="Missed-call WhatsApp reply" checked><span>Missed-call WhatsApp</span></label>
+          <label><input type="checkbox" name="Interested in" value="Website"><span>Website</span></label>
+          <label><input type="checkbox" name="Interested in" value="App"><span>App</span></label>
+          <label><input type="checkbox" name="Interested in" value="AI agent"><span>AI agent</span></label>
+          <label><input type="checkbox" name="Interested in" value="Google Business Profile"><span>Google listing</span></label>
+        </div>
+      </fieldset>
+      <label>Anything else? <span class="opt">(optional)</span><textarea name="Message" rows="3" placeholder="e.g. We miss a lot of calls in the evening"></textarea></label>
+      <button class="btn" type="submit">Request my free demo</button>
+      <p class="form-msg" role="status" aria-live="polite"></p>
+    </form>
   </div>
 </section>
 
