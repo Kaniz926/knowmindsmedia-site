@@ -115,12 +115,30 @@ header{display:flex;justify-content:space-between;align-items:center;height:72px
 footer{padding:26px 0 36px;color:var(--muted);font-size:.86rem}
 footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
 footer a{color:var(--sky);font-weight:700}
+
+.skyimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.55;mix-blend-mode:luminosity;animation:sz 24s ease-out forwards}
+@keyframes sz{from{transform:scale(1.12)}}
+.sky .wrap{position:relative;z-index:1}
+.sky::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(3,105,161,.75),rgba(14,165,233,.55) 60%,rgba(125,211,252,.85));z-index:0}
+.sky .cloud{z-index:0}
+.trend{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:12px}
+.dst{position:relative;border:0;border-radius:20px;overflow:hidden;aspect-ratio:3/4;cursor:pointer;color:#fff;text-align:left;padding:0;background:#0c4a6e}
+.dst img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.dst:hover img{transform:scale(1.08)}
+.dst::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(2,44,74,.85),transparent 55%)}
+.dst span{position:absolute;left:14px;right:14px;bottom:14px;z-index:1}.dst b{font-size:1.15rem;display:block}.dst small{opacity:.85}
+.dst em{position:absolute;top:12px;left:12px;z-index:1;font-style:normal;background:#fff;color:#0369a1;font-weight:700;font-size:.78rem;border-radius:999px;padding:4px 10px}
+.feat{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:12px 0 30px}
+.feat div{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 10px 30px rgba(12,74,110,.08)}
+.feat img{width:100%;height:130px;object-fit:cover}.feat p{padding:12px 14px 16px;font-size:.88rem;color:var(--muted)}.feat b{display:block;color:var(--ink);font-size:1rem}
+@media(max-width:860px){.trend,.feat{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.trips .t{display:none}.trips{padding-left:12px!important;padding-right:12px!important}}
 </style>
 </head>
 <body>
 <div class="demo">Demo app by <a href="https://knowmindsmedia.com/" target="_blank" rel="noopener">KnowMinds Media</a> — Aakash Trips and the airlines shown are fictional. No real tickets are issued.</div>
-<section class="sky"><span class="cloud" style="width:180px;height:50px;top:90px"></span><span class="cloud" style="width:260px;height:70px;top:200px;animation-duration:60s;animation-delay:-20s"></span><span class="cloud" style="width:140px;height:40px;top:40px;animation-duration:50s;animation-delay:-35s"></span>
-  <div class="wrap"><header><div class="logo"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="#fff"/><path d="M12 36l40-14-6 8 6 4-8 2-6 10-4-8-12 2z" fill="#0ea5e9"/></svg>Aakash Trips <small>DEMO</small></div><button class="trips" id="tripsBtn">My trips</button></header>
+<section class="sky"><img class="skyimg" src="img/hero.webp" alt="" fetchpriority="high"><span class="cloud" style="width:180px;height:50px;top:90px"></span><span class="cloud" style="width:260px;height:70px;top:200px;animation-duration:60s;animation-delay:-20s"></span><span class="cloud" style="width:140px;height:40px;top:40px;animation-duration:50s;animation-delay:-35s"></span>
+  <div class="wrap"><header><div class="logo"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="#fff"/><path d="M12 36l40-14-6 8 6 4-8 2-6 10-4-8-12 2z" fill="#0ea5e9"/></svg>Aakash Trips <small>DEMO</small></div><div style="display:flex;gap:8px"><button class="trips" id="agBtn" style="background:#fff;color:#0369a1">Agency <span class="t">view</span></button><button class="trips" id="tripsBtn">My trips</button></div></header>
   <h1>Find the cheapest day to fly — then pick your seat.</h1><p>Fare calendar · seat selection · instant boarding pass</p></div></section>
 <main class="wrap">
   <div class="search"><div class="route">
@@ -131,10 +149,21 @@ footer a{color:var(--sky);font-weight:700}
     <button class="go" id="go">Show fares</button></div></div>
   <section class="sec" id="calSec"></section>
   <section class="sec" id="listSec"></section>
+  <section class="sec"><h2>Trending from Bhubaneswar <small>tap to see fares</small></h2><div class="trend">
+    <button class="dst" data-dst="MAA"><img src="img/temple.webp" alt="Carved stone temple" loading="lazy"><em>from …</em><span><b>Chennai</b><small>Temple towns &amp; Marina beach</small></span></button>
+    <button class="dst" data-dst="DEL"><img src="img/sky.webp" alt="Above the clouds" loading="lazy"><em>from …</em><span><b>Delhi</b><small>Quick capital weekend</small></span></button>
+    <button class="dst" data-dst="BLR"><img src="img/hills.webp" alt="Misty green hills" loading="lazy"><em>from …</em><span><b>Bengaluru</b><small>Gateway to Coorg hills</small></span></button>
+    <button class="dst" data-dst="BOM"><img src="img/palm.webp" alt="Palm trees by the sea" loading="lazy"><em>from …</em><span><b>Mumbai</b><small>Sea-face city breaks</small></span></button></div></section>
+  <section class="sec"><h2>Why travellers book with us</h2><div class="feat">
+    <div><img src="img/window.webp" alt="View from a plane window" loading="lazy"><p><b>Pick your window</b>Live seat map with free, legroom and front-row seats.</p></div>
+    <div><img src="img/wing.webp" alt="Aircraft wing above clouds" loading="lazy"><p><b>Cheapest-day calendar</b>See 14 days of fares and fly on the lowest one.</p></div>
+    <div><img src="img/airport.webp" alt="Airport terminal" loading="lazy"><p><b>Instant boarding pass</b>PNR, gate and seat in seconds — saved to My trips.</p></div>
+    <div><img src="img/wait.webp" alt="Traveller waiting at the airport" loading="lazy"><p><b>24×7 trip support</b>Date changes and refunds on WhatsApp, in your language.</p></div></div></section>
 </main>
 <footer><div class="wrap"><span>© 2026 Aakash Trips — fictional demo; airlines, fares and flights are made up.</span><span>Designed &amp; built by <a href="https://knowmindsmedia.com/" target="_blank" rel="noopener">KnowMinds Media</a> · <a href="https://knowmindsmedia.com/#demo" target="_blank" rel="noopener">Get a travel portal</a></span></div></footer>
 <div class="ov" id="ov"><div class="mod" id="mod"></div></div>
 <div class="toast" id="toast"></div>
+<script src="/demo-kit/dash.js"></script>
 <script>
 (function(){
 var $=function(s){return document.querySelector(s)};
@@ -169,7 +198,24 @@ function seats(){var f=st.flt,taken={};for(var r=1;r<=20;r++)for(var c=0;c<6;c++
 function bpass(t){var bars='';for(var i=0;i<60;i++)bars+='<i style="opacity:'+(h(t.pnr+i)%3?1:0)+'"></i>';
   return '<div class="bp"><div class="bp-top"><b>'+t.air+'</b><span class="mono">PNR '+t.pnr+'</span></div><div class="bp-r"><div><b>'+t.f+'</b><small>'+name(t.f)+'</small></div><span style="font-size:1.6rem;color:var(--sky)">✈</span><div style="text-align:right"><b>'+t.t+'</b><small>'+name(t.t)+'</small></div></div><div class="bp-g"><div><small>Passenger</small><b>'+t.n+'</b></div><div><small>Flight</small><b>'+t.no+'</b></div><div><small>Date</small><b>'+t.d+'</b></div><div><small>Boarding</small><b>'+t.b+'</b></div><div><small>Gate</small><b>'+t.g+'</b></div><div><small>Seat</small><b>'+t.s+'</b></div><div><small>Fare</small><b>'+t.fare+'</b></div><div><small>Paid</small><b>'+inr(t.p)+'</b></div></div><div class="bp-cut"></div><div class="bar">'+bars+'</div></div>'}
 function myTrips(){mod('<h2>My trips</h2>'+(trips.length?trips.map(bpass).join(''):'<p style="color:var(--muted);margin-top:10px">No trips yet.</p>'))}
+
+var BK=[['Q7K2PM','Sahoo family (3)','BBI → DEL','Kite Air KA 214','₹14,820',0],['M4D9TX','Ankit R.','BBI → BLR','Monsoon Jet MJ 508','₹4,310',0],['Z8P1LC','Priyanka & Arjun','BBI → BOM','Saffron Wings SW 331','₹8,960',1],['H2N6VB','Corporate — 4 pax','BBI → HYD','Blue Lotus BL 122','₹17,400',1]];
+var BS=['Awaiting payment','Ticketed','Refunded'],BC=[['#fef3c7','#b45309'],['#e0f2fe','#0369a1'],['#f1f5f9','#475569']];
+function trendFares(){var o=[st.f,st.t];document.querySelectorAll('.dst').forEach(function(b){st.f='BBI';st.t=b.dataset.dst;var m=1e9;for(var i=0;i<14;i++)m=Math.min(m,dayFare(i));b.querySelector('em').textContent='from '+inr(m)});st.f=o[0];st.t=o[1]}
+trendFares();
+function agency(){KMDash.open({title:'Aakash Trips — Agency console',subtitle:'Bookings across all airlines · demo',theme:{accent:'#0369a1',bg:'#f0f9ff',paper:'#fff',ink:'#0c1f33',muted:'#5b7083',line:'#dbeafe',font:'inherit'},
+ data:function(r){var lab=r==='Today'?KMDash.hours():KMDash.days(r==='7 days'?7:30),m=r==='Today'?.14:r==='7 days'?1:4.3;
+  return {kpis:[{label:'Tickets issued',value:Math.round(386*m)+trips.length,delta:'+16%'},{label:'Gross bookings',value:'₹'+Math.round(1840000*m).toLocaleString('en-IN'),delta:'+11%'},{label:'Avg. fare',value:'₹4,760',delta:'-3%'},{label:'Seat upsell rate',value:'34%',delta:'+5 pts'}],
+   chart:{title:'Searches vs bookings',note:r==='Today'?'per hour':'per day',labels:lab,series:[{name:'Searches ÷10',values:KMDash.series(lab.length,r==='Today'?40:420,120,2),color:'#7dd3fc'},{name:'Bookings',values:KMDash.series(lab.length,r==='Today'?6:55,20,6),color:'#0369a1'}]},
+   donut:{title:'Top routes',center:'BBI',items:[{label:'BBI → DEL',value:31,display:'31%',color:'#0369a1'},{label:'BBI → BLR',value:24,display:'24%',color:'#0ea5e9'},{label:'BBI → BOM',value:19,display:'19%',color:'#f97316'},{label:'Others',value:26,display:'26%',color:'#94a3b8'}]},
+   feed:[{icon:'🎫',text:'Ticket issued — BBI → DEL, 2 pax',time:'4 min ago'},{icon:'💺',text:'Extra-legroom seat sold (₹399)',time:'11 min ago'},{icon:'🔁',text:'Date change request via WhatsApp',time:'26 min ago'}],
+   table:{title:'Latest bookings',note:'Issue tickets or refund',cols:['PNR','Passenger','Route','Flight','Amount','Status',''],
+    rows:trips.slice(0,3).map(function(t){return [t.pnr+' ★',t.n,t.f+' → '+t.t,t.air+' '+t.no,inr(t.p),KMDash.pill('Ticketed',BC[1][0],BC[1][1]),'—']}).concat(BK.map(function(x){return [x[0],x[1],x[2],x[3],x[4],KMDash.pill(BS[x[5]],BC[x[5]][0],BC[x[5]][1]),x[5]===0?KMDash.btn('Issue ticket','iss',x[0]):x[5]===1?KMDash.btn('Refund','ref',x[0]):'—']}))}}},
+ onAction:function(a,id){var x=BK.filter(function(q){return q[0]===id})[0];if(x){x[5]=a==='iss'?1:2;toast(id+' — '+BS[x[5]])}},
+ liveFeed:function(){var c=CITY[1+Math.floor(Math.random()*6)];var t=[['🔎','Fare search BBI → '+c[0]],['🎫','New booking to '+c[1]],['💺','Window seat upgrade sold'],['💬','Support chat resolved']][Math.floor(Math.random()*4)];return {icon:t[0],text:t[1]}}})}
 document.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;
+  if(b.id==='agBtn'){agency();return}
+  if(b.dataset.dst){$('#from').value='BBI';$('#to').value=b.dataset.dst;$('#go').click();return}
   if(b.id==='swap'){var a=$('#from').value;$('#from').value=$('#to').value;$('#to').value=a}
   else if(b.id==='go'){if($('#from').value===$('#to').value)return toast('Pick two different cities');st.f=$('#from').value;st.t=$('#to').value;st.pax=+$('#pax').value;st.day=null;cal();list();$('#calSec').scrollIntoView({behavior:'smooth'})}
   else if(b.dataset.d){st.day=+b.dataset.d;cal();list()}
