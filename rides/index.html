@@ -86,6 +86,24 @@ button,input,select{font:inherit;color:inherit}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 .hist{margin-top:10px;display:grid;gap:6px}
 .hist div{background:var(--bk3);border-radius:12px;padding:10px 12px;font-size:.84rem;display:flex;justify-content:space-between}
+
+.strip{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:26px 0 18px;max-width:520px}
+.strip figure{position:relative;border-radius:18px;overflow:hidden;aspect-ratio:1/1.1;border:1px solid var(--ln)}
+.strip img{width:100%;height:100%;object-fit:cover;transition:transform .5s}.strip figure:hover img{transform:scale(1.07)}
+.strip figcaption{position:absolute;left:8px;bottom:8px;background:rgba(13,13,15,.75);backdrop-filter:blur(6px);border-radius:999px;padding:4px 10px;font-size:.75rem;font-weight:700}
+.ctas{display:flex;gap:10px;flex-wrap:wrap}
+.ops{border:0;background:var(--or);color:#fff;font-weight:800;border-radius:14px;padding:12px 16px;cursor:pointer;font-family:inherit;transition:transform .2s}
+.ops:hover{transform:translateY(-2px)}.ops.alt{background:var(--bk3);border:1px solid var(--ln)}
+.more{max-width:1180px;margin:20px auto 60px;padding:0 20px}
+.mi{display:grid;grid-template-columns:.9fr 1.1fr;gap:40px;align-items:center;background:var(--bk2);border:1px solid var(--ln);border-radius:32px;overflow:hidden}
+.mi img{width:100%;height:100%;min-height:380px;object-fit:cover}
+.mi>div{padding:34px 34px 34px 0}.kk{color:var(--or);font-weight:800;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase}
+.mi h2{font-size:clamp(1.6rem,3vw,2.4rem);font-weight:900;letter-spacing:-.03em;line-height:1.05;margin:8px 0 12px}.mi p{color:var(--mu)}
+.mi ul{list-style:none;margin-top:18px;display:grid;gap:10px;color:var(--mu)}.mi li::before{content:"●";color:var(--gr);margin-right:10px;font-size:.7rem}.mi li b{color:var(--tx)}
+.mg{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
+.mg figure{background:var(--bk2);border:1px solid var(--ln);border-radius:24px;overflow:hidden}.mg img{width:100%;height:200px;object-fit:cover}
+.mg figcaption{padding:14px 16px 18px;color:var(--mu);font-size:.9rem}.mg b{display:block;color:var(--tx);font-size:1.05rem}
+@media(max-width:860px){.mi{grid-template-columns:1fr}.mi>div{padding:0 22px 26px}.mi img{min-height:240px}.mg{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -96,6 +114,8 @@ button,input,select{font:inherit;color:inherit}
     <h1>Your ride,<br><span>live</span> on the map.</h1>
     <p>Pick a place, choose bike, auto or cab, and watch your driver arrive in real time — share the OTP and go.</p>
     <div class="feat"><span>🗺️ <b>Animated route</b> with live driver position</span><span>🔐 <b>OTP</b> to start every trip</span><span>⭐ <b>Rate & tip</b> after you arrive</span></div>
+    <div class="strip"><figure><img src="img/hero.webp" alt="Auto rickshaw on a city road"><figcaption>Autos</figcaption></figure><figure><img src="img/auto3.webp" alt="Smiling auto driver"><figcaption>Verified drivers</figcaption></figure><figure><img src="img/rain.webp" alt="Auto ride in the rain"><figcaption>Rain or shine</figcaption></figure></div>
+    <div class="ctas"><button class="ops" id="opsBtn">📡 Open dispatch dashboard</button><button class="ops alt" id="drvBtn">🛺 Driver earnings</button></div>
     <p class="credit">Designed &amp; built by <a href="https://knowmindsmedia.com/" target="_blank" rel="noopener">KnowMinds Media</a> · <a href="https://knowmindsmedia.com/#demo" target="_blank" rel="noopener">Get a booking app →</a></p>
   </section>
   <div class="phone"><div class="screen">
@@ -104,7 +124,11 @@ button,input,select{font:inherit;color:inherit}
     <div class="sheet" id="sheet"></div>
   </div></div>
 </div>
+<section class="more"><div class="mi"><img src="img/driver.webp" alt="Auto driver waiting for a ride" loading="lazy"><div><span class="kk">For fleet owners</span><h2>Run your own ride app — bikes, autos or cabs.</h2><p>Sawari is a demo of the booking + dispatch platform KnowMinds Media builds for local transport businesses: rider app, driver app and an operations dashboard, in your brand and your customers' language.</p>
+<ul><li><b>Live dispatch</b> — see every driver and ride on one screen</li><li><b>Fair pricing</b> — base fare + per-km, with rain and peak-hour rules</li><li><b>Driver payouts</b> — daily earnings, incentives and UPI settlements</li><li><b>Safety</b> — OTP start, trip sharing and SOS</li></ul></div></div>
+<div class="mg"><figure><img src="img/auto2.webp" alt="Auto rickshaw moving through traffic" loading="lazy"><figcaption><b>Bike · Auto · Mini · Sedan</b>One app for every kind of ride</figcaption></figure><figure><img src="img/rain.webp" alt="Rainy street seen through a window" loading="lazy"><figcaption><b>Monsoon-ready</b>Rain pricing and ETA that adjusts with traffic</figcaption></figure><figure><img src="img/auto3.webp" alt="Driver smiling in his auto" loading="lazy"><figcaption><b>Driver-first</b>Clear earnings so drivers stay with you</figcaption></figure></div></section>
 <div class="toast" id="toast"></div>
+<script src="/demo-kit/dash.js"></script>
 <script>
 (function(){
 var $=function(s){return document.querySelector(s)};
@@ -142,6 +166,28 @@ function ride(){st.stage='ride';var pts=path(st.f,st.t),T=10,left=T;clearInterva
 function done(){st.stage='done';var f=fare(st.v),base=V[st.v][4],tip=0,rated=0;
   function draw(){sheet('<h2 style="text-align:center">You\'ve arrived 🎉</h2><p class="sub" style="text-align:center">'+PL[st.f][0]+' → '+PL[st.t][0]+'</p><div class="bill"><div><span>Base fare</span><span>₹'+base+'</span></div><div><span>Distance ('+dist(st.f,st.t)+' km)</span><span>₹'+(f-base)+'</span></div>'+(tip?'<div><span>Tip for '+st.d[0]+'</span><span>₹'+tip+'</span></div>':'')+'<div class="t"><span>Total · '+st.pay+'</span><span>₹'+(f+tip)+'</span></div></div><p style="text-align:center;font-weight:700">Rate '+st.d[0]+'</p><div class="stars">'+[1,2,3,4,5].map(function(n){return '<button data-star="'+n+'" class="'+(n<=rated?'on':'')+'">⭐</button>'}).join('')+'</div><div class="tips">'+[0,10,20,30].map(function(t){return '<button data-tip="'+t+'" aria-pressed="'+(tip===t)+'">'+(t?'+₹'+t:'No tip')+'</button>'}).join('')+'</div><button class="go" id="new">Done · book another ride</button>')}
   draw();$('#sheet').onclick=function(e){var b=e.target.closest('button');if(!b)return;if(b.dataset.star){rated=+b.dataset.star;draw();toast('Thanks for rating!')}if(b.dataset.tip!==undefined){tip=+b.dataset.tip;draw()}if(b.id==='new'){hist.unshift({e:V[st.v][0],to:PL[st.t][0],f:f+tip});try{localStorage.setItem('sw_hist',JSON.stringify(hist))}catch(e){}$('#sheet').onclick=null;pick()}}}
+
+var FL=[['Sanjay','🛺 Auto','OD 02 AK 4417','Saheed Nagar',0],['Pradeep','🚗 Mini','OD 33 BX 2081','Patia',1],['Mamata','🏍️ Bike','OD 02 CJ 7730','KIIT Square',1],['Firoz','🚙 Sedan','OD 05 DM 1192','Airport',2],['Rakesh','🛺 Auto','OD 02 BH 6620','Railway Station',0],['Lipika','🏍️ Bike','OD 02 AZ 3307','Esplanade',3]];
+var FS=['Idle','On trip','Heading to pickup','Offline'],FC=[['#1f3d2b','#3ddc84'],['#3a1d16','#ff8a6e'],['#2a2a40','#a5b4fc'],['#2a2a2e','#9b9ba8']];
+var TH={accent:'#ff4d2e',bg:'#0d0d0f',paper:'#17171b',ink:'#f4f4f6',muted:'#9b9ba8',line:'#2e2e36',font:'inherit'};
+function ops(){KMDash.open({title:'Sawari — Dispatch',subtitle:'Bhubaneswar operations · simulated live',theme:TH,
+ data:function(r){var lab=r==='Today'?KMDash.hours():KMDash.days(r==='7 days'?7:30),m=r==='Today'?.14:r==='7 days'?1:4.3,on=FL.filter(function(f){return f[4]!==3}).length;
+  return {kpis:[{label:'Rides completed',value:Math.round(3120*m)+hist.length,delta:'+19%'},{label:'Drivers online',value:on*31,delta:'peak 214'},{label:'Avg. pickup ETA',value:'4.2 min',delta:'0.6 min faster'},{label:'Gross fares',value:'₹'+Math.round(468000*m).toLocaleString('en-IN'),delta:'+14%'}],
+   chart:(function(){var rq=KMDash.series(lab.length,r==='Today'?130:450,140,3);return {title:'Ride requests',note:r==='Today'?'per hour':'per day',labels:lab,series:[{name:'Requests',values:rq,color:'#ff4d2e'},{name:'Completed',values:rq.map(function(v,i){return Math.round(v*(.86+(i%3)*.03))}),color:'#3ddc84'}]}})(),
+   donut:{title:'Rides by vehicle',center:'Mix',items:[{label:'Auto',value:44,display:'44%',color:'#facc15'},{label:'Bike',value:31,display:'31%',color:'#ff4d2e'},{label:'Mini',value:17,display:'17%',color:'#3ddc84'},{label:'Sedan',value:8,display:'8%',color:'#a5b4fc'}]},
+   feed:[{icon:'🌧️',text:'Rain detected — 1.2× pricing on in Patia',time:'3 min ago'},{icon:'🚨',text:'High demand at Railway Station',time:'9 min ago'},{icon:'⭐',text:'Mamata rated 5★ by rider',time:'15 min ago'}],
+   table:{title:'Fleet — live status',note:'Send idle drivers to busy zones',cols:['Driver','Vehicle','Number','Zone','Status',''],rows:FL.map(function(f){return [f[0],f[1],f[2],f[3],KMDash.pill(FS[f[4]],FC[f[4]][0],FC[f[4]][1]),f[4]===0?KMDash.btn('Send to station','zone',f[0]):f[4]===3?KMDash.btn('Ping','ping',f[0]):'—']})}}},
+ onAction:function(a,id){var f=FL.filter(function(x){return x[0]===id})[0];if(a==='zone'){f[3]='Railway Station';f[4]=2;toast(id+' sent to Railway Station')}else{f[4]=0;toast(id+' is back online')}},
+ liveFeed:function(){var p=PL[Math.floor(Math.random()*PL.length)][0].split(' — ')[0];var t=[['📍','Ride requested from '+p],['✅','Trip completed at '+p],['🛺','Driver went online near '+p],['💸','UPI payment received']][Math.floor(Math.random()*4)];return {icon:t[0],text:t[1]}}})}
+function earn(){KMDash.open({title:'Driver app — Sanjay',subtitle:'🛺 Auto · OD 02 AK 4417 · simulated',theme:TH,
+ data:function(r){var lab=r==='Today'?KMDash.hours():KMDash.days(r==='7 days'?7:30),m=r==='Today'?1:r==='7 days'?6.5:27;
+  return {kpis:[{label:'Earnings',value:'₹'+Math.round(1460*m).toLocaleString('en-IN'),delta:'+₹180 incentive'},{label:'Trips',value:Math.round(14*m),delta:'target 16/day'},{label:'Online hours',value:Math.round(9*m)+' h',delta:''},{label:'Rating',value:'4.9 ★',delta:'top 10%'}],
+   chart:{type:'bar',title:'Earnings',note:'₹',labels:lab,values:KMDash.series(lab.length,r==='Today'?120:1400,400,4),color:'#ff4d2e'},
+   donut:{title:'Payment mode',center:'UPI',items:[{label:'UPI',value:68,display:'68%',color:'#3ddc84'},{label:'Cash',value:32,display:'32%',color:'#9b9ba8'}]},
+   feed:[{icon:'🎯',text:'2 more trips to unlock ₹100 bonus',time:'now'},{icon:'💸',text:'₹1,280 settled to bank (UPI)',time:'yesterday'}],
+   table:{title:'Recent trips',note:'',cols:['Time','From','To','Km','Fare'],rows:[['9:12 AM','Saheed Nagar','Railway Station','5.4','₹94'],['10:05 AM','KIIT Square','Esplanade One','7.1','₹113'],['11:40 AM','Airport','Saheed Nagar','6.2','₹103']]}}},
+ liveFeed:function(){return {icon:'📍',text:'New ride request nearby'}}})}
+document.addEventListener('click',function(e){if(e.target.closest('#opsBtn'))ops();if(e.target.closest('#drvBtn'))earn()});
 document.addEventListener('click',function(e){var b=e.target.closest('button');if(!b||st.stage==='done')return;
   if(b.dataset.v){st.v=+b.dataset.v;pick()}
   else if(b.id==='book'){st.pay=$('#pay').value;search()}
