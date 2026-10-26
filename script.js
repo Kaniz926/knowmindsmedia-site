@@ -213,6 +213,63 @@
     counts.forEach(function(c){ cio.observe(c); });
   }
 
+
+  // ===== Animated network background (all pages) =====
+  (function(){
+    if (reduce) return;
+    var cv=document.createElement('canvas'); cv.id='bg-fx'; cv.setAttribute('aria-hidden','true');
+    document.body.prepend(cv);
+    var ctx=cv.getContext('2d'), W=0,H=0,dpr=Math.min(window.devicePixelRatio||1,2), pts=[], pulses=[], mouse={x:-9999,y:-9999}, raf=null, running=true;
+    function colors(){ var dark=document.documentElement.getAttribute('data-theme')==='dark';
+      return dark?{dot:'110,231,183',line:'110,231,183',la:.3,da:.7,pulse:'167,243,208'}:{dot:'5,150,105',line:'5,150,105',la:.24,da:.55,pulse:'16,185,129'}; }
+    function size(){
+      W=window.innerWidth; H=window.innerHeight; cv.width=W*dpr; cv.height=H*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+      var n=Math.round(Math.min(90,Math.max(28,W*H/19000)));
+      pts=[]; for(var i=0;i<n;i++) pts.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.28,vy:(Math.random()-.5)*.28,r:Math.random()*1.6+.8,ph:Math.random()*6.28});
+      pulses=[];
+    }
+    var LINK=165;
+    function frame(t){
+      if(!running) return;
+      var C=colors(); ctx.clearRect(0,0,W,H);
+      for(var i=0;i<pts.length;i++){ var p=pts[i]; p.x+=p.vx; p.y+=p.vy;
+        if(p.x<-20)p.x=W+20; if(p.x>W+20)p.x=-20; if(p.y<-20)p.y=H+20; if(p.y>H+20)p.y=-20;
+        var dx=p.x-mouse.x, dy=p.y-mouse.y, md=dx*dx+dy*dy; if(md<14400){ var f=(14400-md)/14400*.6; p.x+=dx/Math.sqrt(md+1)*f; p.y+=dy/Math.sqrt(md+1)*f; } }
+      for(i=0;i<pts.length;i++){ for(var k=i+1;k<pts.length;k++){
+        var a=pts[i], b=pts[k], x=a.x-b.x, y=a.y-b.y, d=x*x+y*y;
+        if(d<LINK*LINK){ var al=(1-Math.sqrt(d)/LINK)*C.la; ctx.strokeStyle='rgba('+C.line+','+al.toFixed(3)+')'; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+          if(pulses.length<14 && Math.random()<.0009) pulses.push({a:a,b:b,t:0}); } } }
+      for(i=0;i<pts.length;i++){ var q=pts[i], tw=.6+.4*Math.sin(t/900+q.ph); ctx.fillStyle='rgba('+C.dot+','+(C.da*tw).toFixed(3)+')'; ctx.beginPath(); ctx.arc(q.x,q.y,q.r,0,6.283); ctx.fill(); }
+      for(i=pulses.length-1;i>=0;i--){ var u=pulses[i]; u.t+=.018; if(u.t>=1){pulses.splice(i,1);continue;}
+        var px=u.a.x+(u.b.x-u.a.x)*u.t, py=u.a.y+(u.b.y-u.a.y)*u.t, g=ctx.createRadialGradient(px,py,0,px,py,9);
+        g.addColorStop(0,'rgba('+C.pulse+',.9)'); g.addColorStop(1,'rgba('+C.pulse+',0)'); ctx.fillStyle=g; ctx.beginPath(); ctx.arc(px,py,9,0,6.283); ctx.fill(); }
+      raf=requestAnimationFrame(frame);
+    }
+    size(); raf=requestAnimationFrame(frame);
+    var rt; window.addEventListener('resize',function(){ clearTimeout(rt); rt=setTimeout(size,200); });
+    window.addEventListener('mousemove',function(e){ mouse.x=e.clientX; mouse.y=e.clientY; },{passive:true});
+    document.addEventListener('mouseleave',function(){ mouse.x=mouse.y=-9999; });
+    document.addEventListener('visibilitychange',function(){ running=!document.hidden; if(running){ cancelAnimationFrame(raf); raf=requestAnimationFrame(frame);} });
+  })();
+
+  // ===== Project preview dialog =====
+  var pv=document.getElementById('pv');
+  if(pv){
+    var pImg=pv.querySelector('img'), pT=pv.querySelector('#pv-title'), pD=pv.querySelector('.pv-desc'), pTag=pv.querySelector('.pv-tag');
+    document.querySelectorAll('[data-preview]').forEach(function(b){
+      b.addEventListener('click',function(){
+        var im=b.querySelector('img'); pImg.src=im.src; pImg.alt=im.alt;
+        pT.textContent=b.querySelector('h4').textContent; pD.textContent=b.querySelector('small').textContent;
+        pTag.textContent=(b.querySelector('.ptag')||{}).textContent||'';
+        if(pv.showModal) pv.showModal(); else pv.setAttribute('open','');
+      });
+    });
+    function close(){ if(pv.close) pv.close(); else pv.removeAttribute('open'); }
+    pv.querySelector('.pv-x').addEventListener('click',close);
+    pv.querySelector('[data-close]').addEventListener('click',close);
+    pv.addEventListener('click',function(e){ if(e.target===pv) close(); });
+  }
+
   var items = document.querySelectorAll('.reveal');
   if (!('IntersectionObserver' in window)) {
     items.forEach(function (el) { el.classList.add('in'); });

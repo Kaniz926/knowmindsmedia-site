@@ -436,3 +436,22 @@ html[data-theme="dark"] .aurora i:nth-child(3){background:#34d399}
   .hero h1 em{background-size:100% 100%}
 }
 .strip b .count{font-size:inherit;color:inherit;font-variant-numeric:tabular-nums}
+
+/* project buttons + preview dialog */
+button.app{font:inherit;text-align:left;width:100%;cursor:pointer;padding:0;color:inherit}
+.pv{border:0;padding:0;background:transparent;max-width:min(980px,94vw);width:100%;margin:auto}
+.pv::backdrop{background:rgba(4,14,10,.72);backdrop-filter:blur(6px)}
+.pv[open]{animation:pvin .35s cubic-bezier(.2,.8,.2,1)}
+@keyframes pvin{from{opacity:0;transform:translateY(16px) scale(.98)}}
+.pv-box{background:var(--paper);color:var(--ink);border-radius:20px;overflow:hidden;position:relative;border:1px solid var(--line);box-shadow:var(--shadow-lg)}
+.pv-img{background:#0d0d16;aspect-ratio:16/9.35}
+.pv-img img{width:100%;height:100%;object-fit:cover;object-position:top left}
+.pv-meta{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;padding:20px 24px}
+.pv-meta h3{font-size:1.35rem;letter-spacing:-.02em}
+.pv-meta p{color:var(--muted)}
+.pv-tag{color:var(--accent)}
+.pv-x{position:absolute;top:12px;right:12px;width:40px;height:40px;border-radius:50%;border:0;background:rgba(0,0,0,.55);color:#fff;font-size:1rem;cursor:pointer;z-index:2}
+.pv-x:hover{background:rgba(0,0,0,.8)}
+
+/* site-wide animated background */
+#bg-fx{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;opacity:.9}
