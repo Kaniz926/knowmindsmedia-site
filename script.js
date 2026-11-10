@@ -221,7 +221,7 @@
     document.body.prepend(cv);
     var ctx=cv.getContext('2d'), W=0,H=0,dpr=Math.min(window.devicePixelRatio||1,2), pts=[], pulses=[], mouse={x:-9999,y:-9999}, raf=null, running=true;
     function colors(){ var dark=document.documentElement.getAttribute('data-theme')==='dark';
-      return dark?{dot:'110,231,183',line:'110,231,183',la:.3,da:.7,pulse:'167,243,208'}:{dot:'5,150,105',line:'5,150,105',la:.24,da:.55,pulse:'16,185,129'}; }
+      return dark?{dot:'0,200,255',line:'0,200,255',la:.3,da:.7,pulse:'165,240,255'}:{dot:'11,77,255',line:'11,77,255',la:.24,da:.55,pulse:'0,144,255'}; }
     function size(){
       W=window.innerWidth; H=window.innerHeight; cv.width=W*dpr; cv.height=H*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
       var n=Math.round(Math.min(90,Math.max(28,W*H/19000)));

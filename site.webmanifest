@@ -3,8 +3,8 @@
   "short_name": "KnowMinds",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#f7f8f5",
-  "theme_color": "#06281c",
+  "background_color": "#f6f8fd",
+  "theme_color": "#071a5c",
   "icons": [
     {
       "src": "/icon-192.png",
