@@ -447,10 +447,12 @@ function waSheet(g){
     <label>Phone number ID</label><input id="wPid" value="${esc(g.wa.phone_number_id)}" inputmode="numeric">
     <label>WhatsApp Business Account ID</label><input id="wWaba" value="${esc(g.wa.waba_id)}" inputmode="numeric">
     <label>Permanent access token ${g.wa.ready ? "(leave empty to keep the saved one)" : ""}</label><div class="row"><input id="wTok" type="password" autocomplete="off"><button class="eye" data-eye="wTok">Show</button></div>
+    <label>6-digit PIN ${g.wa.ready ? "(only if you need to register the number again)" : "(you choose it; registers the number)"}</label><input id="wPin" inputmode="numeric" maxlength="6" placeholder="e.g. 482915" autocomplete="off">
     <div class="hint"><ol><li>In the gym's Meta Business account, add the gym's number in <b>WhatsApp Manager</b> (business verification needed).</li>
       <li>From <b>WhatsApp Manager → Phone numbers</b> copy the <b>Phone number ID</b> and the <b>WhatsApp Business Account ID</b>.</li>
       <li><b>Business settings → System users</b> → add a system user, give it the WhatsApp account, then <b>Generate token</b> (never expires) with <i>whatsapp_business_messaging</i> and <i>whatsapp_business_management</i>.</li>
-      <li>Paste all three here → <b>Save and check</b> → <b>Send templates to Meta</b>. Approval usually takes minutes to a few hours.</li></ol></div>
+      <li>Paste all three here, type any 6-digit PIN (write it down) → <b>Save and check</b> → <b>Send templates to Meta</b>. Approval usually takes minutes to a few hours.</li>
+      <li>In WhatsApp Manager → <b>Payment settings</b>, add a payment method, or Meta will not deliver reminders.</li></ol></div>
     <div id="wErr" class="err hide"></div><div id="wOk" class="okmsg hide"></div>
     <button class="btn" id="wSave">Save and check</button>
     <div class="card" style="margin-top:16px"><b>Message templates</b>
@@ -459,7 +461,7 @@ function waSheet(g){
     <button class="btn ghost" data-close>Close</button>`);
   const done = (r, okText) => { const ng = upGym(r.gym); waSheet(ng); if (r.msg || okText) { const ok = $("sheetHost").querySelector("#wOk"); ok.textContent = r.msg || okText; ok.classList.remove("hide"); } };
   bg.querySelector("#wSave").onclick = ev => busy(ev.target, async () => { err(bg.querySelector("#wErr"));
-    try { done(await api({ action:"set_whatsapp", token, gym_id:g.id, phone_number_id:bg.querySelector("#wPid").value, waba_id:bg.querySelector("#wWaba").value, wa_token:bg.querySelector("#wTok").value })); } catch(e){ err(bg.querySelector("#wErr"), e.message); } });
+    try { done(await api({ action:"set_whatsapp", token, gym_id:g.id, phone_number_id:bg.querySelector("#wPid").value, waba_id:bg.querySelector("#wWaba").value, wa_token:bg.querySelector("#wTok").value, pin:bg.querySelector("#wPin").value })); } catch(e){ err(bg.querySelector("#wErr"), e.message); } });
   bg.querySelector("#wSubmit").onclick = ev => busy(ev.target, async () => { err(bg.querySelector("#wErr")); try { done(await api({ action:"templates_submit", token, gym_id:g.id })); } catch(e){ err(bg.querySelector("#wErr"), e.message); } });
   bg.querySelector("#wCheck").onclick = ev => busy(ev.target, async () => { err(bg.querySelector("#wErr")); try { done(await api({ action:"templates_check", token, gym_id:g.id }), "Status updated."); } catch(e){ err(bg.querySelector("#wErr"), e.message); } });
 }
