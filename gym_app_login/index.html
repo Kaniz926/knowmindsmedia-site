@@ -102,7 +102,7 @@
     <p class="sub">Choose how you want to log in.</p>
     <button class="choice" data-role="super"><div class="ic" style="background:#2a1a10">🛡️</div><div><b>Super Admin</b><span>KnowMinds Media team. Add gyms, get each gym's QR code, connect WhatsApp and payments.</span></div><div class="go">›</div></button>
     <button class="choice" data-role="gym"><div class="ic" style="background:#10241a">🏋️</div><div><b>Gym Owner</b><span>Your gym dashboard: cash approvals, members, non-payment list, QR poster.</span></div><div class="go">›</div></button>
-    <a class="dl webonly" href="KnowMinds-Gym-Admin.apk" download><div class="ic" style="font-size:26px">📱</div><div><b>Download the Android app</b><span>Same login for Super Admin and Gym Owner. Android 7 or newer.</span></div></a>
+    <a class="dl webonly" href="KnowMinds-Gym-Owner.apk" download><div class="ic" style="font-size:26px">📱</div><div><b>Download the Gym Owner app</b><span>For gym owners and managers. Android 7 or newer.</span></div></a>
     <p class="foot">Need help? <a href="https://knowmindsmedia.com/contact.html">Contact KnowMinds Media</a></p>
   </div>
 
@@ -181,7 +181,7 @@
       <div id="dNon"></div>
       <h2>Recent payments</h2>
       <div id="dRec"></div>
-      <a class="dl webonly" id="gAppLink" href="KnowMinds-Gym-Admin.apk" download><div class="ic" style="font-size:26px">📱</div><div><b>Get the Android app</b><span>Log in once and your dashboard opens with one tap.</span></div></a>
+      <a class="dl webonly" id="gAppLink" href="KnowMinds-Gym-Owner.apk" download><div class="ic" style="font-size:26px">📱</div><div><b>Get the Android app</b><span>Log in once and your dashboard opens with one tap.</span></div></a>
     </div>
 
     <div id="tMembers" class="hide">
@@ -238,6 +238,7 @@
 const API = "https://cqrtvuspfbwkefpheknj.supabase.co/functions/v1/km-admin";
 const A = window.Android || null;
 const IN_APP = !!A || /[?&]app=1/.test(location.search);
+const LOCK = (new URLSearchParams(location.search).get("role") || "").replace(/[^a-z]/g, ""); // "super" or "gym" in the separate apps
 const $ = (id) => document.getElementById(id);
 const store = { get(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }, set(k,v){ try{ v ? localStorage.setItem(k,v) : localStorage.removeItem(k); }catch(e){} } };
 let token = store.get("km_token") || "", me = null, myGym = null, chosen = "", gyms = [], cur = null, dash = null, members = [], mFilter = "all", tab = "home", timer = null;
@@ -273,7 +274,7 @@ async function api(body){
 }
 async function busy(btn, fn){ const t = btn.textContent; btn.disabled = true; btn.textContent = "Please wait…"; try { return await fn(); } finally { btn.disabled = false; btn.textContent = t; } }
 function setSession(t, admin, gym){ token = t; me = admin; myGym = gym || null; store.set("km_token", t); }
-function logout(){ token = ""; me = null; myGym = null; store.set("km_token",""); clearInterval(timer); closeSheet(); if (A && A.loggedOut) A.loggedOut(); $("lPass").value = ""; show("vChoose"); }
+function logout(){ token = ""; me = null; myGym = null; store.set("km_token",""); clearInterval(timer); closeSheet(); if (A && A.loggedOut) A.loggedOut(); $("lPass").value = ""; if (LOCK === "super" || LOCK === "gym") pickRole(LOCK); else show("vChoose"); }
 document.querySelectorAll("[data-logout]").forEach(b => b.onclick = logout);
 document.querySelectorAll("[data-eye]").forEach(b => b.onclick = () => { const i = $(b.dataset.eye); i.type = i.type === "password" ? "text" : "password"; b.textContent = i.type === "password" ? "Show" : "Hide"; });
 
@@ -300,15 +301,19 @@ async function start(){
   show("vLoading");
   if (location.hash === "#logout"){ history.replaceState(null, "", location.pathname + location.search); logout(); return; }
   if (token){
-    try { const r = await api({ action:"me", token }); me = r.admin; myGym = r.gym; route(); return; }
+    try { const r = await api({ action:"me", token }); me = r.admin; myGym = r.gym;
+      if ((LOCK === "gym" && me.role === "super") || (LOCK === "super" && me.role !== "super")) { logout(); return; }
+      route(); return; }
     catch(e){ if (e.status === 401 || e.status === 403){ logout(); return; } }
   }
-  show("vChoose");
+  if (LOCK === "super" || LOCK === "gym") pickRole(LOCK); else show("vChoose");
 }
 function route(){ if (me.role === "super") openSuper(); else openGym(me.gym_id); }
 let superExists = true;
-document.querySelectorAll("[data-role]").forEach(b => b.onclick = async () => {
-  chosen = b.dataset.role; err($("lErr")); err($("sErr"));
+document.querySelectorAll("[data-role]").forEach(b => b.onclick = () => pickRole(b.dataset.role));
+if (LOCK === "super" || LOCK === "gym") document.querySelectorAll("[data-back]").forEach(b => b.classList.add("hide"));
+async function pickRole(role){
+  chosen = role; err($("lErr")); err($("sErr"));
   const sup = chosen === "super";
   $("lTag").textContent = sup ? "Super Admin" : "Gym Owner";
   $("lTitle").textContent = sup ? "Super Admin login" : "Gym Owner login";
@@ -316,7 +321,7 @@ document.querySelectorAll("[data-role]").forEach(b => b.onclick = async () => {
   $("lFoot").textContent = sup ? "Forgot the super admin password? Contact KnowMinds Media support." : "Forgot your password? Ask KnowMinds Media to reset it.";
   if (sup){ show("vLoading"); try { superExists = (await api({ action:"status" })).superExists; } catch(e){ superExists = true; } show(superExists ? "vLogin" : "vSetup"); }
   else show("vLogin");
-});
+}
 document.querySelectorAll("[data-back]").forEach(b => b.onclick = () => show("vChoose"));
 $("sBtn").onclick = () => busy($("sBtn"), async () => {
   err($("sErr"));
@@ -328,8 +333,8 @@ $("lBtn").onclick = () => busy($("lBtn"), async () => {
   err($("lErr"));
   try {
     const r = await api({ action:"login", phone:$("lPhone").value, password:$("lPass").value });
-    if (chosen === "gym" && r.admin.role === "super") return err($("lErr"), "This is the Super Admin account. Go back and choose Super Admin.");
-    if (chosen === "super" && r.admin.role !== "super") return err($("lErr"), "This is a Gym Owner account. Go back and choose Gym Owner.");
+    if (chosen === "gym" && r.admin.role === "super") return err($("lErr"), LOCK ? "This is the Super Admin account. Please use the KnowMinds Super Admin app." : "This is the Super Admin account. Go back and choose Super Admin.");
+    if (chosen === "super" && r.admin.role !== "super") return err($("lErr"), LOCK ? "This is a Gym Owner account. Please use the KnowMinds Gym Owner app." : "This is a Gym Owner account. Go back and choose Gym Owner.");
     setSession(r.token, r.admin, r.gym); route();
   } catch(e){ err($("lErr"), e.message); }
 });
@@ -379,7 +384,7 @@ $("gymList").onclick = ev => {
 function upGym(gym){ const i = gyms.findIndex(x => x.id === gym.id); if (i >= 0) gyms[i] = Object.assign({}, gyms[i], gym); renderGyms(); return gyms[i]; }
 
 function shareLogin(gymName, name, phone, pass){
-  const msg = `Hello ${name},\n\nYour ${gymName} dashboard login (KnowMinds Gym Admin):\nWebsite: https://knowmindsmedia.com/gym_app_login\nChoose: Gym Owner\nMobile number: ${String(phone).replace(/^91/,"")}\nPassword: ${pass}\n\nYou can also download the Android app from the same page. Please keep this password private.\n\n– KnowMinds Media`;
+  const msg = `Hello ${name},\n\nYour ${gymName} dashboard login (KnowMinds Gym Admin):\nApp: https://knowmindsmedia.com/gym_app_login/KnowMinds-Gym-Owner.apk\nOr website: https://knowmindsmedia.com/gym_app_login (choose Gym Owner)\nMobile number: ${String(phone).replace(/^91/,"")}\nPassword: ${pass}\n\nPlease keep this password private.\n\n– KnowMinds Media`;
   openUrl("https://wa.me/" + phone + "?text=" + encodeURIComponent(msg));
 }
 $("btnAddGym").onclick = () => {
