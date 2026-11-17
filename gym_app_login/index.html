@@ -73,7 +73,7 @@
   .dl b{display:block;font-size:14.5px}.dl span{color:var(--muted);font-size:12.5px}
   .tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--brand2);margin-bottom:6px}
   .tabs{display:flex;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:5px;margin-bottom:16px;position:sticky;top:6px;z-index:4}
-  .tabs button{flex:1;background:transparent;color:var(--muted);padding:10px 6px;font-size:14px;border-radius:10px}
+  .tabs button{flex:1;background:transparent;color:var(--muted);padding:10px 4px;font-size:13.5px;border-radius:10px;white-space:nowrap}
   .tabs button.on{background:var(--brand);color:#111}
   .badge{background:#b91c1c;color:#fff;border-radius:99px;padding:1px 8px;font-size:12px;font-weight:700}
   .qrbox{background:#fff;border-radius:16px;padding:14px;display:flex;justify-content:center;margin:12px auto;max-width:300px}
@@ -162,6 +162,7 @@
     <div class="tabs">
       <button data-tab="home" class="on">Home</button>
       <button data-tab="members">Members</button>
+      <button data-tab="trainers">Trainers</button>
       <button data-tab="qr">QR</button>
       <button data-tab="settings">Settings</button>
     </div>
@@ -193,6 +194,12 @@
       <div id="mList"></div>
     </div>
 
+    <div id="tTrainers" class="hide">
+      <div class="top" style="margin-bottom:6px"><div><h2 style="margin:0">Personal trainers</h2><div class="meta">Members choose a trainer in the QR form.</div></div>
+        <button class="small" id="btnAddTrainer" style="background:var(--brand);color:#111">+ Add trainer</button></div>
+      <div id="trList"></div>
+    </div>
+
     <div id="tQr" class="hide">
       <div class="card" style="text-align:center">
         <h2 style="justify-content:center;margin-top:4px">Member QR code</h2>
@@ -218,7 +225,7 @@
           <div><label>Half-Yearly</label><input id="sp_Half-Yearly" inputmode="numeric"></div>
           <div><label>Yearly</label><input id="sp_Yearly" inputmode="numeric"></div>
         </div>
-        <label>Personal trainers (one per line)</label><textarea id="sTrainers" placeholder="Ravi Kumar&#10;Sneha Patra"></textarea>
+        <p class="hint">Personal trainers are in the <b>Trainers</b> tab.</p>
         <label>UPI ID (shown on the renewal page)</label><input id="sUpi" placeholder="9876543210@ybl">
         <div class="grid2">
           <div><label>Owner name (on the pass)</label><input id="sOwner"></div>
@@ -544,8 +551,9 @@ $("gRefresh").onclick = () => { loadDash(); if (tab === "members") loadMembers()
 document.querySelectorAll("[data-tab]").forEach(b => b.onclick = () => setTab(b.dataset.tab));
 function setTab(t){
   tab = t; document.querySelectorAll("[data-tab]").forEach(b => b.classList.toggle("on", b.dataset.tab === t));
-  ["home","members","qr","settings"].forEach(x => $("t" + x[0].toUpperCase() + x.slice(1)).classList.toggle("hide", x !== t));
+  ["home","members","trainers","qr","settings"].forEach(x => $("t" + x[0].toUpperCase() + x.slice(1)).classList.toggle("hide", x !== t));
   if (t === "members") loadMembers();
+  if (t === "trainers") loadTrainers();
   if (t === "settings" && dash) fillSettings(dash.gym);
 }
 async function loadDash(quiet){
@@ -697,6 +705,51 @@ function shrink(file){ return new Promise((res, rej) => { const r = new FileRead
   const s = Math.min(im.width, im.height), c = document.createElement("canvas"); c.width = c.height = 480; c.getContext("2d").drawImage(im, (im.width-s)/2, (im.height-s)/2, s, s, 0, 0, 480, 480); res(c.toDataURL("image/jpeg", .85)); };
   im.onerror = () => rej(new Error("Could not read this photo.")); im.src = r.result; }; r.readAsDataURL(file); }); }
 
+// ----- trainers tab -----
+async function loadTrainers(){
+  if (!dash) return;
+  renderTrainers();
+  try { members = (await gapi({ action:"gym_members" })).members; renderTrainers(); } catch(e){}
+}
+function renderTrainers(){
+  const list = dash.gym.trainers || [];
+  const count = n => members.filter(m => m.trainer === n && !["left","rejected"].includes(m.status)).length;
+  $("trList").innerHTML = list.length ? list.map((t, i) => `<div class="card"><div class="person"><div class="ph">${esc(initials(t))}</div><div class="info"><b>${esc(t)}</b>
+      <div class="meta">${count(t)} member${count(t) === 1 ? "" : "s"}</div></div></div>
+      <div class="acts"><button class="ghost small" data-tr="rename" data-i="${i}">Rename</button><button class="redline small" data-tr="remove" data-i="${i}">Remove</button></div></div>`).join("")
+    : '<div class="empty">No trainers yet.<br>Tap <b>+ Add trainer</b>. They will show in the QR form when a member says Yes to a personal trainer.</div>';
+}
+async function saveTrainers(list){ const r = await gapi({ action:"gym_settings", trainers:list }); dash.gym = r.gym; renderTrainers(); }
+$("btnAddTrainer").onclick = () => {
+  const bg = sheet(`<h2>Add trainer</h2><label>Trainer name</label><input id="trN" placeholder="e.g. Ravi Kumar">
+    <div id="trErr" class="err hide"></div><button class="btn" id="trSave">Add trainer</button><button class="btn ghost" data-close>Cancel</button>`);
+  setTimeout(() => bg.querySelector("#trN").focus(), 50);
+  bg.querySelector("#trSave").onclick = ev => busy(ev.target, async () => {
+    const n = bg.querySelector("#trN").value.trim(); err(bg.querySelector("#trErr"));
+    if (!n) return err(bg.querySelector("#trErr"), "Please enter the trainer's name.");
+    const list = dash.gym.trainers || [];
+    if (list.some(x => x.toLowerCase() === n.toLowerCase())) return err(bg.querySelector("#trErr"), "This trainer is already in the list.");
+    try { await saveTrainers(list.concat([n])); closeSheet(); toast(n + " added"); } catch(e){ err(bg.querySelector("#trErr"), e.message); }
+  });
+};
+$("trList").onclick = ev => {
+  const b = ev.target.closest("button[data-tr]"); if (!b) return;
+  const list = (dash.gym.trainers || []).slice(), i = Number(b.dataset.i), old = list[i];
+  if (b.dataset.tr === "remove") return confirmSheet("Remove " + old + "?", "New members will no longer see this trainer in the form. Members who already chose " + esc(old) + " keep the name on their record.", "Remove", true, async () => {
+    list.splice(i, 1); await saveTrainers(list); closeSheet(); toast(old + " removed"); });
+  const bg = sheet(`<h2>Rename trainer</h2><label>Trainer name</label><input id="trN" value="${esc(old)}">
+    <p class="hint">Members who have this trainer are updated too.</p><div id="trErr" class="err hide"></div><button class="btn" id="trSave">Save</button><button class="btn ghost" data-close>Cancel</button>`);
+  bg.querySelector("#trSave").onclick = ev2 => busy(ev2.target, async () => {
+    const n = bg.querySelector("#trN").value.trim(); err(bg.querySelector("#trErr"));
+    if (!n) return err(bg.querySelector("#trErr"), "Please enter the trainer's name.");
+    try {
+      list[i] = n; await saveTrainers(list);
+      for (const m of members.filter(m => m.trainer === old)) { await gapi({ action:"gym_update_member", member_id:m.id, trainer:n }); m.trainer = n; }
+      renderTrainers(); closeSheet(); toast("Renamed to " + n);
+    } catch(e){ err(bg.querySelector("#trErr"), e.message); }
+  });
+};
+
 // ----- QR tab -----
 $("qrPoster").onclick = () => openUrl(dash.gym.poster_url);
 $("qrDownload").onclick = () => downloadQr(dash.gym);
@@ -706,14 +759,14 @@ $("qrShare").onclick = () => openUrl("https://wa.me/?text=" + encodeURIComponent
 // ----- settings tab -----
 function fillSettings(g){
   Object.keys(PLANM).forEach(k => $("sp_" + k).value = (g.prices || {})[k] || 0);
-  $("sTrainers").value = (g.trainers || []).join("\n"); $("sUpi").value = g.upi_id || ""; $("sOwner").value = g.owner_name || "";
+$("sUpi").value = g.upi_id || ""; $("sOwner").value = g.owner_name || "";
   $("sColor").value = g.pass_color || "#2E7D32"; $("sRemind").value = String(g.remind_days || 3);
   if (![...$("sRemind").options].some(o => o.value === String(g.remind_days))) $("sRemind").add(new Option(g.remind_days + " days", g.remind_days, true, true));
   err($("setErr"));
 }
 $("btnSaveSettings").onclick = () => busy($("btnSaveSettings"), async () => { err($("setErr"));
   const prices = {}; Object.keys(PLANM).forEach(k => prices[k] = Number($("sp_" + k).value || 0));
-  try { const r = await gapi({ action:"gym_settings", prices, trainers:$("sTrainers").value, upi_id:$("sUpi").value, owner_name:$("sOwner").value, pass_color:$("sColor").value, remind_days:Number($("sRemind").value) });
+  try { const r = await gapi({ action:"gym_settings", prices, upi_id:$("sUpi").value, owner_name:$("sOwner").value, pass_color:$("sColor").value, remind_days:Number($("sRemind").value) });
     dash.gym = r.gym; toast(r.msg); } catch(e){ err($("setErr"), e.message); } });
 
 start();
