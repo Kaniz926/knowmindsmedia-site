@@ -8,106 +8,119 @@
 <title>Gym App Login · KnowMinds Media</title>
 <link rel="icon" type="image/png" href="/icon-192.png">
 <style>
-  :root{
-    --bg:#0f1115; --card:#181b22; --line:#262a33; --text:#f2f4f7; --muted:#9aa3b2;
-    --brand:#ff6a1a; --brand2:#ff8a3d; --ok:#22c55e; --bad:#ef4444; --warn:#f59e0b;
-  }
+  :root{--bg:#0f1115;--card:#181b22;--card2:#1e222b;--line:#2a2f3a;--text:#f2f4f7;--muted:#9aa3b2;--brand:#ff6a1a;--brand2:#ff8a3d;--ok:#22c55e;--bad:#ef4444;--warn:#f59e0b;--blue:#60a5fa}
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   html,body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:15px}
-  .wrap{max-width:560px;margin:0 auto;padding:18px 16px 90px}
+  a{color:var(--brand2)}
+  .wrap{max-width:720px;margin:0 auto;padding:18px 16px 100px}
   .hide{display:none!important}
   .brand{display:flex;align-items:center;gap:10px;margin:8px 0 22px}
-  .logo{width:40px;height:40px;border-radius:11px;background:linear-gradient(135deg,var(--brand),#ffb03d);display:grid;place-items:center;font-weight:800;color:#111;font-size:18px}
-  .brand b{font-size:17px;display:block}
-  .brand span{color:var(--muted);font-size:12.5px}
-  h1{font-size:22px;margin:0 0 6px}
+  .logo{width:40px;height:40px;border-radius:11px;background:linear-gradient(135deg,var(--brand),#ffb03d);display:grid;place-items:center;font-weight:800;color:#111;font-size:18px;flex-shrink:0}
+  .brand b{font-size:17px;display:block}.brand span{color:var(--muted);font-size:12.5px}
+  h1{font-size:22px;margin:0 0 6px}h2{font-size:17px;margin:24px 0 10px;display:flex;align-items:center;gap:8px}
   p.sub{color:var(--muted);margin:0 0 18px;line-height:1.45}
   label{display:block;font-size:13px;color:var(--muted);margin:14px 0 6px}
-  input,textarea{width:100%;background:#11141a;border:1px solid var(--line);color:var(--text);border-radius:12px;padding:13px 14px;font-size:16px;outline:none;font-family:inherit}
-  textarea{min-height:76px;resize:vertical;font-size:13px}
-  input:focus,textarea:focus{border-color:var(--brand)}
-  .row{display:flex;gap:8px;align-items:center}
-  .row input{flex:1}
-  button{font-family:inherit;font-size:15px;border:0;border-radius:12px;padding:13px 16px;font-weight:600;cursor:pointer}
-  .btn{background:var(--brand);color:#111;width:100%;margin-top:20px}
-  .btn:disabled{opacity:.55}
+  input,textarea,select{width:100%;background:#11141a;border:1px solid var(--line);color:var(--text);border-radius:12px;padding:13px 14px;font-size:16px;outline:none;font-family:inherit}
+  textarea{min-height:80px;resize:vertical;font-size:14px}
+  input:focus,textarea:focus,select:focus{border-color:var(--brand)}
+  .row{display:flex;gap:8px;align-items:center}.row>*{flex:1}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  button{font-family:inherit;font-size:15px;border:0;border-radius:12px;padding:13px 16px;font-weight:600;cursor:pointer;color:var(--text)}
+  .btn{background:var(--brand);color:#111;width:100%;margin-top:18px}
+  .btn:disabled,button:disabled{opacity:.55}
   .ghost{background:transparent;border:1px solid var(--line);color:var(--text)}
   .small{padding:8px 12px;font-size:13px;border-radius:10px;white-space:nowrap}
-  .top .row{flex-shrink:0}
-  #meLine{font-size:12px}
-  .err{background:#3a1416;border:1px solid #6b1f23;color:#ffb4b4;border-radius:12px;padding:11px 13px;margin-top:14px;font-size:14px}
+  .green{background:#15803d;color:#fff}.red{background:#b91c1c;color:#fff}.redline{background:transparent;border:1px solid #7f1d1d;color:#fca5a5}
+  .err{background:#3a1416;border:1px solid #6b1f23;color:#ffb4b4;border-radius:12px;padding:11px 13px;margin-top:14px;font-size:14px;white-space:pre-line}
   .okmsg{background:#0f2a18;border:1px solid #1e5a33;color:#a7f3c0;border-radius:12px;padding:11px 13px;margin-top:14px;font-size:14px}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px}
-  .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
-  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
-  .stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px}
-  .stat b{font-size:22px;display:block}
-  .stat span{color:var(--muted);font-size:12px}
-  .gym{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
-  .gym h3{margin:0 0 4px;font-size:16px}
-  .meta{color:var(--muted);font-size:13px;line-height:1.5}
-  .chip{font-size:11.5px;padding:4px 9px;border-radius:99px;font-weight:700;white-space:nowrap}
-  .chip.on{background:#0f2a18;color:var(--ok)}
-  .chip.off{background:#3a1416;color:#ff8f8f}
-  .chip.nolink{background:#33270b;color:var(--warn)}
-  .acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-  .acts button{flex:1 1 auto}
-  .search{margin-bottom:12px}
-  .fab{position:fixed;right:18px;bottom:22px;background:var(--brand);color:#111;border-radius:99px;padding:15px 20px;font-weight:700;box-shadow:0 8px 24px rgba(255,106,26,.35)}
+  .warnbox{background:#2b210b;border:1px solid #5c4410;color:#fcd68a;border-radius:12px;padding:11px 13px;margin:12px 0;font-size:13.5px;line-height:1.45}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:12px}
+  .top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px}
+  .top .row{flex:0 0 auto}.top .row>*{flex:0 0 auto}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:6px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:11px}
+  .stat b{font-size:20px;display:block}.stat span{color:var(--muted);font-size:12px}
+  .stat.bad b{color:#ff8f8f}.stat.good b{color:#86efac}
+  @media(max-width:520px){.stats{grid-template-columns:repeat(2,1fr)}}
+  .meta{color:var(--muted);font-size:13px;line-height:1.55}
+  .chip{display:inline-block;font-size:11.5px;padding:3px 9px;border-radius:99px;font-weight:700;white-space:nowrap;margin:2px 4px 2px 0}
+  .c-ok{background:#0f2a18;color:#4ade80}.c-bad{background:#3a1416;color:#ff8f8f}.c-warn{background:#33270b;color:#fbbf24}.c-blue{background:#0c2140;color:#93c5fd}.c-grey{background:#262a33;color:#aab}
+  .acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.acts button{flex:1 1 auto}
+  .person{display:flex;gap:12px;align-items:flex-start}
+  .ph{width:56px;height:56px;border-radius:12px;object-fit:cover;flex-shrink:0;background:#262a33;display:grid;place-items:center;font-weight:800;font-size:22px;color:#aab}
+  .person .info{flex:1;min-width:0}.person b{font-size:15.5px}
+  .late{color:#ff8f8f;font-weight:700;font-size:13px}
+  .links a{font-size:13px;margin-right:12px;text-decoration:none}
+  .fab{position:fixed;right:18px;bottom:22px;background:var(--brand);color:#111;border-radius:99px;padding:15px 20px;font-weight:700;box-shadow:0 8px 24px rgba(255,106,26,.35);z-index:5}
   .sheet-bg{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:flex-end;justify-content:center;z-index:10}
-  .sheet{background:var(--card);width:100%;max-width:560px;border-radius:20px 20px 0 0;padding:18px 16px 26px;max-height:92vh;overflow:auto;border-top:1px solid var(--line)}
+  .sheet{background:var(--card);width:100%;max-width:600px;border-radius:20px 20px 0 0;padding:18px 16px 26px;max-height:92vh;overflow:auto;border-top:1px solid var(--line)}
+  @media(min-width:700px){.sheet-bg{align-items:center}.sheet{border-radius:20px;border:1px solid var(--line)}}
   .sheet h2{margin:0 0 4px;font-size:19px}
-  .hint{font-size:12.5px;color:var(--muted);margin-top:6px;line-height:1.45}
-  .empty{text-align:center;color:var(--muted);padding:34px 10px}
-  .spin{width:34px;height:34px;border:3px solid var(--line);border-top-color:var(--brand);border-radius:50%;animation:s 0.8s linear infinite;margin:80px auto}
+  .hint{font-size:12.5px;color:var(--muted);margin-top:6px;line-height:1.5}
+  .hint ol{padding-left:18px;margin:6px 0}.hint li{margin:3px 0}
+  .empty{text-align:center;color:var(--muted);padding:26px 10px;background:var(--card);border:1px dashed var(--line);border-radius:14px}
+  .spin{width:34px;height:34px;border:3px solid var(--line);border-top-color:var(--brand);border-radius:50%;animation:s .8s linear infinite;margin:60px auto}
   @keyframes s{to{transform:rotate(360deg)}}
-  .eye{background:#11141a;border:1px solid var(--line);color:var(--muted);padding:12px 12px;border-radius:12px;font-size:13px}
+  .eye{background:#11141a;border:1px solid var(--line);color:var(--muted);padding:12px;border-radius:12px;font-size:13px;flex:0 0 auto}
   .foot{color:var(--muted);font-size:12px;text-align:center;margin-top:28px}
-  .foot a{color:var(--brand2)}
-  .choice{display:flex;gap:14px;align-items:center;width:100%;text-align:left;background:var(--card);border:1px solid var(--line);color:var(--text);border-radius:16px;padding:18px 16px;margin-bottom:12px}
-  .choice:hover,.choice:focus{border-color:var(--brand)}
-  .choice .ic{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-size:22px;flex-shrink:0}
-  .choice b{display:block;font-size:16.5px;margin-bottom:3px}
-  .choice span{color:var(--muted);font-size:13px;font-weight:400;line-height:1.4}
-  .choice .go{margin-left:auto;color:var(--muted);font-size:20px}
+  .choice{display:flex;gap:14px;align-items:center;width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 16px;margin-bottom:12px}
+  .choice:hover{border-color:var(--brand)}
+  .ic{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-size:22px;flex-shrink:0}
+  .choice b{display:block;font-size:16.5px;margin-bottom:3px}.choice span{color:var(--muted);font-size:13px;font-weight:400;line-height:1.4}
+  .go{margin-left:auto;color:var(--muted);font-size:20px}
   .back{background:none;border:0;color:var(--muted);padding:0;font-size:14px;margin-bottom:14px;font-weight:500}
   .dl{display:flex;gap:12px;align-items:center;background:#11141a;border:1px dashed var(--line);border-radius:14px;padding:14px;margin-top:18px;color:var(--text);text-decoration:none}
   .dl b{display:block;font-size:14.5px}.dl span{color:var(--muted);font-size:12.5px}
   .tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--brand2);margin-bottom:6px}
-  @media(min-width:700px){.wrap{padding-top:48px}}
+  .tabs{display:flex;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:5px;margin-bottom:16px;position:sticky;top:6px;z-index:4}
+  .tabs button{flex:1;background:transparent;color:var(--muted);padding:10px 6px;font-size:14px;border-radius:10px}
+  .tabs button.on{background:var(--brand);color:#111}
+  .badge{background:#b91c1c;color:#fff;border-radius:99px;padding:1px 8px;font-size:12px;font-weight:700}
+  .qrbox{background:#fff;border-radius:16px;padding:14px;display:flex;justify-content:center;margin:12px auto;max-width:300px}
+  .qrbox img{width:100%;max-width:270px;aspect-ratio:1;display:block}
+  .code{font-family:ui-monospace,monospace;background:#11141a;border:1px solid var(--line);border-radius:10px;padding:10px;font-size:12.5px;word-break:break-all;color:#cbd5e1}
+  table{width:100%;border-collapse:collapse;font-size:14px}td{border-bottom:1px solid var(--line);padding:9px 4px;vertical-align:top}
+  .filters{display:flex;gap:6px;overflow:auto;margin:10px 0 12px;padding-bottom:2px}
+  .filters button{background:var(--card);border:1px solid var(--line);color:var(--muted);padding:7px 12px;font-size:13px;border-radius:99px;white-space:nowrap}
+  .filters button.on{border-color:var(--brand);color:var(--text)}
+  .mrow{display:flex;gap:12px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin-bottom:8px;width:100%;text-align:left}
+  .mrow .ph{width:44px;height:44px;font-size:18px;border-radius:10px}
+  .mrow .info{flex:1;min-width:0}.mrow b{display:block;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:#0f2a18;border:1px solid #1e5a33;color:#a7f3c0;padding:12px 16px;border-radius:12px;z-index:20;max-width:92vw;font-size:14px}
+  @media(min-width:700px){.wrap{padding-top:40px}}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="brand"><div class="logo">KM</div><div><b>KnowMinds Gym Admin</b><span>by KnowMinds Media</span></div></div>
+  <div class="brand" id="brand"><div class="logo">KM</div><div><b>KnowMinds Gym Admin</b><span>by KnowMinds Media</span></div></div>
 
   <div id="vLoading"><div class="spin"></div></div>
 
-  <!-- Start: choose who is logging in -->
+  <!-- choose -->
   <div id="vChoose" class="hide">
     <h1>Gym App Login</h1>
     <p class="sub">Choose how you want to log in.</p>
-    <button class="choice" data-role="super"><div class="ic" style="background:#2a1a10">🛡️</div><div><b>Super Admin</b><span>KnowMinds Media team. Add gyms, manage gym owner logins.</span></div><div class="go">›</div></button>
-    <button class="choice" data-role="gym"><div class="ic" style="background:#10241a">🏋️</div><div><b>Gym Owner</b><span>Gym owners and managers. Open your gym dashboard: cash approvals, payments, non-payment list.</span></div><div class="go">›</div></button>
-    <a class="dl webonly" href="KnowMinds-Gym-Admin.apk" download><div class="ic" style="font-size:26px">📱</div><div><b>Download the Android app</b><span>Same login, works for Super Admin and Gym Owner. Android 7 or newer.</span></div></a>
+    <button class="choice" data-role="super"><div class="ic" style="background:#2a1a10">🛡️</div><div><b>Super Admin</b><span>KnowMinds Media team. Add gyms, get each gym's QR code, connect WhatsApp and payments.</span></div><div class="go">›</div></button>
+    <button class="choice" data-role="gym"><div class="ic" style="background:#10241a">🏋️</div><div><b>Gym Owner</b><span>Your gym dashboard: cash approvals, members, non-payment list, QR poster.</span></div><div class="go">›</div></button>
+    <a class="dl webonly" href="KnowMinds-Gym-Admin.apk" download><div class="ic" style="font-size:26px">📱</div><div><b>Download the Android app</b><span>Same login for Super Admin and Gym Owner. Android 7 or newer.</span></div></a>
     <p class="foot">Need help? <a href="https://knowmindsmedia.com/contact.html">Contact KnowMinds Media</a></p>
   </div>
 
-  <!-- First run: create the super admin -->
+  <!-- first run -->
   <div id="vSetup" class="hide">
     <button class="back" data-back>‹ Back</button>
     <h1>Create the super admin</h1>
-    <p class="sub">This is a one-time step. The account you create here can add, block and reset every gym admin. Only one super admin can exist.</p>
+    <p class="sub">One-time step. Only one super admin can exist.</p>
     <label>Setup code (from KnowMinds Media)</label><input id="sCode" autocapitalize="characters" placeholder="KM-XXXX-XXXX" autocomplete="off">
-    <label>Your name</label><input id="sName" value="KnowMinds Media" autocomplete="name">
-    <label>Mobile number (login ID)</label><input id="sPhone" inputmode="tel" placeholder="10-digit mobile number" autocomplete="tel">
+    <label>Your name</label><input id="sName" value="KnowMinds Media">
+    <label>Mobile number (login ID)</label><input id="sPhone" inputmode="tel" placeholder="10-digit mobile number">
     <label>Password (at least 6 characters)</label><input id="sPass" type="password" autocomplete="new-password">
     <label>Confirm password</label><input id="sPass2" type="password" autocomplete="new-password">
     <div id="sErr" class="err hide"></div>
     <button class="btn" id="sBtn">Create super admin</button>
   </div>
 
-  <!-- Login -->
+  <!-- login -->
   <div id="vLogin" class="hide">
     <button class="back" data-back>‹ Back</button>
     <div class="tag" id="lTag">Gym Owner</div>
@@ -121,84 +134,178 @@
     <p class="foot" id="lFoot">Forgot your password? Ask KnowMinds Media to reset it.</p>
   </div>
 
-  <!-- Super admin panel -->
+  <!-- super admin: gyms -->
   <div id="vSuper" class="hide">
     <div class="top">
       <div><h1 style="margin:0">Gyms</h1><div class="meta" id="meLine"></div></div>
-      <div class="row"><button class="ghost small" id="btnMyPass">Password</button><button class="ghost small" id="btnLogout">Log out</button></div>
+      <div class="row"><button class="ghost small" id="btnMyPass">Password</button><button class="ghost small" data-logout>Log out</button></div>
     </div>
     <div class="stats">
-      <div class="stat"><b id="stTotal">0</b><span>Gym admins</span></div>
-      <div class="stat"><b id="stActive">0</b><span>Active</span></div>
-      <div class="stat"><b id="stBlocked">0</b><span>Blocked</span></div>
+      <div class="stat"><b id="stGyms">0</b><span>Gyms</span></div>
+      <div class="stat"><b id="stMembers">0</b><span>Members</span></div>
+      <div class="stat good"><b id="stActive">0</b><span>Active</span></div>
+      <div class="stat bad"><b id="stNonpay">0</b><span>Non-payment</span></div>
     </div>
-    <input class="search" id="q" placeholder="Search gym, name or number">
-    <div id="list"></div>
+    <input id="q" placeholder="Search gym, owner, city or number" style="margin:10px 0 12px">
+    <div id="gymList"></div>
     <div id="pErr" class="err hide"></div>
-    <button class="fab" id="btnAdd">+ Add gym admin</button>
+    <button class="fab" id="btnAddGym">+ Add gym</button>
   </div>
 
-  <!-- Gym admin: opening the dashboard -->
+  <!-- gym dashboard -->
   <div id="vGym" class="hide">
-    <h1 id="gTitle">Opening your dashboard…</h1>
-    <p class="sub" id="gSub"></p>
-    <div id="gErr" class="err hide"></div>
-    <button class="btn" id="gOpen">Open dashboard</button>
-    <button class="btn ghost" id="gLogout">Log out</button>
-    <a class="dl webonly" href="KnowMinds-Gym-Admin.apk" download><div class="ic" style="font-size:26px">📱</div><div><b>Get the Android app</b><span>Log in once and your dashboard opens with one tap.</span></div></a>
+    <div class="top">
+      <div style="min-width:0"><button class="back hide" id="gBack" style="margin-bottom:4px">‹ All gyms</button>
+        <h1 style="margin:0" id="gName">Gym</h1><div class="meta" id="gSub"></div></div>
+      <div class="row"><button class="ghost small" id="gRefresh">↻</button><button class="ghost small hide" id="gPass">Password</button><button class="ghost small hide" data-logout id="gLogout">Log out</button></div>
+    </div>
+    <div class="tabs">
+      <button data-tab="home" class="on">Home</button>
+      <button data-tab="members">Members</button>
+      <button data-tab="qr">QR</button>
+      <button data-tab="settings">Settings</button>
+    </div>
+    <div id="gWarn"></div>
+
+    <div id="tHome">
+      <div class="stats">
+        <div class="stat good"><b id="dToday">₹0</b><span>Collected today</span></div>
+        <div class="stat"><b id="dActive">0</b><span>Active members</span></div>
+        <div class="stat"><b id="dDue">0</b><span>Due in next days</span></div>
+        <div class="stat bad"><b id="dNonpay">0</b><span>Non-payment</span></div>
+      </div>
+      <h2>Payment requests <span class="badge" id="dPendN">0</span></h2>
+      <div id="dPend"></div>
+      <h2>Non-payment customers <span class="badge" id="dNonN">0</span></h2>
+      <p class="hint" style="margin-top:-6px">Due date passed and not paid yet. They leave this list as soon as they pay.</p>
+      <div id="dNon"></div>
+      <h2>Recent payments</h2>
+      <div id="dRec"></div>
+      <a class="dl webonly" id="gAppLink" href="KnowMinds-Gym-Admin.apk" download><div class="ic" style="font-size:26px">📱</div><div><b>Get the Android app</b><span>Log in once and your dashboard opens with one tap.</span></div></a>
+    </div>
+
+    <div id="tMembers" class="hide">
+      <div class="row"><input id="mq" placeholder="Search name, number or member no."><button class="small" id="btnAddMember" style="background:var(--brand);color:#111;flex:0 0 auto">+ Add</button></div>
+      <div class="filters" id="mFilters">
+        <button data-f="all" class="on">All</button><button data-f="active">Active</button><button data-f="due">Reminder sent</button>
+        <button data-f="nonpay">Non-payment</button><button data-f="pending">Requests</button><button data-f="left">Left</button>
+      </div>
+      <div id="mList"></div>
+    </div>
+
+    <div id="tQr" class="hide">
+      <div class="card" style="text-align:center">
+        <h2 style="justify-content:center;margin-top:4px">Member QR code</h2>
+        <p class="meta" style="margin:0">New members scan this at the reception: fill the form, add a photo, choose a plan, pay cash or online. The pass comes on WhatsApp.</p>
+        <div class="qrbox"><img id="qrImg" alt="QR code"></div>
+        <div class="code" id="qrLink"></div>
+        <div class="acts">
+          <button class="green" id="qrPoster">🖨️ Print poster</button>
+          <button class="ghost" id="qrDownload">⬇️ Download QR</button>
+          <button class="ghost" id="qrCopy">Copy link</button>
+          <button class="ghost" id="qrShare">Share on WhatsApp</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="tSettings" class="hide">
+      <div class="card">
+        <h2 style="margin-top:0">Plans and prices (₹)</h2>
+        <p class="hint" style="margin-top:-4px">Leave a plan at 0 to hide it from the form.</p>
+        <div class="grid2">
+          <div><label>Monthly</label><input id="sp_Monthly" inputmode="numeric"></div>
+          <div><label>Quarterly</label><input id="sp_Quarterly" inputmode="numeric"></div>
+          <div><label>Half-Yearly</label><input id="sp_Half-Yearly" inputmode="numeric"></div>
+          <div><label>Yearly</label><input id="sp_Yearly" inputmode="numeric"></div>
+        </div>
+        <label>Personal trainers (one per line)</label><textarea id="sTrainers" placeholder="Ravi Kumar&#10;Sneha Patra"></textarea>
+        <label>UPI ID (shown on the renewal page)</label><input id="sUpi" placeholder="9876543210@ybl">
+        <div class="grid2">
+          <div><label>Owner name (on the pass)</label><input id="sOwner"></div>
+          <div><label>Pass colour</label><input id="sColor" type="color" style="height:50px;padding:6px"></div>
+        </div>
+        <label>Reminder days (ending on the due date)</label>
+        <select id="sRemind"><option value="1">1 day (due date only)</option><option value="2">2 days</option><option value="3">3 days (e.g. 15th, 16th, 17th)</option><option value="5">5 days</option><option value="7">7 days</option></select>
+        <div id="setErr" class="err hide"></div>
+        <button class="btn" id="btnSaveSettings">Save settings</button>
+      </div>
+    </div>
   </div>
 </div>
-
 <div id="sheetHost"></div>
 
 <script>
 const API = "https://cqrtvuspfbwkefpheknj.supabase.co/functions/v1/km-admin";
-const A = window.Android || null;      // native bridge (inside the app)
+const A = window.Android || null;
+const IN_APP = !!A || /[?&]app=1/.test(location.search);
 const $ = (id) => document.getElementById(id);
-const store = {
-  get(k){ try{ return A ? A.load(k) : localStorage.getItem(k); }catch(e){ return null; } },
-  set(k,v){ try{ A ? A.save(k, v||"") : (v ? localStorage.setItem(k,v) : localStorage.removeItem(k)); }catch(e){} }
-};
-let token = store.get("km_token") || "";
-let me = null, admins = [], chosen = "";
-const IN_APP = !!A;
+const store = { get(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }, set(k,v){ try{ v ? localStorage.setItem(k,v) : localStorage.removeItem(k); }catch(e){} } };
+let token = store.get("km_token") || "", me = null, myGym = null, chosen = "", gyms = [], cur = null, dash = null, members = [], mFilter = "all", tab = "home", timer = null;
 if (IN_APP) document.querySelectorAll(".webonly").forEach(e => e.remove());
 
-function show(view){
-  ["vLoading","vChoose","vSetup","vLogin","vSuper","vGym"].forEach(v => $(v).classList.toggle("hide", v !== view));
-}
-function err(el, msg){ el.textContent = msg || ""; el.classList.toggle("hide", !msg); }
+// ---------- helpers ----------
+function show(v){ ["vLoading","vChoose","vSetup","vLogin","vSuper","vGym"].forEach(x => $(x).classList.toggle("hide", x !== v)); $("brand").classList.toggle("hide", v === "vGym" || v === "vSuper"); window.scrollTo(0,0); }
+function err(el,msg){ el.textContent = msg || ""; el.classList.toggle("hide", !msg); }
 function esc(s){ return String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
-function prettyPhone(p){ p = String(p||""); return p.length === 12 && p.startsWith("91") ? "+91 " + p.slice(2,7) + " " + p.slice(7) : p; }
-function when(t){ if(!t) return "never"; const d = new Date(t); return d.toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"}) + ", " + d.toLocaleTimeString("en-IN",{hour:"numeric",minute:"2-digit"}); }
+const money = n => "₹" + Number(n||0).toLocaleString("en-IN");
+function pp(p){ p = String(p||""); return p.length === 12 && p.startsWith("91") ? "+91 " + p.slice(2,7) + " " + p.slice(7) : "+" + p; }
+const MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+function fd(iso){ if(!iso) return "-"; const [y,m,d] = String(iso).slice(0,10).split("-").map(Number); return String(d).padStart(2,"0") + " " + MON[m-1] + " " + y; }
+function fdt(t){ if(!t) return ""; const d = new Date(t); return d.toLocaleDateString("en-IN",{day:"numeric",month:"short"}) + ", " + d.toLocaleTimeString("en-IN",{hour:"numeric",minute:"2-digit"}); }
+function todayIso(){ return new Date(Date.now() + 330*60000).toISOString().slice(0,10); }
+function addMonths(iso,n){ let [y,m,d] = iso.split("-").map(Number); m = m - 1 + n; y += Math.floor(m/12); m = ((m%12)+12)%12; const last = new Date(Date.UTC(y,m+1,0)).getUTCDate(); return y + "-" + String(m+1).padStart(2,"0") + "-" + String(Math.min(d,last)).padStart(2,"0"); }
+const PLANM = {"Monthly":1,"Quarterly":3,"Half-Yearly":6,"Yearly":12};
+const qrSrc = (url, size) => "https://api.qrserver.com/v1/create-qr-code/?size=" + (size||600) + "x" + (size||600) + "&margin=16&data=" + encodeURIComponent(url);
+function initials(n){ return String(n||"?").trim().split(/\s+/).slice(0,2).map(w => w[0]).join("").toUpperCase(); }
+function photo(m, cls){ return m.photo ? `<img class="ph ${cls||""}" src="${esc(m.photo)}" alt="">` : `<div class="ph ${cls||""}">${esc(initials(m.name))}</div>`; }
+function toast(msg){ const t = document.createElement("div"); t.className = "toast"; t.textContent = msg; document.body.appendChild(t); setTimeout(() => t.remove(), 3200); }
+function openUrl(url){ if (A && A.openExternal) A.openExternal(url); else window.open(url, "_blank", "noopener"); }
+function genPass(){ const c = "abcdefghjkmnpqrstuvwxyz23456789"; let s = ""; crypto.getRandomValues(new Uint32Array(8)).forEach(n => s += c[n % c.length]); return s; }
+const statusChip = (s) => ({active:'<span class="chip c-ok">Active</span>', due:'<span class="chip c-warn">Reminder sent</span>', nonpay:'<span class="chip c-bad">Non-payment</span>',
+  pending:'<span class="chip c-blue">Payment request</span>', awaiting_online:'<span class="chip c-grey">Paying online…</span>', left:'<span class="chip c-grey">Left gym</span>', rejected:'<span class="chip c-grey">Rejected</span>'})[s] || "";
 
 async function api(body){
   let res, data;
-  try{
-    // text/plain avoids a CORS pre-flight; the server reads the body as JSON either way
-    res = await fetch(API, { method:"POST", headers:{ "Content-Type":"text/plain" }, body: JSON.stringify(body) });
-    data = await res.json();
-  }catch(e){ throw new Error("No internet connection. Please check your network and try again."); }
-  if (data && data.error){
-    const e = new Error(data.error); e.status = res.status; throw e;
-  }
+  try { res = await fetch(API, { method:"POST", headers:{ "Content-Type":"text/plain" }, body: JSON.stringify(body) }); data = await res.json(); }
+  catch(e){ throw new Error("No internet connection. Please check your network and try again."); }
+  if (data && data.error){ const e = new Error(data.error); e.status = res.status; if (res.status === 401 && body.token) { logout(); } throw e; }
   return data;
 }
-async function busy(btn, fn){
-  const t = btn.textContent; btn.disabled = true; btn.textContent = "Please wait…";
-  try{ return await fn(); } finally { btn.disabled = false; btn.textContent = t; }
+async function busy(btn, fn){ const t = btn.textContent; btn.disabled = true; btn.textContent = "Please wait…"; try { return await fn(); } finally { btn.disabled = false; btn.textContent = t; } }
+function setSession(t, admin, gym){ token = t; me = admin; myGym = gym || null; store.set("km_token", t); }
+function logout(){ token = ""; me = null; myGym = null; store.set("km_token",""); clearInterval(timer); closeSheet(); if (A && A.loggedOut) A.loggedOut(); $("lPass").value = ""; show("vChoose"); }
+document.querySelectorAll("[data-logout]").forEach(b => b.onclick = logout);
+document.querySelectorAll("[data-eye]").forEach(b => b.onclick = () => { const i = $(b.dataset.eye); i.type = i.type === "password" ? "text" : "password"; b.textContent = i.type === "password" ? "Show" : "Hide"; });
+
+// ---------- sheets ----------
+function sheet(html){
+  $("sheetHost").innerHTML = `<div class="sheet-bg"><div class="sheet">${html}</div></div>`;
+  const bg = $("sheetHost").firstChild;
+  bg.onclick = e => { if (e.target === bg) closeSheet(); };
+  bg.querySelectorAll("[data-close]").forEach(x => x.onclick = closeSheet);
+  bg.querySelectorAll("[data-eye]").forEach(b => b.onclick = () => { const i = bg.querySelector("#" + b.dataset.eye); i.type = i.type === "password" ? "text" : "password"; });
+  return bg;
 }
-function setSession(t, admin){
-  token = t; me = admin; store.set("km_token", t);
-  store.set("km_role", admin.role); store.set("km_gym", admin.gym_name || "");
-}
-function logout(){
-  token = ""; me = null; store.set("km_token",""); store.set("km_role",""); store.set("km_gym","");
-  if (A && A.loggedOut) A.loggedOut();
-  $("lPass").value = ""; show("vChoose");
+function closeSheet(){ $("sheetHost").innerHTML = ""; }
+window.kmBack = () => { if ($("sheetHost").innerHTML){ closeSheet(); return true; } if (!$("vGym").classList.contains("hide") && me && me.role === "super"){ openSuper(); return true; } return false; };
+function confirmSheet(title, text, btnText, danger, fn){
+  const bg = sheet(`<h2>${esc(title)}</h2><p class="sub" style="margin-top:6px">${text}</p><div id="cfErr" class="err hide"></div>
+    <button class="btn ${danger ? "red" : ""}" id="cfOk">${esc(btnText)}</button><button class="btn ghost" data-close>Cancel</button>`);
+  bg.querySelector("#cfOk").onclick = ev => busy(ev.target, async () => { try { await fn(bg); } catch(e){ err(bg.querySelector("#cfErr"), e.message); } });
+  return bg;
 }
 
-// ---------- choose: Super Admin or Gym Owner ----------
+// ---------- start / choose / setup / login ----------
+async function start(){
+  show("vLoading");
+  if (location.hash === "#logout"){ history.replaceState(null, "", location.pathname + location.search); logout(); return; }
+  if (token){
+    try { const r = await api({ action:"me", token }); me = r.admin; myGym = r.gym; route(); return; }
+    catch(e){ if (e.status === 401 || e.status === 403){ logout(); return; } }
+  }
+  show("vChoose");
+}
+function route(){ if (me.role === "super") openSuper(); else openGym(me.gym_id); }
 let superExists = true;
 document.querySelectorAll("[data-role]").forEach(b => b.onclick = async () => {
   chosen = b.dataset.role; err($("lErr")); err($("sErr"));
@@ -206,259 +313,403 @@ document.querySelectorAll("[data-role]").forEach(b => b.onclick = async () => {
   $("lTag").textContent = sup ? "Super Admin" : "Gym Owner";
   $("lTitle").textContent = sup ? "Super Admin login" : "Gym Owner login";
   $("lSub").textContent = sup ? "KnowMinds Media team only." : "Use the mobile number and password KnowMinds Media gave you.";
-  $("lFoot").textContent = sup ? "Forgot the super admin password? It can only be reset from the database." : "Forgot your password? Ask KnowMinds Media to reset it.";
-  if (sup) {
-    show("vLoading");
-    try { superExists = (await api({ action:"status" })).superExists; } catch (e) { superExists = true; }
-    show(superExists ? "vLogin" : "vSetup");
-  } else show("vLogin");
-  setTimeout(() => (superExists || !sup ? $("lPhone") : $("sCode")).focus(), 50);
+  $("lFoot").textContent = sup ? "Forgot the super admin password? Contact KnowMinds Media support." : "Forgot your password? Ask KnowMinds Media to reset it.";
+  if (sup){ show("vLoading"); try { superExists = (await api({ action:"status" })).superExists; } catch(e){ superExists = true; } show(superExists ? "vLogin" : "vSetup"); }
+  else show("vLogin");
 });
 document.querySelectorAll("[data-back]").forEach(b => b.onclick = () => show("vChoose"));
-
-// ---------- start ----------
-async function start(){
-  show("vLoading");
-  if (location.hash === "#logout") { history.replaceState(null, "", location.pathname + location.search); logout(); return; }
-  try{
-    if (token){
-      const r = await api({ action:"me", token });
-      me = r.admin; route(); return;
-    }
-  }catch(e){
-    if (e.status === 401 || e.status === 403){ logout(); return; }
-    show("vChoose"); return;
-  }
-  show("vChoose");
-}
-function route(){
-  if (me.role === "super"){ show("vSuper"); $("meLine").textContent = me.name + " · " + prettyPhone(me.phone); loadList(); }
-  else openGym(true);
-}
-
-// ---------- first run ----------
 $("sBtn").onclick = () => busy($("sBtn"), async () => {
   err($("sErr"));
   if ($("sPass").value !== $("sPass2").value) return err($("sErr"), "The two passwords do not match.");
-  try{
-    const r = await api({ action:"setup_super", setup_code:$("sCode").value, name:$("sName").value, phone:$("sPhone").value, password:$("sPass").value });
-    setSession(r.token, r.admin); route();
-  }catch(e){ err($("sErr"), e.message); }
+  try { const r = await api({ action:"setup_super", setup_code:$("sCode").value, name:$("sName").value, phone:$("sPhone").value, password:$("sPass").value }); setSession(r.token, r.admin); route(); }
+  catch(e){ err($("sErr"), e.message); }
 });
-
-// ---------- login ----------
 $("lBtn").onclick = () => busy($("lBtn"), async () => {
   err($("lErr"));
-  try{
+  try {
     const r = await api({ action:"login", phone:$("lPhone").value, password:$("lPass").value });
     if (chosen === "gym" && r.admin.role === "super") return err($("lErr"), "This is the Super Admin account. Go back and choose Super Admin.");
     if (chosen === "super" && r.admin.role !== "super") return err($("lErr"), "This is a Gym Owner account. Go back and choose Gym Owner.");
-    setSession(r.token, r.admin); route();
-  }catch(e){ err($("lErr"), e.message); }
+    setSession(r.token, r.admin, r.gym); route();
+  } catch(e){ err($("lErr"), e.message); }
 });
 $("lPass").addEventListener("keydown", e => { if (e.key === "Enter") $("lBtn").click(); });
-document.querySelectorAll("[data-eye]").forEach(b => b.onclick = () => {
-  const i = $(b.dataset.eye); i.type = i.type === "password" ? "text" : "password"; b.textContent = i.type === "password" ? "Show" : "Hide";
-});
 
-// ---------- gym admin ----------
-function openGym(auto){
-  show("vGym"); err($("gErr"));
-  $("gTitle").textContent = me.gym_name || "Your gym";
-  if (!me.dashboard_url){
-    $("gSub").textContent = "Logged in as " + me.name + ".";
-    $("gOpen").classList.add("hide");
-    return err($("gErr"), "Your gym dashboard is not linked yet. Please ask KnowMinds Media to add your dashboard link.");
-  }
-  $("gOpen").classList.remove("hide");
-  if (IN_APP) {
-    $("gSub").textContent = "Logged in as " + me.name + ". Your dashboard is opening…";
-    if (auto) goDashboard(me.dashboard_url, me.gym_name, false);
-  } else {
-    $("gSub").textContent = "Logged in as " + me.name + ". Approve cash payments, see today's collection and the non-payment list.";
-  }
+// ================= SUPER ADMIN =================
+async function openSuper(){
+  clearInterval(timer); cur = null; show("vSuper");
+  $("meLine").textContent = me.name + " · " + pp(me.phone);
+  $("gymList").innerHTML = '<div class="spin" style="margin:30px auto"></div>';
+  try { gyms = (await api({ action:"list", token })).gyms || []; renderGyms(); }
+  catch(e){ $("gymList").innerHTML = ""; err($("pErr"), e.message); }
 }
-$("gOpen").onclick = () => goDashboard(me.dashboard_url, me.gym_name, false);
-$("gLogout").onclick = logout;
-function goDashboard(url, gym, fromSuper){
-  if (A && A.openDashboard) A.openDashboard(url, gym || "", !!fromSuper);
-  else if (fromSuper) window.open(url, "_blank", "noopener");
-  else location.href = url;
-}
-
-// ---------- super admin panel ----------
-async function loadList(){
-  err($("pErr"));
-  $("list").innerHTML = '<div class="spin" style="margin:30px auto"></div>';
-  try{
-    const r = await api({ action:"list", token });
-    admins = r.admins || []; render();
-  }catch(e){ if (e.status === 401 || e.status === 403) return logout(); $("list").innerHTML = ""; err($("pErr"), e.message); }
-}
-function render(){
-  const q = $("q").value.trim().toLowerCase();
-  $("stTotal").textContent = admins.length;
-  $("stActive").textContent = admins.filter(a => a.active).length;
-  $("stBlocked").textContent = admins.filter(a => !a.active).length;
-  const rows = admins.filter(a => !q || [a.gym_name,a.name,a.phone].join(" ").toLowerCase().includes(q));
-  if (!admins.length){ $("list").innerHTML = '<div class="empty">No gym admins yet.<br>Tap <b>+ Add gym admin</b> to add the first gym.</div>'; return; }
-  if (!rows.length){ $("list").innerHTML = '<div class="empty">No match for "' + esc(q) + '".</div>'; return; }
-  $("list").innerHTML = rows.map(a => `
-    <div class="card">
-      <div class="gym">
-        <div><h3>${esc(a.gym_name)}</h3>
-          <div class="meta">${esc(a.name)} · ${esc(prettyPhone(a.phone))}<br>Last login: ${esc(when(a.last_login))}</div></div>
-        <div>${a.active ? '<span class="chip on">Active</span>' : '<span class="chip off">Blocked</span>'}
-          ${a.dashboard_url ? '' : '<div style="margin-top:6px"><span class="chip nolink">No link</span></div>'}</div>
-      </div>
+function renderGyms(){
+  const qv = $("q").value.trim().toLowerCase();
+  let tm = 0, ta = 0, tn = 0; gyms.forEach(g => { tm += g.counts.total; ta += g.counts.active; tn += g.counts.nonpay; });
+  $("stGyms").textContent = gyms.length; $("stMembers").textContent = tm; $("stActive").textContent = ta; $("stNonpay").textContent = tn;
+  const rows = gyms.filter(g => !qv || [g.name, g.city, g.code, ...(g.admins||[]).map(a => a.name + " " + a.phone)].join(" ").toLowerCase().includes(qv));
+  if (!gyms.length) { $("gymList").innerHTML = '<div class="empty">No gyms yet.<br>Tap <b>+ Add gym</b>. Each gym gets its own QR code and owner login.</div>'; return; }
+  if (!rows.length) { $("gymList").innerHTML = '<div class="empty">No match.</div>'; return; }
+  $("gymList").innerHTML = rows.map(g => {
+    const a = (g.admins||[])[0] || {};
+    const tpl = Object.values(g.wa.templates||{}); const appr = tpl.filter(s => s === "APPROVED").length;
+    const waChip = !g.wa.ready ? '<span class="chip c-warn">WhatsApp: not set</span>' : appr >= 4 ? '<span class="chip c-ok">WhatsApp ✓</span>' : `<span class="chip c-blue">WhatsApp: templates ${appr}/4</span>`;
+    return `<div class="card">
+      <div class="person"><img class="ph" style="background:#fff;padding:4px" src="${qrSrc(g.join_url,160)}" alt="QR">
+        <div class="info"><b>${esc(g.name)}</b> ${g.active ? "" : '<span class="chip c-bad">Switched off</span>'}
+          <div class="meta">${esc(a.name || "-")} · ${esc(a.phone ? pp(a.phone) : "")}${g.city ? " · " + esc(g.city) : ""}<br>QR code <b>${esc(g.code)}</b> · ${g.counts.total} members · ${g.counts.active} active${g.counts.nonpay ? ` · <span class="late">${g.counts.nonpay} non-payment</span>` : ""}</div>
+          <div>${waChip}${g.rzp.ready ? '<span class="chip c-ok">Online pay ✓</span>' : '<span class="chip c-grey">Online pay: off</span>'}${a.active === false ? '<span class="chip c-bad">Login blocked</span>' : ""}</div>
+        </div></div>
       <div class="acts">
-        ${a.dashboard_url ? `<button class="ghost small" data-act="open" data-id="${a.id}">Open dashboard</button>` : ''}
-        <button class="ghost small" data-act="edit" data-id="${a.id}">Edit</button>
-        <button class="ghost small" data-act="reset" data-id="${a.id}">Reset password</button>
-        <button class="ghost small" data-act="block" data-id="${a.id}">${a.active ? "Block" : "Unblock"}</button>
-        <button class="ghost small" data-act="del" data-id="${a.id}" style="color:#ff8f8f">Delete</button>
-      </div>
-    </div>`).join("");
+        <button class="green small" data-a="dash" data-id="${g.id}">Open dashboard</button>
+        <button class="ghost small" data-a="qr" data-id="${g.id}">QR code</button>
+        <button class="ghost small" data-a="wa" data-id="${g.id}">WhatsApp</button>
+        <button class="ghost small" data-a="rzp" data-id="${g.id}">Online payments</button>
+        <button class="ghost small" data-a="login" data-id="${g.id}">Owner login</button>
+        <button class="ghost small" data-a="edit" data-id="${g.id}">Edit</button>
+      </div></div>`;
+  }).join("");
 }
-$("q").oninput = render;
-$("btnLogout").onclick = logout;
-$("list").onclick = (ev) => {
-  const b = ev.target.closest("button[data-act]"); if (!b) return;
-  const a = admins.find(x => x.id === b.dataset.id); if (!a) return;
-  ({ open: () => goDashboard(a.dashboard_url, a.gym_name, true), edit: () => editSheet(a), reset: () => resetSheet(a),
-     block: () => blockSheet(a), del: () => deleteSheet(a) })[b.dataset.act]();
+$("q").oninput = renderGyms;
+$("gymList").onclick = ev => {
+  const b = ev.target.closest("button[data-a]"); if (!b) return;
+  const g = gyms.find(x => x.id === b.dataset.id); if (!g) return;
+  ({ dash: () => openGym(g.id), qr: () => qrSheet(g), wa: () => waSheet(g), rzp: () => rzpSheet(g), login: () => loginSheet(g), edit: () => editGymSheet(g) })[b.dataset.a]();
 };
+function upGym(gym){ const i = gyms.findIndex(x => x.id === gym.id); if (i >= 0) gyms[i] = Object.assign({}, gyms[i], gym); renderGyms(); return gyms[i]; }
 
-// ----- sheets (pop-up panels) -----
-function sheet(html){
-  $("sheetHost").innerHTML = `<div class="sheet-bg"><div class="sheet">${html}</div></div>`;
-  const bg = $("sheetHost").firstChild;
-  bg.onclick = (e) => { if (e.target === bg) closeSheet(); };
-  bg.querySelectorAll("[data-close]").forEach(x => x.onclick = closeSheet);
-  return bg;
+function shareLogin(gymName, name, phone, pass){
+  const msg = `Hello ${name},\n\nYour ${gymName} dashboard login (KnowMinds Gym Admin):\nWebsite: https://knowmindsmedia.com/gym_app_login\nChoose: Gym Owner\nMobile number: ${String(phone).replace(/^91/,"")}\nPassword: ${pass}\n\nYou can also download the Android app from the same page. Please keep this password private.\n\n– KnowMinds Media`;
+  openUrl("https://wa.me/" + phone + "?text=" + encodeURIComponent(msg));
 }
-function closeSheet(){ $("sheetHost").innerHTML = ""; }
-window.kmBack = () => { if ($("sheetHost").innerHTML){ closeSheet(); return true; } return false; };   // used by the phone's Back button
-function genPass(){
-  const c = "abcdefghjkmnpqrstuvwxyz23456789"; let s = "";
-  const r = crypto.getRandomValues(new Uint32Array(8)); r.forEach(n => s += c[n % c.length]); return s;
-}
-function shareLogin(a, pass){
-  const msg = `Hello ${a.name},\n\nYour login for the KnowMinds Gym Admin app (${a.gym_name}):\nMobile number: ${String(a.phone).replace(/^91/,"")}\nPassword: ${pass}\n\nInstall the app, log in, and your gym dashboard will open. Please keep this password private.\n\n– KnowMinds Media`;
-  const url = "https://wa.me/" + a.phone + "?text=" + encodeURIComponent(msg);
-  if (A && A.openExternal) A.openExternal(url); else window.open(url, "_blank");
-}
-function doneSheet(a, pass, title){
-  const bg = sheet(`<h2>${esc(title)}</h2>
-    <p class="sub" style="margin-top:6px">Login for <b>${esc(a.gym_name)}</b><br>Mobile: <b>${esc(String(a.phone).replace(/^91/,""))}</b><br>Password: <b>${esc(pass)}</b></p>
-    <p class="hint">This password is shown only now. Send it to the gym owner, then close.</p>
-    <button class="btn" id="shWa">Send login on WhatsApp</button>
-    <button class="btn ghost" data-close>Close</button>`);
-  bg.querySelector("#shWa").onclick = () => shareLogin(a, pass);
-}
-
-$("btnAdd").onclick = () => {
-  const bg = sheet(`<h2>Add gym admin</h2>
-    <p class="hint">The gym owner or manager will log in with this mobile number and password.</p>
-    <label>Gym name</label><input id="aGym" placeholder="e.g. Fitness Warrior Gym">
-    <label>Admin name</label><input id="aName" placeholder="Owner or manager name">
-    <label>Admin mobile number (login ID)</label><input id="aPhone" inputmode="tel" placeholder="10-digit mobile number">
+$("btnAddGym").onclick = () => {
+  const bg = sheet(`<h2>Add gym</h2><p class="hint">The gym gets its own QR code straight away, plus a login for the owner.</p>
+    <label>Gym name</label><input id="aGym" placeholder="e.g. Fitness Warrior">
+    <label>City / area (optional)</label><input id="aCity" placeholder="e.g. Jagatsinghpur">
+    <label>Owner name</label><input id="aName" placeholder="Owner or manager name">
+    <label>Owner mobile number (login ID, gets payment alerts on WhatsApp)</label><input id="aPhone" inputmode="tel" placeholder="10-digit mobile number">
     <label>Password</label><div class="row"><input id="aPass"><button class="eye" id="aGen">New</button></div>
-    <label>Gym dashboard link</label><textarea id="aUrl" placeholder="https://script.google.com/macros/s/…/exec?page=admin&k=…"></textarea>
-    <div class="hint">In the gym's Google Sheet: menu <b>Gym Automation → Admin dashboard: show link</b>. Copy that link and paste it here. You can also add it later with Edit.</div>
     <div id="aErr" class="err hide"></div>
-    <button class="btn" id="aSave">Add gym admin</button>
-    <button class="btn ghost" data-close>Cancel</button>`);
-  const p = bg.querySelector("#aPass"); p.value = genPass();
-  bg.querySelector("#aGen").onclick = () => p.value = genPass();
-  bg.querySelector("#aSave").onclick = (ev) => busy(ev.target, async () => {
+    <button class="btn" id="aSave">Add gym</button><button class="btn ghost" data-close>Cancel</button>`);
+  const p = bg.querySelector("#aPass"); p.value = genPass(); bg.querySelector("#aGen").onclick = () => p.value = genPass();
+  bg.querySelector("#aSave").onclick = ev => busy(ev.target, async () => {
     err(bg.querySelector("#aErr"));
-    try{
-      const r = await api({ action:"add", token, gym_name:bg.querySelector("#aGym").value, name:bg.querySelector("#aName").value,
-        phone:bg.querySelector("#aPhone").value, password:p.value, dashboard_url:bg.querySelector("#aUrl").value.trim() });
-      admins.push(r.admin); render(); doneSheet(r.admin, p.value, "Gym admin added");
-    }catch(e){ err(bg.querySelector("#aErr"), e.message); }
+    try {
+      const r = await api({ action:"add_gym", token, gym_name:bg.querySelector("#aGym").value, city:bg.querySelector("#aCity").value,
+        name:bg.querySelector("#aName").value, phone:bg.querySelector("#aPhone").value, password:p.value });
+      gyms.push(r.gym); renderGyms(); qrSheet(r.gym, p.value);
+    } catch(e){ err(bg.querySelector("#aErr"), e.message); }
   });
+};
+function qrSheet(g, newPass){
+  const a = (g.admins||[])[0] || {};
+  const bg = sheet(`<h2>${newPass ? "✅ Gym added: " : ""}${esc(g.name)}</h2>
+    <p class="hint">This QR code belongs only to <b>${esc(g.name)}</b> (code ${esc(g.code)}). Print it and put it at the reception.</p>
+    <div class="qrbox"><img src="${qrSrc(g.join_url)}" alt="QR"></div>
+    <div class="code">${esc(g.join_url)}</div>
+    <div class="acts"><button class="green" id="qPoster">🖨️ Print poster</button><button class="ghost" id="qDl">⬇️ Download QR</button><button class="ghost" id="qCopy">Copy link</button></div>
+    ${newPass ? `<div class="card" style="margin-top:16px"><b>Owner login</b><div class="meta">Mobile: ${esc(String(a.phone).replace(/^91/,""))}<br>Password: <b>${esc(newPass)}</b><br>Shown only now. Send it to the owner.</div>
+      <button class="btn" id="qSend" style="margin-top:12px">Send login on WhatsApp</button></div>` : ""}
+    <div class="warnbox">Next: connect the gym's <b>WhatsApp number</b> (for reminders and passes) and, if they want, <b>Razorpay</b> for online payments. Cash payments work right away.</div>
+    <button class="btn ghost" data-close>Close</button>`);
+  bg.querySelector("#qPoster").onclick = () => openUrl(g.poster_url);
+  bg.querySelector("#qDl").onclick = () => downloadQr(g);
+  bg.querySelector("#qCopy").onclick = () => copy(g.join_url);
+  if (newPass) bg.querySelector("#qSend").onclick = () => shareLogin(g.name, a.name, a.phone, newPass);
+}
+async function downloadQr(g){
+  const url = qrSrc(g.join_url, 1000) + "&format=png";
+  if (A) return openUrl(url);
+  try { const b = await (await fetch(url)).blob(); const a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = g.name.replace(/[^\w]+/g,"_") + "_QR.png"; document.body.appendChild(a); a.click(); a.remove(); }
+  catch(e){ openUrl(url); }
+}
+function copy(t){ (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(() => toast("Link copied"), () => { prompt("Copy this link:", t); }); }
+
+function waSheet(g){
+  const T = g.wa.templates || {};
+  const names = { km_gym_fee_reminder:"Payment reminder (to member)", km_gym_pass:"Membership pass (to member)", km_gym_owner_request:"New cash/UPI request (to owner)", km_gym_owner_paid:"Online payment received (to owner)" };
+  const chip = s => s === "APPROVED" ? '<span class="chip c-ok">Approved</span>' : s === "PENDING" || s === "IN_APPEAL" ? '<span class="chip c-blue">Waiting for Meta</span>' : s === "REJECTED" ? '<span class="chip c-bad">Rejected</span>' : s ? `<span class="chip c-warn">${esc(s)}</span>` : '<span class="chip c-grey">Not sent</span>';
+  const bg = sheet(`<h2>WhatsApp: ${esc(g.name)}</h2>
+    <p class="hint">The gym's own WhatsApp Business number sends payment reminders and passes to members, and alerts to the owner.</p>
+    ${g.wa.ready ? `<div class="okmsg">Connected: ${esc(g.wa.display)}</div>` : ""}
+    <label>Phone number ID</label><input id="wPid" value="${esc(g.wa.phone_number_id)}" inputmode="numeric">
+    <label>WhatsApp Business Account ID</label><input id="wWaba" value="${esc(g.wa.waba_id)}" inputmode="numeric">
+    <label>Permanent access token ${g.wa.ready ? "(leave empty to keep the saved one)" : ""}</label><div class="row"><input id="wTok" type="password" autocomplete="off"><button class="eye" data-eye="wTok">Show</button></div>
+    <div class="hint"><ol><li>In the gym's Meta Business account, add the gym's number in <b>WhatsApp Manager</b> (business verification needed).</li>
+      <li>From <b>WhatsApp Manager → Phone numbers</b> copy the <b>Phone number ID</b> and the <b>WhatsApp Business Account ID</b>.</li>
+      <li><b>Business settings → System users</b> → add a system user, give it the WhatsApp account, then <b>Generate token</b> (never expires) with <i>whatsapp_business_messaging</i> and <i>whatsapp_business_management</i>.</li>
+      <li>Paste all three here → <b>Save and check</b> → <b>Send templates to Meta</b>. Approval usually takes minutes to a few hours.</li></ol></div>
+    <div id="wErr" class="err hide"></div><div id="wOk" class="okmsg hide"></div>
+    <button class="btn" id="wSave">Save and check</button>
+    <div class="card" style="margin-top:16px"><b>Message templates</b>
+      <table style="margin-top:6px">${Object.keys(names).map(k => `<tr><td>${names[k]}</td><td style="text-align:right">${chip(T[k])}</td></tr>`).join("")}</table>
+      <div class="acts"><button class="ghost" id="wSubmit" ${g.wa.ready ? "" : "disabled"}>Send templates to Meta</button><button class="ghost" id="wCheck" ${g.wa.ready ? "" : "disabled"}>Check approval</button></div></div>
+    <button class="btn ghost" data-close>Close</button>`);
+  const done = (r, okText) => { const ng = upGym(r.gym); waSheet(ng); if (r.msg || okText) { const ok = $("sheetHost").querySelector("#wOk"); ok.textContent = r.msg || okText; ok.classList.remove("hide"); } };
+  bg.querySelector("#wSave").onclick = ev => busy(ev.target, async () => { err(bg.querySelector("#wErr"));
+    try { done(await api({ action:"set_whatsapp", token, gym_id:g.id, phone_number_id:bg.querySelector("#wPid").value, waba_id:bg.querySelector("#wWaba").value, wa_token:bg.querySelector("#wTok").value })); } catch(e){ err(bg.querySelector("#wErr"), e.message); } });
+  bg.querySelector("#wSubmit").onclick = ev => busy(ev.target, async () => { err(bg.querySelector("#wErr")); try { done(await api({ action:"templates_submit", token, gym_id:g.id })); } catch(e){ err(bg.querySelector("#wErr"), e.message); } });
+  bg.querySelector("#wCheck").onclick = ev => busy(ev.target, async () => { err(bg.querySelector("#wErr")); try { done(await api({ action:"templates_check", token, gym_id:g.id }), "Status updated."); } catch(e){ err(bg.querySelector("#wErr"), e.message); } });
+}
+
+function rzpSheet(g){
+  const bg = sheet(`<h2>Online payments: ${esc(g.name)}</h2>
+    <p class="hint">Money goes straight to the gym's own Razorpay account. Members can then pay online from the QR form and from WhatsApp reminders.</p>
+    ${g.rzp.ready ? `<div class="okmsg">Connected: ${esc(g.rzp.key_id)}${g.rzp.webhook_set ? " · webhook ✓" : ""}</div>` : ""}
+    <label>Key ID</label><input id="rKey" value="${esc(g.rzp.key_id)}" placeholder="rzp_live_…">
+    <label>Key Secret ${g.rzp.ready ? "(leave empty to keep the saved one)" : ""}</label><div class="row"><input id="rSec" type="password" autocomplete="off"><button class="eye" data-eye="rSec">Show</button></div>
+    <label>Webhook secret ${g.rzp.webhook_set ? "(leave empty to keep)" : ""}</label><div class="row"><input id="rWh" autocomplete="off"><button class="eye" id="rGen">New</button></div>
+    <label>Webhook URL (paste this in Razorpay)</label><div class="code" id="rUrl">${esc(g.rzp.webhook_url)}</div>
+    <div class="hint"><ol><li>Gym's Razorpay Dashboard → <b>Account &amp; Settings → API Keys</b> → generate → copy Key ID and Key Secret here.</li>
+      <li>Tap <b>New</b> next to Webhook secret. Then Razorpay → <b>Webhooks → Add new webhook</b>: paste the Webhook URL above, paste the same secret, tick the event <b>payment_link.paid</b>, save.</li>
+      <li>Tap <b>Save</b> here.</li></ol></div>
+    <div id="rErr" class="err hide"></div><div id="rOk" class="okmsg hide"></div>
+    <div class="acts"><button class="ghost" id="rCopy">Copy webhook URL</button>${g.rzp.ready ? '<button class="redline" id="rOff">Switch off</button>' : ""}</div>
+    <button class="btn" id="rSave">Save</button><button class="btn ghost" data-close>Close</button>`);
+  bg.querySelector("#rGen").onclick = () => { bg.querySelector("#rWh").value = genPass() + genPass(); };
+  bg.querySelector("#rCopy").onclick = () => copy(g.rzp.webhook_url);
+  bg.querySelector("#rSave").onclick = ev => busy(ev.target, async () => { err(bg.querySelector("#rErr"));
+    try { const r = await api({ action:"set_razorpay", token, gym_id:g.id, key_id:bg.querySelector("#rKey").value.trim(), key_secret:bg.querySelector("#rSec").value, webhook_secret:bg.querySelector("#rWh").value });
+      upGym(r.gym); const ok = bg.querySelector("#rOk"); ok.textContent = r.msg; ok.classList.remove("hide"); } catch(e){ err(bg.querySelector("#rErr"), e.message); } });
+  const off = bg.querySelector("#rOff"); if (off) off.onclick = () => confirmSheet("Switch off online payments?", "Members will only see cash / UPI options.", "Switch off", true, async () => { const r = await api({ action:"set_razorpay", token, gym_id:g.id, remove:true }); upGym(r.gym); closeSheet(); toast(r.msg); });
+}
+function loginSheet(g){
+  const a = (g.admins||[])[0];
+  if (!a) return toast("No owner login for this gym.");
+  const bg = sheet(`<h2>Owner login: ${esc(g.name)}</h2>
+    <label>Owner name</label><input id="oName" value="${esc(a.name)}">
+    <label>Mobile number (login ID)</label><input id="oPhone" inputmode="tel" value="${esc(String(a.phone).replace(/^91/,""))}">
+    <div class="meta" style="margin-top:8px">Last login: ${a.last_login ? fdt(a.last_login) : "never"} · ${a.active ? "Active" : "Blocked"}</div>
+    <div id="oErr" class="err hide"></div>
+    <button class="btn" id="oSave">Save</button>
+    <div class="acts"><button class="ghost" id="oReset">Reset password</button><button class="${a.active ? "redline" : "ghost"}" id="oBlock">${a.active ? "Block login" : "Unblock login"}</button></div>
+    <button class="btn ghost" data-close>Close</button>`);
+  const setA = na => { g.admins[0] = na; upGym(g); };
+  bg.querySelector("#oSave").onclick = ev => busy(ev.target, async () => { err(bg.querySelector("#oErr"));
+    try { const r = await api({ action:"update_admin", token, id:a.id, name:bg.querySelector("#oName").value, phone:bg.querySelector("#oPhone").value }); setA(r.admin); g.owner_name = r.admin.name; closeSheet(); toast("Saved"); } catch(e){ err(bg.querySelector("#oErr"), e.message); } });
+  bg.querySelector("#oReset").onclick = () => {
+    const np = genPass();
+    confirmSheet("Reset password?", `New password: <b>${np}</b><br>The owner will be logged out and must use this password.`, "Reset password", false, async () => {
+      const r = await api({ action:"update_admin", token, id:a.id, password:np }); setA(r.admin);
+      const b2 = sheet(`<h2>Password reset</h2><p class="sub" style="margin-top:6px">Mobile: <b>${esc(String(a.phone).replace(/^91/,""))}</b><br>Password: <b>${np}</b></p><button class="btn" id="rs">Send on WhatsApp</button><button class="btn ghost" data-close>Close</button>`);
+      b2.querySelector("#rs").onclick = () => shareLogin(g.name, a.name, a.phone, np);
+    });
+  };
+  bg.querySelector("#oBlock").onclick = () => confirmSheet(a.active ? "Block this login?" : "Unblock this login?", a.active ? "The owner is logged out at once and cannot log in. Members, reminders and the QR keep working." : "The owner can log in again.", a.active ? "Block" : "Unblock", a.active, async () => {
+    const r = await api({ action:"update_admin", token, id:a.id, active:!a.active }); setA(r.admin); closeSheet(); toast(r.admin.active ? "Unblocked" : "Blocked"); });
+}
+function editGymSheet(g){
+  const bg = sheet(`<h2>Edit ${esc(g.name)}</h2>
+    <label>Gym name</label><input id="eName" value="${esc(g.name)}">
+    <label>City / area</label><input id="eCity" value="${esc(g.city||"")}">
+    <div id="eErr" class="err hide"></div>
+    <button class="btn" id="eSave">Save</button>
+    <div class="acts"><button class="ghost" id="eOff">${g.active ? "Switch gym off" : "Switch gym on"}</button><button class="redline" id="eDel">Delete gym</button></div>
+    <p class="hint">Switching off stops the QR form, reminders and the owner's login. Nothing is deleted.</p>
+    <button class="btn ghost" data-close>Close</button>`);
+  bg.querySelector("#eSave").onclick = ev => busy(ev.target, async () => { err(bg.querySelector("#eErr"));
+    try { const r = await api({ action:"update_gym", token, gym_id:g.id, gym_name:bg.querySelector("#eName").value, city:bg.querySelector("#eCity").value }); upGym(r.gym); closeSheet(); toast("Saved"); } catch(e){ err(bg.querySelector("#eErr"), e.message); } });
+  bg.querySelector("#eOff").onclick = () => confirmSheet(g.active ? "Switch this gym off?" : "Switch this gym on?", g.active ? "The QR form, reminders and the owner's login stop until you switch it on again." : "Everything starts working again.", g.active ? "Switch off" : "Switch on", g.active, async () => {
+    const r = await api({ action:"update_gym", token, gym_id:g.id, active:!g.active }); upGym(r.gym); closeSheet(); toast(r.gym.active ? "Gym switched on" : "Gym switched off"); });
+  bg.querySelector("#eDel").onclick = () => {
+    const b2 = confirmSheet("Delete " + g.name + "?", `This deletes the gym, the owner login, <b>all ${g.counts.total} members and all payments</b>. It cannot be undone.<label>Type DELETE to confirm</label><input id="dTxt" autocapitalize="characters">`, "Delete permanently", true, async (bx) => {
+      await api({ action:"delete_gym", token, gym_id:g.id, confirm:bx.querySelector("#dTxt").value }); gyms = gyms.filter(x => x.id !== g.id); renderGyms(); closeSheet(); toast("Gym deleted"); });
+  };
+}
+$("btnMyPass").onclick = $("gPass").onclick = () => {
+  const bg = sheet(`<h2>Change my password</h2><label>Current password</label><input id="cOld" type="password"><label>New password (at least 6 characters)</label><input id="cNew" type="password"><label>Confirm new password</label><input id="cNew2" type="password">
+    <div id="cErr" class="err hide"></div><button class="btn" id="cSave">Change password</button><button class="btn ghost" data-close>Close</button>`);
+  bg.querySelector("#cSave").onclick = ev => busy(ev.target, async () => { err(bg.querySelector("#cErr"));
+    if (bg.querySelector("#cNew").value !== bg.querySelector("#cNew2").value) return err(bg.querySelector("#cErr"), "The two new passwords do not match.");
+    try { const r = await api({ action:"change_password", token, old_password:bg.querySelector("#cOld").value, new_password:bg.querySelector("#cNew").value }); token = r.token; store.set("km_token", r.token); closeSheet(); toast("Password changed"); } catch(e){ err(bg.querySelector("#cErr"), e.message); } });
 };
 
-function editSheet(a){
-  const bg = sheet(`<h2>Edit ${esc(a.gym_name)}</h2>
-    <label>Gym name</label><input id="eGym" value="${esc(a.gym_name)}">
-    <label>Admin name</label><input id="eName" value="${esc(a.name)}">
-    <label>Admin mobile number</label><input id="ePhone" inputmode="tel" value="${esc(String(a.phone).replace(/^91/,""))}">
-    <label>Gym dashboard link</label><textarea id="eUrl">${esc(a.dashboard_url || "")}</textarea>
-    <div class="hint">From the gym's Google Sheet menu: <b>Gym Automation → Admin dashboard: show link</b>. If the owner made a new link there, paste the new one here.</div>
-    <div id="eErr" class="err hide"></div>
-    <button class="btn" id="eSave">Save changes</button>
-    <button class="btn ghost" data-close>Cancel</button>`);
-  bg.querySelector("#eSave").onclick = (ev) => busy(ev.target, async () => {
-    err(bg.querySelector("#eErr"));
-    try{
-      const r = await api({ action:"update", token, id:a.id, gym_name:bg.querySelector("#eGym").value, name:bg.querySelector("#eName").value,
-        phone:bg.querySelector("#ePhone").value, dashboard_url:bg.querySelector("#eUrl").value.trim() });
-      Object.assign(a, r.admin); render(); closeSheet();
-    }catch(e){ err(bg.querySelector("#eErr"), e.message); }
-  });
+// ================= GYM DASHBOARD =================
+function gapi(body){ return api(Object.assign({ token, gym_id: cur }, body)); }
+async function openGym(gymId){
+  cur = gymId; show("vGym"); members = [];
+  const sup = me.role === "super";
+  $("gBack").classList.toggle("hide", !sup); $("gLogout").classList.toggle("hide", sup); $("gPass").classList.toggle("hide", sup);
+  setTab("home");
+  await loadDash();
+  clearInterval(timer); timer = setInterval(() => { if (!document.hidden && !$("sheetHost").innerHTML && tab === "home") loadDash(true); }, 30000);
 }
-function resetSheet(a){
-  const bg = sheet(`<h2>Reset password</h2>
-    <p class="sub" style="margin-top:6px">${esc(a.gym_name)} · ${esc(a.name)}. The admin will be logged out of the app and must use the new password.</p>
-    <label>New password</label><div class="row"><input id="rPass"><button class="eye" id="rGen">New</button></div>
-    <div id="rErr" class="err hide"></div>
-    <button class="btn" id="rSave">Reset password</button>
-    <button class="btn ghost" data-close>Cancel</button>`);
-  const p = bg.querySelector("#rPass"); p.value = genPass();
-  bg.querySelector("#rGen").onclick = () => p.value = genPass();
-  bg.querySelector("#rSave").onclick = (ev) => busy(ev.target, async () => {
-    err(bg.querySelector("#rErr"));
-    try{ const r = await api({ action:"update", token, id:a.id, password:p.value }); Object.assign(a, r.admin); render(); doneSheet(a, p.value, "Password reset"); }
-    catch(e){ err(bg.querySelector("#rErr"), e.message); }
-  });
+$("gBack").onclick = () => openSuper();
+$("gRefresh").onclick = () => { loadDash(); if (tab === "members") loadMembers(); };
+document.querySelectorAll("[data-tab]").forEach(b => b.onclick = () => setTab(b.dataset.tab));
+function setTab(t){
+  tab = t; document.querySelectorAll("[data-tab]").forEach(b => b.classList.toggle("on", b.dataset.tab === t));
+  ["home","members","qr","settings"].forEach(x => $("t" + x[0].toUpperCase() + x.slice(1)).classList.toggle("hide", x !== t));
+  if (t === "members") loadMembers();
+  if (t === "settings" && dash) fillSettings(dash.gym);
 }
-function blockSheet(a){
-  const blocking = a.active;
-  const bg = sheet(`<h2>${blocking ? "Block" : "Unblock"} ${esc(a.gym_name)}?</h2>
-    <p class="sub" style="margin-top:6px">${blocking
-      ? "The admin is logged out at once and cannot log in until you unblock them. Their gym sheet and members are not changed."
-      : "The admin can log in again with their current password."}</p>
-    <div id="bErr" class="err hide"></div>
-    <button class="btn" id="bSave" ${blocking ? 'style="background:var(--bad);color:#fff"' : ''}>${blocking ? "Block" : "Unblock"}</button>
-    <button class="btn ghost" data-close>Cancel</button>`);
-  bg.querySelector("#bSave").onclick = (ev) => busy(ev.target, async () => {
-    try{ const r = await api({ action:"update", token, id:a.id, active:!a.active }); Object.assign(a, r.admin); render(); closeSheet(); }
-    catch(e){ err(bg.querySelector("#bErr"), e.message); }
-  });
+async function loadDash(quiet){
+  if (!quiet) $("dPend").innerHTML = '<div class="spin" style="margin:20px auto"></div>';
+  try { dash = await gapi({ action:"gym_dash" }); renderDash(); }
+  catch(e){ if (!quiet) { $("dPend").innerHTML = ""; $("gWarn").innerHTML = `<div class="err">${esc(e.message)}</div>`; } }
 }
-function deleteSheet(a){
-  const bg = sheet(`<h2>Delete ${esc(a.gym_name)}?</h2>
-    <p class="sub" style="margin-top:6px">This removes the app login for ${esc(a.name)} permanently. It cannot be undone. The gym's Google Sheet, members and payments are <b>not</b> deleted.</p>
-    <label>Type DELETE to confirm</label><input id="dTxt" autocapitalize="characters">
-    <div id="dErr" class="err hide"></div>
-    <button class="btn" id="dSave" style="background:var(--bad);color:#fff">Delete permanently</button>
-    <button class="btn ghost" data-close>Cancel</button>`);
-  bg.querySelector("#dSave").onclick = (ev) => busy(ev.target, async () => {
-    if (bg.querySelector("#dTxt").value.trim().toUpperCase() !== "DELETE") return err(bg.querySelector("#dErr"), "Type DELETE to confirm.");
-    try{ await api({ action:"delete", token, id:a.id }); admins = admins.filter(x => x.id !== a.id); render(); closeSheet(); }
-    catch(e){ err(bg.querySelector("#dErr"), e.message); }
-  });
+function renderDash(){
+  const g = dash.gym, s = dash.stats;
+  $("gName").textContent = g.name;
+  $("gSub").textContent = (g.owner_name || "") + (g.city ? " · " + g.city : "") + " · QR code " + g.code;
+  const T = g.wa.templates || {}; const appr = ["km_gym_fee_reminder","km_gym_pass"].every(k => T[k] === "APPROVED");
+  const sup = me.role === "super";
+  $("gWarn").innerHTML = (!g.wa.ready ? `<div class="warnbox">WhatsApp is not connected yet, so reminders and passes are <b>not sent</b>. ${sup ? "Connect it from the gym card → WhatsApp." : "KnowMinds Media will connect your number."} Cash approvals and the QR form already work.</div>`
+    : !appr ? `<div class="warnbox">WhatsApp is connected. The message templates are waiting for Meta approval. Reminders and passes start after approval.</div>` : "");
+  $("dToday").textContent = money(s.todayCash + s.todayOnline);
+  $("dToday").nextElementSibling.textContent = "Today · cash " + money(s.todayCash) + " · online " + money(s.todayOnline);
+  $("dActive").textContent = s.active + s.due; $("dDue").textContent = s.expiring + s.due; $("dNonpay").textContent = s.nonpay;
+  $("dDue").nextElementSibling.textContent = "Due in " + g.remind_days + " days";
+  $("dPendN").textContent = dash.pending.length; $("dNonN").textContent = dash.nonpay.length;
+  $("dPend").innerHTML = dash.pending.length ? dash.pending.map(m => `<div class="card" id="p_${m.id}"><div class="person">${photo(m)}<div class="info">
+      <b>${esc(m.name)}</b> <span class="meta">#${m.no}</span><div class="meta">${esc(m.plan)} · <b style="color:var(--text)">${money(m.amount)}</b> · ${esc(m.request_mode || "Cash")}${m.trainer && m.trainer !== "No trainer" ? " · Trainer: " + esc(m.trainer) : ""}<br>${esc(pp(m.phone))} · ${fdt(m.request_at)}${m.expiry ? "" : ' · <span class="chip c-blue">New member</span>'}</div></div></div>
+      <div class="acts"><button class="green" data-p="approve" data-id="${m.id}">Yes, ${esc((m.request_mode || "Cash").toLowerCase())} received</button><button class="redline" data-p="reject" data-id="${m.id}">Reject</button></div></div>`).join("")
+    : '<div class="empty">No payment requests right now. ✅</div>';
+  $("dNon").innerHTML = dash.nonpay.length ? dash.nonpay.map(m => `<div class="card" id="n_${m.id}"><div class="person">${photo(m)}<div class="info">
+      <b>${esc(m.name)}</b> <span class="meta">#${m.no}</span><div class="meta">${esc(m.plan)} · ${money(m.amount)}</div>
+      <div class="late">Due ${fd(m.expiry)} · ${-m.days_left} day${m.days_left === -1 ? "" : "s"} late</div>
+      <div class="links"><a href="tel:+${esc(m.phone)}" target="_blank">📞 Call</a><a href="https://wa.me/${esc(m.phone)}" target="_blank">💬 WhatsApp</a></div></div></div>
+      <div class="acts"><button class="green" data-n="cash" data-id="${m.id}">Cash received</button><button class="ghost" data-n="remind" data-id="${m.id}">Send reminder</button><button class="redline" data-n="left" data-id="${m.id}">Left the gym</button></div></div>`).join("")
+    : '<div class="empty">Everyone has paid. ✅</div>';
+  $("dRec").innerHTML = dash.recent.length ? `<div class="card"><table>${dash.recent.map(r => `<tr><td>${fdt(r.when)}</td><td><b>${esc(r.name)}</b><br><span class="meta">${esc(r.plan)} · till ${fd(r.end)}</span></td><td style="text-align:right">${money(r.amount)}<br><span class="meta">${esc(r.mode)}</span></td></tr>`).join("")}</table></div>` : '<div class="empty">No payments yet.</div>';
+  // QR tab
+  $("qrImg").src = qrSrc(g.join_url); $("qrLink").textContent = g.join_url;
 }
-$("btnMyPass").onclick = () => {
-  const bg = sheet(`<h2>Change my password</h2>
-    <label>Current password</label><input id="cOld" type="password">
-    <label>New password (at least 6 characters)</label><input id="cNew" type="password">
-    <label>Confirm new password</label><input id="cNew2" type="password">
-    <div id="cErr" class="err hide"></div><div id="cOk" class="okmsg hide"></div>
-    <button class="btn" id="cSave">Change password</button>
-    <button class="btn ghost" data-close>Close</button>`);
-  bg.querySelector("#cSave").onclick = (ev) => busy(ev.target, async () => {
-    err(bg.querySelector("#cErr"));
-    if (bg.querySelector("#cNew").value !== bg.querySelector("#cNew2").value) return err(bg.querySelector("#cErr"), "The two new passwords do not match.");
-    try{
-      const r = await api({ action:"change_password", token, old_password:bg.querySelector("#cOld").value, new_password:bg.querySelector("#cNew").value });
-      setSession(r.token, r.admin); const ok = bg.querySelector("#cOk"); ok.textContent = "Password changed."; ok.classList.remove("hide");
-    }catch(e){ err(bg.querySelector("#cErr"), e.message); }
-  });
+$("dPend").onclick = ev => {
+  const b = ev.target.closest("button[data-p]"); if (!b) return;
+  const m = dash.pending.find(x => x.id === b.dataset.id);
+  const go = async () => { const box = $("p_" + m.id); box.querySelectorAll("button").forEach(x => x.disabled = true);
+    try { const r = await gapi({ action:"gym_decide", member_id:m.id, decision:b.dataset.p }); box.innerHTML = `<p class="okmsg" style="margin:0">${esc(r.msg)}</p>`; setTimeout(loadDash, 1800); }
+    catch(e){ toast(e.message); loadDash(); } };
+  if (b.dataset.p === "reject") confirmSheet("Reject " + m.name + "'s request?", "Use this if the money was not received.", "Reject", true, async () => { closeSheet(); await go(); });
+  else confirmSheet(`${m.request_mode || "Cash"} received from ${m.name}?`, `${money(m.amount)} for the ${esc(m.plan)} plan. The membership starts and the pass is sent on WhatsApp.`, "Yes, received", false, async () => { closeSheet(); await go(); });
 };
+$("dNon").onclick = ev => {
+  const b = ev.target.closest("button[data-n]"); if (!b) return;
+  const m = dash.nonpay.find(x => x.id === b.dataset.id);
+  const run = async (body) => { const box = $("n_" + m.id); box.querySelectorAll("button").forEach(x => x.disabled = true);
+    try { const r = await gapi(Object.assign({ member_id:m.id }, body)); box.innerHTML = `<p class="okmsg" style="margin:0">${esc(r.msg)}</p>`; setTimeout(loadDash, 1800); }
+    catch(e){ toast(e.message); loadDash(); } };
+  if (b.dataset.n === "cash") paidSheet(m, () => loadDash());
+  if (b.dataset.n === "remind") run({ action:"gym_remind" });
+  if (b.dataset.n === "left") confirmSheet("Mark " + m.name + " as left?", "No more reminders. You can bring them back from Members.", "Left the gym", true, async () => { closeSheet(); await run({ action:"gym_set_status", status:"left" }); });
+};
+function plansOptions(sel){ const p = dash.gym.prices || {}; return Object.keys(PLANM).filter(k => Number(p[k]) > 0 || k === sel).map(k => `<option value="${k}" ${k === sel ? "selected" : ""}>${k} · ${money(p[k])}</option>`).join(""); }
+function paidSheet(m, after){
+  const bg = sheet(`<h2>Payment received from ${esc(m.name)}</h2>
+    <label>Plan</label><select id="pPlan">${plansOptions(m.plan)}</select>
+    <label>Paid by</label><select id="pMode"><option>Cash</option><option>UPI</option></select>
+    <p class="hint">The plan is renewed, the payment is saved and the pass is sent on WhatsApp.</p>
+    <div id="pErr" class="err hide"></div><button class="btn green" id="pOk">Confirm payment</button><button class="btn ghost" data-close>Cancel</button>`);
+  bg.querySelector("#pOk").onclick = ev => busy(ev.target, async () => { err(bg.querySelector("#pErr"));
+    try { const r = await gapi({ action:"gym_mark_paid", member_id:m.id, plan:bg.querySelector("#pPlan").value, mode:bg.querySelector("#pMode").value }); closeSheet(); toast(r.msg); after && after(); }
+    catch(e){ err(bg.querySelector("#pErr"), e.message); } });
+}
+
+// ----- members tab -----
+async function loadMembers(){
+  $("mList").innerHTML = '<div class="spin" style="margin:20px auto"></div>';
+  try { members = (await gapi({ action:"gym_members" })).members; renderMembers(); } catch(e){ $("mList").innerHTML = `<div class="err">${esc(e.message)}</div>`; }
+}
+function renderMembers(){
+  const qv = $("mq").value.trim().toLowerCase();
+  const rows = members.filter(m => (mFilter === "all" ? m.status !== "rejected" : m.status === mFilter) && (!qv || [m.name, m.phone, "#" + m.no, m.no, m.email].join(" ").toLowerCase().includes(qv)));
+  $("mList").innerHTML = rows.length ? rows.map(m => `<button class="mrow" data-m="${m.id}">${photo(m)}<div class="info"><b>${esc(m.name)} <span class="meta">#${m.no}</span></b>
+    <div class="meta">${esc(m.plan)}${m.expiry ? " · till " + fd(m.expiry) : ""}</div></div>${statusChip(m.status)}</button>`).join("")
+    : `<div class="empty">${members.length ? "No members match." : "No members yet. Share the QR code, or tap <b>+ Add</b> for members who already paid."}</div>`;
+}
+$("mq").oninput = renderMembers;
+$("mFilters").onclick = ev => { const b = ev.target.closest("button[data-f]"); if (!b) return; mFilter = b.dataset.f; $("mFilters").querySelectorAll("button").forEach(x => x.classList.toggle("on", x === b)); renderMembers(); };
+$("mList").onclick = ev => { const b = ev.target.closest("[data-m]"); if (b) memberSheet(members.find(m => m.id === b.dataset.m)); };
+function memberSheet(m){
+  const bg = sheet(`<div class="person">${photo(m)}<div class="info"><h2 style="margin:0">${esc(m.name)}</h2><div class="meta">Member #${m.no} ${statusChip(m.status)}</div></div></div>
+    <table style="margin-top:12px">
+      <tr><td class="meta">WhatsApp</td><td>${esc(pp(m.phone))} <span class="links"><a href="https://wa.me/${esc(m.phone)}" target="_blank">chat</a><a href="tel:+${esc(m.phone)}" target="_blank">call</a></span></td></tr>
+      ${m.email ? `<tr><td class="meta">Email</td><td>${esc(m.email)}</td></tr>` : ""}
+      <tr><td class="meta">Plan</td><td>${esc(m.plan)} · ${money(m.amount)}</td></tr>
+      <tr><td class="meta">Trainer</td><td>${esc(m.trainer || "No trainer")}</td></tr>
+      <tr><td class="meta">Start</td><td>${fd(m.start)}</td></tr>
+      <tr><td class="meta">Valid till</td><td>${fd(m.expiry)}${m.days_left !== null ? ` <span class="meta">(${m.days_left >= 0 ? m.days_left + " days left" : -m.days_left + " days late"})</span>` : ""}</td></tr>
+      ${m.paid_on ? `<tr><td class="meta">Last paid</td><td>${fd(m.paid_on)} · ${esc(m.pay_mode || "")}</td></tr>` : ""}
+      ${m.notes ? `<tr><td class="meta">Notes</td><td class="meta">${esc(m.notes)}</td></tr>` : ""}
+    </table>
+    <div id="mErr" class="err hide"></div>
+    <div class="acts">
+      ${m.status !== "left" ? '<button class="green" id="mPaid">Payment received</button>' : ""}
+      ${["active","due","nonpay"].includes(m.status) ? '<button class="ghost" id="mRemind">Send reminder</button>' : ""}
+      ${m.status === "active" ? '<button class="ghost" id="mPass">Send pass again</button>' : ""}
+      <button class="ghost" id="mOpenPass">Open pass</button>
+      <button class="ghost" id="mEdit">Edit</button>
+      ${m.status === "left" ? '<button class="ghost" id="mBack">Back in gym</button>' : '<button class="redline" id="mLeft">Left the gym</button>'}
+      <button class="redline" id="mDel">Delete</button>
+    </div>
+    <button class="btn ghost" data-close>Close</button>`);
+  const act = async (body, ok) => { try { const r = await gapi(Object.assign({ member_id:m.id }, body)); closeSheet(); toast(r.msg || ok); loadMembers(); loadDash(true); } catch(e){ err(bg.querySelector("#mErr"), e.message); } };
+  const q = s => bg.querySelector(s);
+  if (q("#mPaid")) q("#mPaid").onclick = () => paidSheet(m, () => { loadMembers(); loadDash(true); });
+  if (q("#mRemind")) q("#mRemind").onclick = ev => busy(ev.target, () => act({ action:"gym_remind" }));
+  if (q("#mPass")) q("#mPass").onclick = ev => busy(ev.target, () => act({ action:"gym_resend_pass" }));
+  q("#mOpenPass").onclick = ev => busy(ev.target, async () => { try { const r = await gapi({ action:"gym_member_links", member_id:m.id }); openUrl(r.pass_url); } catch(e){ err(q("#mErr"), e.message); } });
+  q("#mEdit").onclick = () => editMemberSheet(m);
+  if (q("#mLeft")) q("#mLeft").onclick = ev => busy(ev.target, () => act({ action:"gym_set_status", status:"left" }));
+  if (q("#mBack")) q("#mBack").onclick = ev => busy(ev.target, () => act({ action:"gym_set_status", status:"back" }));
+  q("#mDel").onclick = () => confirmSheet("Delete " + m.name + "?", "The member is removed from the list. Their old payments stay in the payment history.", "Delete", true, async () => { await act({ action:"gym_delete_member" }); });
+}
+function trainerOptions(sel){ const t = dash.gym.trainers || []; return `<option value="">No trainer</option>` + t.concat(sel && sel !== "No trainer" && !t.includes(sel) ? [sel] : []).map(x => `<option ${x === sel ? "selected" : ""}>${esc(x)}</option>`).join(""); }
+function editMemberSheet(m){
+  const bg = sheet(`<h2>Edit ${esc(m.name)}</h2>
+    <label>Name</label><input id="eN" value="${esc(m.name)}"><label>WhatsApp number</label><input id="eP" inputmode="tel" value="${esc(String(m.phone).replace(/^91/,""))}">
+    <label>Email</label><input id="eE" value="${esc(m.email||"")}"><label>Plan</label><select id="ePl">${plansOptions(m.plan)}</select>
+    <label>Trainer</label><select id="eT">${trainerOptions(m.trainer)}</select>
+    <label>Valid till</label><input id="eX" type="date" value="${esc(m.expiry||"")}">
+    <label>Photo (optional)</label><input id="eF" type="file" accept="image/*">
+    <div id="eErr" class="err hide"></div><button class="btn" id="eSave">Save</button><button class="btn ghost" data-close>Cancel</button>`);
+  bg.querySelector("#eSave").onclick = ev => busy(ev.target, async () => { err(bg.querySelector("#eErr"));
+    try {
+      const body = { action:"gym_update_member", member_id:m.id, name:bg.querySelector("#eN").value, phone:bg.querySelector("#eP").value, email:bg.querySelector("#eE").value, plan:bg.querySelector("#ePl").value, trainer:bg.querySelector("#eT").value };
+      if (bg.querySelector("#eX").value) body.expiry_date = bg.querySelector("#eX").value;
+      const f = bg.querySelector("#eF").files[0]; if (f) body.photo = await shrink(f);
+      const r = await gapi(body); closeSheet(); toast("Saved"); loadMembers(); loadDash(true);
+    } catch(e){ err(bg.querySelector("#eErr"), e.message); } });
+}
+$("btnAddMember").onclick = () => {
+  const t = todayIso();
+  const bg = sheet(`<h2>Add an existing member</h2><p class="hint">For members who already paid before the app. New members should use the QR code instead.</p>
+    <label>Name</label><input id="nN"><label>WhatsApp number</label><input id="nP" inputmode="tel" placeholder="10-digit mobile number">
+    <label>Email (optional)</label><input id="nE"><label>Plan</label><select id="nPl">${plansOptions("Monthly")}</select>
+    <label>Trainer</label><select id="nT">${trainerOptions("")}</select>
+    <div class="grid2"><div><label>Start date</label><input id="nS" type="date" value="${t}"></div><div><label>Valid till</label><input id="nX" type="date"></div></div>
+    <p class="hint">Valid till fills in from the plan. Change it if needed.</p>
+    <div id="nErr" class="err hide"></div><button class="btn" id="nSave">Add member</button><button class="btn ghost" data-close>Cancel</button>`);
+  const upd = () => { const s = bg.querySelector("#nS").value, p = bg.querySelector("#nPl").value; if (s && PLANM[p]) bg.querySelector("#nX").value = addMonths(s, PLANM[p]); };
+  bg.querySelector("#nS").onchange = upd; bg.querySelector("#nPl").onchange = upd; upd();
+  bg.querySelector("#nSave").onclick = ev => busy(ev.target, async () => { err(bg.querySelector("#nErr"));
+    try { const r = await gapi({ action:"gym_add_member", name:bg.querySelector("#nN").value, phone:bg.querySelector("#nP").value, email:bg.querySelector("#nE").value,
+        plan:bg.querySelector("#nPl").value, trainer:bg.querySelector("#nT").value, start_date:bg.querySelector("#nS").value, expiry_date:bg.querySelector("#nX").value });
+      closeSheet(); toast(r.msg); loadMembers(); loadDash(true); } catch(e){ err(bg.querySelector("#nErr"), e.message); } });
+};
+function shrink(file){ return new Promise((res, rej) => { const r = new FileReader(); r.onload = () => { const im = new Image(); im.onload = () => {
+  const s = Math.min(im.width, im.height), c = document.createElement("canvas"); c.width = c.height = 480; c.getContext("2d").drawImage(im, (im.width-s)/2, (im.height-s)/2, s, s, 0, 0, 480, 480); res(c.toDataURL("image/jpeg", .85)); };
+  im.onerror = () => rej(new Error("Could not read this photo.")); im.src = r.result; }; r.readAsDataURL(file); }); }
+
+// ----- QR tab -----
+$("qrPoster").onclick = () => openUrl(dash.gym.poster_url);
+$("qrDownload").onclick = () => downloadQr(dash.gym);
+$("qrCopy").onclick = () => copy(dash.gym.join_url);
+$("qrShare").onclick = () => openUrl("https://wa.me/?text=" + encodeURIComponent(`Join ${dash.gym.name}: fill the form and pay here ${dash.gym.join_url}`));
+
+// ----- settings tab -----
+function fillSettings(g){
+  Object.keys(PLANM).forEach(k => $("sp_" + k).value = (g.prices || {})[k] || 0);
+  $("sTrainers").value = (g.trainers || []).join("\n"); $("sUpi").value = g.upi_id || ""; $("sOwner").value = g.owner_name || "";
+  $("sColor").value = g.pass_color || "#2E7D32"; $("sRemind").value = String(g.remind_days || 3);
+  if (![...$("sRemind").options].some(o => o.value === String(g.remind_days))) $("sRemind").add(new Option(g.remind_days + " days", g.remind_days, true, true));
+  err($("setErr"));
+}
+$("btnSaveSettings").onclick = () => busy($("btnSaveSettings"), async () => { err($("setErr"));
+  const prices = {}; Object.keys(PLANM).forEach(k => prices[k] = Number($("sp_" + k).value || 0));
+  try { const r = await gapi({ action:"gym_settings", prices, trainers:$("sTrainers").value, upi_id:$("sUpi").value, owner_name:$("sOwner").value, pass_color:$("sColor").value, remind_days:Number($("sRemind").value) });
+    dash.gym = r.gym; toast(r.msg); } catch(e){ err($("setErr"), e.message); } });
 
 start();
 </script>

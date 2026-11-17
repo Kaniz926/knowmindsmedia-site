@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Gym membership</title>
+<link rel="icon" type="image/png" href="/icon-192.png">
+<style>
+  :root{--c:#2E7D32;--text:#1a1d24;--muted:#667085;--line:#e4e7ec;--bg:#f4f6f8}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:16px}
+  .wrap{max-width:520px;margin:0 auto;padding:0 0 40px}
+  .hero{background:var(--c);color:#fff;padding:26px 20px 30px;border-radius:0 0 24px 24px}
+  .hero h1{margin:0;font-size:24px}.hero p{margin:6px 0 0;opacity:.92;font-size:14.5px}
+  .card{background:#fff;border-radius:18px;padding:18px;margin:14px 14px 0;box-shadow:0 2px 10px rgba(16,24,40,.06)}
+  .card h2{margin:0 0 4px;font-size:17px}
+  label{display:block;font-size:13.5px;color:var(--muted);margin:14px 0 6px;font-weight:600}
+  input,select{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:13px 14px;font-size:16px;outline:none;font-family:inherit;background:#fff;color:var(--text)}
+  input:focus,select:focus{border-color:var(--c)}
+  .opts{display:grid;gap:10px}.opts.two{grid-template-columns:1fr 1fr}
+  .opt{display:flex;align-items:center;gap:10px;border:1.5px solid var(--line);border-radius:14px;padding:13px 14px;cursor:pointer;background:#fff}
+  .opt input{width:auto;margin:0;accent-color:var(--c)}.opt b{display:block}.opt span{color:var(--muted);font-size:13px}
+  .opt.on{border-color:var(--c);background:color-mix(in srgb,var(--c) 7%,#fff)}
+  .opt .pr{margin-left:auto;font-weight:800}
+  .photo{display:flex;gap:14px;align-items:center}
+  .photo .pv{width:84px;height:84px;border-radius:14px;background:#eef1f4;display:grid;place-items:center;font-size:30px;overflow:hidden;flex-shrink:0;border:1.5px dashed #cbd2da}
+  .photo .pv img{width:100%;height:100%;object-fit:cover}
+  .pbtn{display:inline-block;border:1.5px solid var(--c);color:var(--c);border-radius:12px;padding:11px 14px;font-weight:700;cursor:pointer;background:#fff}
+  button.main{width:100%;background:var(--c);color:#fff;border:0;border-radius:14px;padding:16px;font-size:17px;font-weight:800;margin-top:18px;cursor:pointer;font-family:inherit}
+  button.main:disabled{opacity:.6}
+  button.alt{width:100%;background:#fff;color:var(--text);border:1.5px solid var(--line);border-radius:14px;padding:14px;font-size:16px;font-weight:700;margin-top:10px;cursor:pointer;font-family:inherit}
+  .err{background:#fef3f2;border:1px solid #fecdca;color:#b42318;border-radius:12px;padding:11px 13px;margin-top:14px;font-size:14.5px}
+  .ok{text-align:center;padding:26px 18px}.ok .big{font-size:52px}.ok h2{font-size:21px;margin:8px 0}
+  .muted{color:var(--muted);font-size:14px;line-height:1.5}
+  .hide{display:none!important}
+  .spin{width:36px;height:36px;border:3px solid #dfe3e8;border-top-color:var(--c);border-radius:50%;animation:s .8s linear infinite;margin:80px auto}
+  @keyframes s{to{transform:rotate(360deg)}}
+  .foot{text-align:center;color:#98a2b3;font-size:12px;margin-top:26px}.foot a{color:#98a2b3}
+  .sum{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line);font-size:15px}.sum:last-child{border:0}
+  /* pass */
+  .pass{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 6px 24px rgba(16,24,40,.12);margin:18px 14px 0}
+  .pass .ph{background:var(--c);color:#fff;padding:18px 20px}.pass .ph .g{font-size:23px;font-weight:800}.pass .ph .o{font-size:14px;opacity:.95;margin-top:3px}
+  .pass .pb{display:flex;gap:16px;padding:20px;align-items:center;flex-wrap:wrap}
+  .pass .pp{width:110px;height:110px;border-radius:14px;object-fit:cover;border:3px solid var(--c);background:#eef1f4;display:grid;place-items:center;font-size:36px;font-weight:800;color:var(--c)}
+  .pass .pi{flex:1;min-width:150px}.pass .n{font-size:21px;font-weight:800;margin-bottom:10px}
+  .pass .l{font-size:11px;letter-spacing:.08em;color:var(--muted);font-weight:700;margin-top:6px}.pass .d{font-size:16px;font-weight:700}
+  .pass .pq{width:120px;height:120px;margin:0 auto}
+  .valid{margin:14px 14px 0;text-align:center;padding:12px;border-radius:14px;font-weight:800;font-size:16px}
+  .valid.y{background:#ecfdf3;color:#067647;border:1px solid #abefc6}.valid.n{background:#fef3f2;color:#b42318;border:1px solid #fecdca}
+  /* poster */
+  .poster{display:none}
+  body.posterMode{background:#fff}
+  body.posterMode .wrap{display:none}
+  body.posterMode .poster{display:block;max-width:760px;margin:0 auto;padding:24px;text-align:center}
+  .poster .ptop{background:var(--c);color:#fff;border-radius:22px;padding:30px 20px}
+  .poster .ptop h1{font-size:44px;margin:0}.poster .ptop p{font-size:22px;margin:8px 0 0}
+  .poster .pqr{width:420px;max-width:80vw;margin:26px auto 8px;display:block}
+  .poster .scan{font-size:30px;font-weight:800;margin:6px 0}
+  .poster .steps{display:flex;gap:12px;justify-content:center;margin:18px 0;flex-wrap:wrap}
+  .poster .steps div{flex:1;min-width:150px;border:2px solid var(--line);border-radius:16px;padding:14px;font-size:17px}
+  .poster .steps b{display:block;font-size:26px;color:var(--c)}
+  .poster .pfoot{color:#98a2b3;font-size:13px;margin-top:16px}
+  .poster .printbtn{margin-top:16px;background:var(--c);color:#fff;border:0;border-radius:12px;padding:14px 22px;font-size:17px;font-weight:800;cursor:pointer}
+  @media print{.poster .printbtn{display:none}@page{size:A4;margin:12mm}body.posterMode .poster{padding:0}}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"><div class="spin"></div></div>
+<div class="poster" id="poster"></div>
+
+<script>
+const API = "https://cqrtvuspfbwkefpheknj.supabase.co/functions/v1/gym-public";
+const P = new URLSearchParams(location.search);
+const page = location.pathname.split("/").filter(Boolean)[0] || "gym_join";
+const $ = (id) => document.getElementById(id);
+const app = $("app");
+function esc(s){ return String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+const money = n => "₹" + Number(n||0).toLocaleString("en-IN");
+const MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+function fd(iso){ if(!iso) return "-"; const [y,m,d] = String(iso).slice(0,10).split("-").map(Number); return String(d).padStart(2,"0") + " " + MON[m-1] + " " + y; }
+const qr = (data, size) => "https://api.qrserver.com/v1/create-qr-code/?size=" + (size||500) + "x" + (size||500) + "&margin=10&data=" + encodeURIComponent(data);
+function setColor(c){ if (/^#[0-9a-f]{6}$/i.test(c||"")) document.documentElement.style.setProperty("--c", c); }
+async function api(body){
+  let res, data;
+  try { res = await fetch(API, { method:"POST", headers:{ "Content-Type":"text/plain" }, body: JSON.stringify(body) }); data = await res.json(); }
+  catch(e){ throw new Error("No internet connection. Please check your network and try again."); }
+  if (data && data.error) throw new Error(data.error);
+  return data;
+}
+function fail(msg){ app.innerHTML = `<div class="card ok"><div class="big">⚠️</div><h2>Sorry</h2><p class="muted">${esc(msg)}</p></div>${foot()}`; }
+const foot = () => `<p class="foot">Powered by <a href="https://knowmindsmedia.com" target="_blank">KnowMinds Media</a></p>`;
+function shrink(file){ return new Promise((res, rej) => { const r = new FileReader(); r.onload = () => { const im = new Image(); im.onload = () => {
+  const s = Math.min(im.width, im.height), c = document.createElement("canvas"); c.width = c.height = 480; c.getContext("2d").drawImage(im, (im.width-s)/2, (im.height-s)/2, s, s, 0, 0, 480, 480); res(c.toDataURL("image/jpeg", .85)); };
+  im.onerror = () => rej(new Error("Could not read this photo. Please try another one.")); im.src = r.result; }; r.readAsDataURL(file); }); }
+function radios(box){ box.querySelectorAll(".opt").forEach(o => o.onclick = () => { const i = o.querySelector("input"); i.checked = true; box.querySelectorAll(".opt").forEach(x => x.classList.toggle("on", x.querySelector("input").checked)); i.dispatchEvent(new Event("change", { bubbles:true })); }); }
+
+// ================= JOIN FORM (+ poster) =================
+async function joinPage(){
+  let gym;
+  try { gym = (await api({ action:"join_info", g: P.get("g") })).gym; } catch(e){ return fail(e.message); }
+  setColor(gym.color); document.title = gym.name + " · Join";
+  const url = location.origin + "/gym_join/?g=" + gym.code;
+  if (P.get("poster")){
+    document.body.classList.add("posterMode");
+    $("poster").innerHTML = `<div class="ptop"><h1>${esc(gym.name)}</h1><p>${gym.city ? esc(gym.city) + " · " : ""}Join or renew your membership</p></div>
+      <img class="pqr" src="${qr(url, 900)}" alt="QR"><div class="scan">📷 Scan with your phone camera</div>
+      <div class="steps"><div><b>1</b>Fill the form<br>and add your photo</div><div><b>2</b>Choose your plan<br>and trainer</div><div><b>3</b>Pay ${gym.online ? "online or " : ""}at the reception</div></div>
+      <div class="muted">Your membership pass comes on WhatsApp.</div>
+      <div class="pfoot">Powered by KnowMinds Media · knowmindsmedia.com</div><button class="printbtn" onclick="print()">🖨️ Print / Save as PDF</button>`;
+    return;
+  }
+  const hasTrainers = (gym.trainers || []).length > 0;
+  app.innerHTML = `<div class="hero"><h1>${esc(gym.name)}</h1><p>${gym.city ? esc(gym.city) + " · " : ""}Membership form</p></div>
+  <div class="card"><h2>Your details</h2>
+    <label>Full name</label><input id="fName" autocomplete="name" placeholder="Your full name">
+    <label>Email</label><input id="fEmail" type="email" autocomplete="email" placeholder="you@example.com">
+    <label>WhatsApp number</label><input id="fPhone" inputmode="tel" autocomplete="tel" placeholder="10-digit WhatsApp number">
+    <label>Your photo (for the membership pass)</label>
+    <div class="photo"><div class="pv" id="pv">🙂</div><div><label class="pbtn" for="fPhoto" style="margin:0;color:var(--c)">📷 Add photo</label><input id="fPhoto" type="file" accept="image/*" capture="user" class="hide"><div class="muted" style="margin-top:6px;font-size:12.5px">A clear photo of your face.</div></div></div>
+  </div>
+  ${hasTrainers ? `<div class="card"><h2>Personal trainer</h2><p class="muted" style="margin:0">Do you want a personal trainer?</p>
+    <div class="opts two" id="tYN" style="margin-top:12px"><label class="opt"><input type="radio" name="tyn" value="yes"><b>Yes</b></label><label class="opt on"><input type="radio" name="tyn" value="no" checked><b>No</b></label></div>
+    <div id="tPick" class="hide"><label>Choose your trainer</label><select id="fTrainer"><option value="">Select a trainer</option>${gym.trainers.map(t => `<option>${esc(t)}</option>`).join("")}</select></div></div>` : ""}
+  <div class="card"><h2>Choose your plan</h2><div class="opts" id="plans" style="margin-top:12px">
+    ${gym.plans.map((p, i) => `<label class="opt ${i === 0 ? "on" : ""}"><input type="radio" name="plan" value="${esc(p.name)}" ${i === 0 ? "checked" : ""}><div><b>${esc(p.name)}</b><span>${p.months} month${p.months > 1 ? "s" : ""}</span></div><div class="pr">${money(p.price)}</div></label>`).join("")}
+  </div></div>
+  <div class="card"><h2>How will you pay?</h2><div class="opts" id="pays" style="margin-top:12px">
+    <label class="opt on"><input type="radio" name="pay" value="cash" checked><div><b>💵 Cash at the reception</b><span>The owner confirms, then your pass comes on WhatsApp.</span></div></label>
+    ${gym.online ? `<label class="opt"><input type="radio" name="pay" value="online"><div><b>💳 Pay online now</b><span>UPI, card or net banking. Your pass comes on WhatsApp at once.</span></div></label>` : ""}
+  </div>
+  <div id="fErr" class="err hide"></div>
+  <button class="main" id="fGo">Submit</button></div>${foot()}`;
+  ["plans","pays","tYN"].forEach(id => $(id) && radios($(id)));
+  if (hasTrainers) $("tYN").onchange = () => $("tPick").classList.toggle("hide", document.querySelector("input[name=tyn]:checked").value !== "yes");
+  let photo = "";
+  $("fPhoto").onchange = async () => { const f = $("fPhoto").files[0]; if (!f) return; try { photo = await shrink(f); $("pv").innerHTML = `<img src="${photo}">`; } catch(e){ alert(e.message); } };
+  const btnText = () => document.querySelector("input[name=pay]:checked").value === "online" ? "Continue to pay " + money(gym.plans.find(p => p.name === document.querySelector("input[name=plan]:checked").value).price) : "Submit";
+  document.querySelectorAll("input[name=pay],input[name=plan]").forEach(i => i.addEventListener("change", () => $("fGo").textContent = btnText()));
+  $("fGo").onclick = async () => {
+    const e = $("fErr"); e.classList.add("hide");
+    const wantsTrainer = hasTrainers && document.querySelector("input[name=tyn]:checked").value === "yes";
+    const trainer = wantsTrainer ? $("fTrainer").value : "";
+    const show = m => { e.textContent = m; e.classList.remove("hide"); e.scrollIntoView({ behavior:"smooth", block:"center" }); };
+    if (!$("fName").value.trim()) return show("Please enter your full name.");
+    if (!$("fEmail").value.trim()) return show("Please enter your email.");
+    if ($("fPhone").value.replace(/\D/g,"").length < 10) return show("Please enter your 10-digit WhatsApp number.");
+    if (!photo) return show("Please add your photo.");
+    if (wantsTrainer && !trainer) return show("Please choose your trainer.");
+    const b = $("fGo"); b.disabled = true; b.textContent = "Please wait…";
+    try {
+      const r = await api({ action:"join_submit", g: gym.code, name:$("fName").value, email:$("fEmail").value, phone:$("fPhone").value, photo, trainer,
+        plan: document.querySelector("input[name=plan]:checked").value, mode: document.querySelector("input[name=pay]:checked").value });
+      if (r.mode === "online"){ b.textContent = "Opening payment…"; location.href = r.pay_url; return; }
+      app.innerHTML = `<div class="hero"><h1>${esc(gym.name)}</h1></div><div class="card ok"><div class="big">✅</div><h2>Thank you, ${esc(r.name)}!</h2>
+        <p class="muted">Please pay <b>${money(r.amount)}</b> (${esc(r.plan)}) in cash at the reception.<br><br>After the owner confirms, your <b>membership pass</b> will come on WhatsApp.</p></div>${foot()}`;
+      window.scrollTo(0,0);
+    } catch(err){ show(err.message); b.disabled = false; b.textContent = btnText(); }
+  };
+}
+
+// ================= RENEWAL PAGE =================
+async function payPage(){
+  const t = P.get("t"); let d;
+  try { d = await api({ action:"pay_info", t }); } catch(e){ return fail(e.message); }
+  const g = d.gym, m = d.member; setColor(g.color); document.title = g.name + " · Renew";
+  if (m.status === "active" && d.pass_token){
+    app.innerHTML = `<div class="hero"><h1>${esc(g.name)}</h1></div><div class="card ok"><div class="big">✅</div><h2>You're all set, ${esc(m.name)}!</h2>
+      <p class="muted">Your ${esc(m.plan)} membership is active till <b>${fd(m.expiry)}</b>.</p><button class="main" onclick="location.href='/gym_pass/?p=${encodeURIComponent(d.pass_token)}'">View my pass</button></div>${foot()}`;
+    return;
+  }
+  const pending = m.status === "pending";
+  const upiLink = (amt) => "upi://pay?pa=" + encodeURIComponent(g.upi) + "&pn=" + encodeURIComponent(g.name) + "&am=" + amt + "&cu=INR&tn=" + encodeURIComponent(g.name + " " + m.name);
+  app.innerHTML = `<div class="hero"><h1>${esc(g.name)}</h1><p>Membership renewal</p></div>
+  <div class="card"><div class="photo">${m.photo ? `<div class="pv" style="border:0"><img src="${esc(m.photo)}"></div>` : ""}<div><h2>${esc(m.name)}</h2><div class="muted">Member #${m.no}${m.expiry ? " · valid till " + fd(m.expiry) : ""}</div></div></div>
+    ${pending ? `<div class="err" style="background:#eff8ff;border-color:#b2ddff;color:#175cd3">Your ${esc(m.request_mode || "")} payment request is waiting for the owner's approval. Your pass will come on WhatsApp.</div>` : ""}
+    <label>Plan</label><select id="pPlan">${g.plans.map(p => `<option value="${esc(p.name)}" ${p.name === m.plan ? "selected" : ""}>${esc(p.name)} · ${money(p.price)}</option>`).join("")}</select>
+    <div class="sum" style="margin-top:12px"><span>Amount</span><b id="pAmt"></b></div>
+  </div>
+  <div class="card"><h2>Pay</h2>
+    ${g.online ? `<button class="main" id="bOnline">💳 Pay online now</button>` : ""}
+    ${g.upi ? `<button class="alt" id="bUpi">📲 Pay by UPI (scan QR)</button><div id="upiBox" class="hide" style="text-align:center;margin-top:12px"><img id="upiQr" style="width:220px;height:220px"><div class="muted">UPI ID: <b>${esc(g.upi)}</b></div>
+      <a id="upiOpen" class="pbtn" style="display:inline-block;margin-top:10px;text-decoration:none">Open UPI app</a><button class="main" id="bUpiDone">I have paid by UPI</button></div>` : ""}
+    <button class="alt" id="bCash">💵 I will pay cash at the reception</button>
+    <div id="pErr" class="err hide"></div></div>${foot()}`;
+  const price = () => g.plans.find(p => p.name === $("pPlan").value)?.price || 0;
+  const upd = () => { $("pAmt").textContent = money(price()); if ($("upiQr")) { $("upiQr").src = qr(upiLink(price()), 440); $("upiOpen").href = upiLink(price()); } };
+  $("pPlan").onchange = upd; upd();
+  const showErr = msg => { $("pErr").textContent = msg; $("pErr").classList.remove("hide"); };
+  const done = (msg) => { app.innerHTML = `<div class="hero"><h1>${esc(g.name)}</h1></div><div class="card ok"><div class="big">👍</div><h2>Thank you!</h2><p class="muted">${esc(msg)}</p></div>${foot()}`; window.scrollTo(0,0); };
+  const req = async (btn, mode) => { btn.disabled = true; try { done((await api({ action:"pay_request", t, mode, plan:$("pPlan").value })).msg); } catch(e){ showErr(e.message); btn.disabled = false; } };
+  if ($("bOnline")) $("bOnline").onclick = async () => { const b = $("bOnline"); b.disabled = true; b.textContent = "Opening payment…"; try { location.href = (await api({ action:"pay_online", t, plan:$("pPlan").value })).pay_url; } catch(e){ showErr(e.message); b.disabled = false; b.textContent = "💳 Pay online now"; } };
+  if ($("bUpi")) $("bUpi").onclick = () => $("upiBox").classList.toggle("hide");
+  if ($("bUpiDone")) $("bUpiDone").onclick = () => req($("bUpiDone"), "UPI");
+  $("bCash").onclick = () => req($("bCash"), "Cash");
+}
+
+// ================= BACK FROM RAZORPAY =================
+async function paidPage(){
+  app.innerHTML = `<div class="card ok"><div class="spin" style="margin:30px auto"></div><p class="muted">Checking your payment…</p></div>`;
+  const body = { action:"paid_check" }; P.forEach((v, k) => body[k] = v);
+  try {
+    const r = await api(body);
+    if (!r.paid) return fail("The payment was not completed. You can try again from the form or the WhatsApp link.");
+    app.innerHTML = `<div class="hero"><h1>${esc(r.gym)}</h1></div><div class="card ok"><div class="big">🎉</div><h2>Payment successful!</h2>
+      <p class="muted">Welcome, ${esc(r.name)}. Your membership is active till <b>${esc(r.until)}</b>.${r.sent ? "<br>Your pass has also been sent on WhatsApp." : ""}</p>
+      <button class="main" onclick="location.href='/gym_pass/?p=${encodeURIComponent(r.pass_token)}'">View my membership pass</button></div>${foot()}`;
+  } catch(e){ fail(e.message); }
+}
+
+// ================= PASS =================
+async function passPage(){
+  let d; try { d = await api({ action:"pass", p: P.get("p") }); } catch(e){ return fail(e.message); }
+  setColor(d.gym.color); document.title = d.member.name + " · " + d.gym.name;
+  const m = d.member, ini = String(m.name).trim().split(/\s+/).slice(0,2).map(w => w[0]).join("").toUpperCase();
+  app.innerHTML = `<div class="pass"><div class="ph"><div class="g">${esc(d.gym.name)}</div>${d.gym.owner_name ? `<div class="o">${esc(d.gym.owner_name)}</div>` : ""}</div>
+    <div class="pb">${m.photo ? `<img class="pp" src="${esc(m.photo)}">` : `<div class="pp">${esc(ini)}</div>`}
+      <div class="pi"><div class="n">${esc(m.name)}</div><div class="l">START DATE</div><div class="d">${esc(m.start)}</div><div class="l">VALID TILL</div><div class="d" style="color:var(--c)">${esc(m.until)}</div></div>
+      <img class="pq" src="${qr(location.href, 300)}" alt="QR"></div></div>
+    <div class="valid ${d.valid ? "y" : "n"}">${d.valid ? "✅ Valid membership" : "❌ Membership expired"} · checked ${esc(d.today)}</div>
+    <p class="muted" style="text-align:center;margin:14px">Show this pass at the reception. Tip: take a screenshot to keep it handy.</p>${foot()}`;
+}
+
+({ gym_join: joinPage, gym_pay: payPage, gym_paid: paidPage, gym_pass: passPage }[page] || joinPage)();
+</script>
+</body>
+</html>
