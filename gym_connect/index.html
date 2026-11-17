@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Connect WhatsApp</title>
+<link rel="icon" type="image/png" href="/icon-192.png">
+<style>
+  :root{--c:#2E7D32;--text:#1a1d24;--muted:#667085;--line:#e4e7ec;--bg:#f4f6f8}
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:16px}
+  .wrap{max-width:520px;margin:0 auto;padding:0 0 40px}
+  .hero{background:#128C7E;color:#fff;padding:26px 20px 30px;border-radius:0 0 24px 24px}
+  .hero h1{margin:0;font-size:23px}.hero p{margin:6px 0 0;opacity:.92;font-size:14.5px}
+  .card{background:#fff;border-radius:18px;padding:18px;margin:14px 14px 0;box-shadow:0 2px 10px rgba(16,24,40,.06)}
+  .card h2{margin:0 0 6px;font-size:17px}
+  .muted{color:var(--muted);font-size:14px;line-height:1.5}
+  ol{padding-left:20px;margin:8px 0;line-height:1.55;font-size:14.5px}
+  button.main{width:100%;background:#1877F2;color:#fff;border:0;border-radius:14px;padding:15px;font-size:16.5px;font-weight:800;margin-top:12px;cursor:pointer;font-family:inherit}
+  button.alt{background:#25D366;color:#073b1d}
+  button:disabled{opacity:.55}
+  .status{margin:14px;padding:12px 14px;border-radius:12px;font-size:14.5px}
+  .wait{background:#eff8ff;color:#175cd3;border:1px solid #b2ddff}.err{background:#fef3f2;color:#b42318;border:1px solid #fecdca}
+  .ok{text-align:center;padding:26px 18px}.ok .big{font-size:52px}
+  .hide{display:none!important}
+  .spin{width:36px;height:36px;border:3px solid #dfe3e8;border-top-color:#128C7E;border-radius:50%;animation:s .8s linear infinite;margin:80px auto}
+  @keyframes s{to{transform:rotate(360deg)}}
+  .foot{text-align:center;color:#98a2b3;font-size:12px;margin-top:26px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div id="loading"><div class="spin"></div></div>
+  <div id="start" class="hide">
+    <div class="hero"><h1>Connect WhatsApp</h1><p id="gymName"></p></div>
+    <div class="card"><h2>Why?</h2><p class="muted">Your members get fee reminders and their membership pass on WhatsApp from <b>your gym's own number</b>. You get an alert when someone wants to pay cash.</p></div>
+    <div class="card"><h2>Choose one</h2>
+      <p class="muted"><b>A.</b> Your number is already on the <b>WhatsApp Business app</b> and you want to keep using the app on your phone.</p>
+      <button class="main alt" id="goApp">Connect my WhatsApp Business app number</button>
+      <p class="muted" style="margin-top:18px"><b>B.</b> A <b>new number</b> that is not on WhatsApp (for example a new SIM).</p>
+      <button class="main" id="goNew">Connect a new number</button>
+    </div>
+    <div class="card"><h2>What happens</h2><ol>
+      <li>A Facebook window opens. Log in with the Facebook account of the gym owner.</li>
+      <li>Choose or create your business and your WhatsApp Business account.</li>
+      <li><b>A:</b> enter your number and confirm it in the WhatsApp Business app on your phone (Meta shows the steps).<br><b>B:</b> enter the new number and the OTP code.</li>
+      <li>Press <b>Finish</b>. Come back to this page. Done.</li></ol>
+      <p class="muted">After connecting, add a payment method in Meta (WhatsApp Manager → Payment settings). Meta charges a few paise per reminder.</p></div>
+  </div>
+  <div id="status" class="status hide"></div>
+  <div id="done" class="hide"><div class="hero"><h1>Connected ✅</h1><p id="doneGym"></p></div>
+    <div class="card ok"><div class="big">🎉</div><h2 id="doneNum"></h2>
+      <p class="muted" id="doneNote">The message templates were sent to Meta. Reminders and passes start as soon as Meta approves them, usually within a few hours. Nothing more to do.</p></div></div>
+  <div id="fail" class="hide"><div class="card ok"><div class="big">⚠️</div><h2>Sorry</h2><p class="muted" id="failMsg"></p></div></div>
+  <p class="foot">Powered by KnowMinds Media</p>
+</div>
+<script>
+(() => {
+  const API = "https://cqrtvuspfbwkefpheknj.supabase.co/functions/v1/gym-public";
+  const $ = (id) => document.getElementById(id);
+  const t = new URLSearchParams(location.search).get("t") || "";
+  const show = (id) => ["loading","start","done","fail"].forEach(x => $(x).classList.toggle("hide", x !== id));
+  const status = (text, kind) => { const s = $("status"); s.className = "status " + (kind || "wait"); s.textContent = text || ""; s.classList.toggle("hide", !text); };
+  const fail = (m) => { $("failMsg").textContent = m; show("fail"); };
+  let cfg = null, code = null, session = null, sent = false, waitTimer = null;
+  async function api(body){
+    let r, d; try { r = await fetch(API, { method:"POST", headers:{ "Content-Type":"text/plain" }, body: JSON.stringify(body) }); d = await r.json(); }
+    catch(e){ throw new Error("No internet connection. Please try again."); }
+    if (d && d.error) throw new Error(d.error); return d;
+  }
+  const btns = (on) => { $("goApp").disabled = !on; $("goNew").disabled = !on; };
+  async function finish(){
+    if (sent || !code || !session) return;
+    sent = true; clearTimeout(waitTimer);
+    status("Connecting your WhatsApp… please wait, do not close this page.");
+    try {
+      const r = await api({ action:"connect_complete", t, code, ...session });
+      $("doneGym").textContent = r.gym; $("doneNum").textContent = r.number ? "Number " + r.number : "Your number is connected";
+      if (r.templates === "failed") $("doneNote").textContent = "Connected. One step is left on our side (message templates). KnowMinds Media will finish it.";
+      status(""); show("done");
+    } catch(e){ sent = false; code = null; session = null; btns(true); status(e.message, "err"); }
+  }
+  window.addEventListener("message", (event) => {
+    if (!/^https:\/\/([a-z0-9-]+\.)*facebook\.com$/.test(event.origin)) return;
+    let data; try { data = typeof event.data === "string" ? JSON.parse(event.data) : event.data; } catch { return; }
+    if (!data || data.type !== "WA_EMBEDDED_SIGNUP") return;
+    const ev = String(data.event || ""), d = data.data || {};
+    if (ev.startsWith("FINISH")) {
+      session = { waba_id: String(d.waba_id || ""), phone_number_id: String(d.phone_number_id || ""), event: ev };
+      if (!session.phone_number_id) { status("The number was not added. Please press the button again and add the gym's WhatsApp number.", "err"); session = null; btns(true); return; }
+      finish();
+    } else if (ev === "CANCEL") {
+      status(d.error_message ? "Facebook said: " + d.error_message + ". Please try again." : "The Facebook window was closed before finishing. Press the button to try again.", "err"); btns(true);
+    } else if (ev === "ERROR") {
+      status("Facebook said: " + (d.error_message || "an error happened") + ". Please try again.", "err"); btns(true);
+    }
+  });
+  function login(businessApp){
+    btns(false); status("A Facebook window is open. Finish the steps there.");
+    code = null; session = null; sent = false;
+    const extras = businessApp ? { setup: {}, featureType: "whatsapp_business_app_onboarding", sessionInfoVersion: "3" } : { setup: {}, sessionInfoVersion: "3" };
+    window.FB.login((response) => {
+      if (response && response.authResponse && response.authResponse.code) {
+        code = response.authResponse.code;
+        if (session) return finish();
+        waitTimer = setTimeout(() => { if (!session) { status("We did not receive the WhatsApp details. Please press the button and finish all steps, including Finish.", "err"); btns(true); code = null; } }, 8000);
+      } else { btns(true); if (!session) status("Facebook login was not completed. Press the button to try again.", "err"); }
+    }, { config_id: cfg.configId, response_type: "code", override_default_response_type: true, extras });
+  }
+  async function start(){
+    if (!t) return fail("This link is not complete. Please open the full link you received.");
+    try { cfg = await api({ action:"connect_info", t }); } catch(e){ return fail(e.message); }
+    $("gymName").textContent = cfg.gym;
+    if (cfg.connected) status("WhatsApp is already connected (" + cfg.connected + "). You only need to do this again to change the number.", "wait");
+    show("start"); btns(false);
+    window.fbAsyncInit = () => { window.FB.init({ appId: cfg.appId, autoLogAppEvents: true, xfbml: false, version: cfg.version }); btns(true); };
+    const s = document.createElement("script"); s.src = "https://connect.facebook.net/en_US/sdk.js"; s.async = true; s.defer = true; s.crossOrigin = "anonymous";
+    s.onerror = () => status("Could not load Facebook. Check the internet connection and reload this page.", "err");
+    document.head.append(s);
+    $("goApp").onclick = () => login(true); $("goNew").onclick = () => login(false);
+  }
+  start();
+})();
+</script>
+</body>
+</html>

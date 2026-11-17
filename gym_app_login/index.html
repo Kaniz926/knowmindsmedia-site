@@ -216,6 +216,7 @@
     </div>
 
     <div id="tSettings" class="hide">
+      <div class="card" id="waCard"></div>
       <div class="card">
         <h2 style="margin-top:0">Plans and prices (₹)</h2>
         <p class="hint" style="margin-top:-4px">Leave a plan at 0 to hide it from the form.</p>
@@ -443,7 +444,12 @@ function waSheet(g){
   const chip = s => s === "APPROVED" ? '<span class="chip c-ok">Approved</span>' : s === "PENDING" || s === "IN_APPEAL" ? '<span class="chip c-blue">Waiting for Meta</span>' : s === "REJECTED" ? '<span class="chip c-bad">Rejected</span>' : s ? `<span class="chip c-warn">${esc(s)}</span>` : '<span class="chip c-grey">Not sent</span>';
   const bg = sheet(`<h2>WhatsApp: ${esc(g.name)}</h2>
     <p class="hint">The gym's own WhatsApp Business number sends payment reminders and passes to members, and alerts to the owner.</p>
-    ${g.wa.ready ? `<div class="okmsg">Connected: ${esc(g.wa.display)}</div>` : ""}
+    ${g.wa.ready ? `<div class="okmsg">Connected: ${esc(g.wa.display)}${g.wa.via ? " · " + esc({signup:"via Meta signup",signup_business_app:"via Meta signup (WhatsApp Business app)",manual:"entered by hand"}[g.wa.via] || g.wa.via) : ""}</div>` : ""}
+    <div class="card" style="margin-top:12px"><b>Connect with Meta (recommended)</b>
+      <p class="hint">The owner logs in with Facebook and adds the gym's number in Meta's own window. Works for a new number and for a number that stays on the WhatsApp Business app. Templates are sent to Meta automatically.</p>
+      ${g.wa.signup_ready ? "" : '<div class="warnbox">Signup is not switched on yet on the server (Meta app ID, configuration ID and app secret).</div>'}
+      <div class="acts"><button class="green" id="wLink" ${g.wa.signup_ready ? "" : "disabled"}>Send signup link to owner</button><button class="ghost" id="wOpen" ${g.wa.signup_ready ? "" : "disabled"}>Open signup here</button></div></div>
+    <p class="hint" style="margin-top:14px"><b>Or enter the details by hand:</b></p>
     <label>Phone number ID</label><input id="wPid" value="${esc(g.wa.phone_number_id)}" inputmode="numeric">
     <label>WhatsApp Business Account ID</label><input id="wWaba" value="${esc(g.wa.waba_id)}" inputmode="numeric">
     <label>Permanent access token ${g.wa.ready ? "(leave empty to keep the saved one)" : ""}</label><div class="row"><input id="wTok" type="password" autocomplete="off"><button class="eye" data-eye="wTok">Show</button></div>
@@ -459,6 +465,10 @@ function waSheet(g){
       <table style="margin-top:6px">${Object.keys(names).map(k => `<tr><td>${names[k]}</td><td style="text-align:right">${chip(T[k])}</td></tr>`).join("")}</table>
       <div class="acts"><button class="ghost" id="wSubmit" ${g.wa.ready ? "" : "disabled"}>Send templates to Meta</button><button class="ghost" id="wCheck" ${g.wa.ready ? "" : "disabled"}>Check approval</button></div></div>
     <button class="btn ghost" data-close>Close</button>`);
+  const link = async () => (await api({ action:"gym_connect_link", token, gym_id:g.id })).url;
+  bg.querySelector("#wLink").onclick = ev => busy(ev.target, async () => { try { const u = await link(); const a = (g.admins||[])[0] || {};
+    openUrl("https://wa.me/" + (a.phone || "") + "?text=" + encodeURIComponent(`Hello ${a.name || ""},\n\nPlease connect ${g.name}'s WhatsApp number to the gym app (takes 5 minutes). Open this link and follow the steps:\n${u}\n\nThe link works for 14 days.\n\n– KnowMinds Media`)); } catch(e){ err(bg.querySelector("#wErr"), e.message); } });
+  bg.querySelector("#wOpen").onclick = ev => busy(ev.target, async () => { try { openUrl(await link()); } catch(e){ err(bg.querySelector("#wErr"), e.message); } });
   const done = (r, okText) => { const ng = upGym(r.gym); waSheet(ng); if (r.msg || okText) { const ok = $("sheetHost").querySelector("#wOk"); ok.textContent = r.msg || okText; ok.classList.remove("hide"); } };
   bg.querySelector("#wSave").onclick = ev => busy(ev.target, async () => { err(bg.querySelector("#wErr"));
     try { done(await api({ action:"set_whatsapp", token, gym_id:g.id, phone_number_id:bg.querySelector("#wPid").value, waba_id:bg.querySelector("#wWaba").value, wa_token:bg.querySelector("#wTok").value, pin:bg.querySelector("#wPin").value })); } catch(e){ err(bg.querySelector("#wErr"), e.message); } });
@@ -569,7 +579,7 @@ function renderDash(){
   $("gSub").textContent = (g.owner_name || "") + (g.city ? " · " + g.city : "") + " · QR code " + g.code;
   const T = g.wa.templates || {}; const appr = ["km_gym_fee_reminder","km_gym_pass"].every(k => T[k] === "APPROVED");
   const sup = me.role === "super";
-  $("gWarn").innerHTML = (!g.wa.ready ? `<div class="warnbox">WhatsApp is not connected yet, so reminders and passes are <b>not sent</b>. ${sup ? "Connect it from the gym card → WhatsApp." : "KnowMinds Media will connect your number."} Cash approvals and the QR form already work.</div>`
+  $("gWarn").innerHTML = (!g.wa.ready ? `<div class="warnbox">WhatsApp is not connected yet, so reminders and passes are <b>not sent</b>. ${sup ? "Connect it from the gym card → WhatsApp." : 'Go to <b>Settings → Connect WhatsApp</b>.'} Cash approvals and the QR form already work.</div>`
     : !appr ? `<div class="warnbox">WhatsApp is connected. The message templates are waiting for Meta approval. Reminders and passes start after approval.</div>` : "");
   $("dToday").textContent = money(s.todayCash + s.todayOnline);
   $("dToday").nextElementSibling.textContent = "Today · cash " + money(s.todayCash) + " · online " + money(s.todayOnline);
@@ -759,7 +769,16 @@ $("qrCopy").onclick = () => copy(dash.gym.join_url);
 $("qrShare").onclick = () => openUrl("https://wa.me/?text=" + encodeURIComponent(`Join ${dash.gym.name}: fill the form and pay here ${dash.gym.join_url}`));
 
 // ----- settings tab -----
+function renderWaCard(g){
+  const T = g.wa.templates || {}; const appr = Object.values(T).filter(x => x === "APPROVED").length;
+  $("waCard").innerHTML = `<h2 style="margin-top:0">WhatsApp</h2>` + (g.wa.ready
+    ? `<div class="okmsg" style="margin-top:0">Connected: ${esc(g.wa.display)}</div><p class="hint">Message templates approved: ${appr} of 4${appr < 4 ? " (Meta usually approves within a few hours; we check every morning)" : " ✅"}</p>`
+    : `<p class="hint" style="margin-top:0">Connect your gym's WhatsApp number so members get fee reminders and passes, and you get payment alerts.</p>`)
+    + `<button class="btn" id="btnConnectWa" style="margin-top:10px;background:#25D366;color:#073b1d">${g.wa.ready ? "Change WhatsApp number" : "Connect WhatsApp"}</button>`;
+  $("btnConnectWa").onclick = ev => busy(ev.target, async () => { try { openUrl((await gapi({ action:"gym_connect_link" })).url); } catch(e){ toast(e.message); } });
+}
 function fillSettings(g){
+  renderWaCard(g);
   Object.keys(PLANM).forEach(k => $("sp_" + k).value = (g.prices || {})[k] || 0);
 $("sUpi").value = g.upi_id || ""; $("sOwner").value = g.owner_name || "";
   $("sColor").value = g.pass_color || "#2E7D32"; $("sRemind").value = String(g.remind_days || 3);
